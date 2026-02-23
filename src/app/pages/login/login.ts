@@ -16,10 +16,10 @@ export class Login implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       this.logoAnimated = true;
-    }, 1500);
+    }, 400);
 
     setTimeout(() => {
       this.formVisible = true;
-    }, 2000);
+    }, 1200);
   }
 }
