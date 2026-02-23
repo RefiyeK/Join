@@ -22,7 +22,7 @@
   ></app-header>
 
   <div class="task-wrapper">
-    <div class="head-line">
+    <div class="head-line" [ngClass]="{ 'd-none': tasksService.editMode }">
       <h1>Add Task</h1>
     </div>
     <div class="add-Task-Container">
@@ -161,7 +161,7 @@
           </div>
 
           <!-- CATEGORY -->
-          <div class="category-container">
+          <div class="category-container" [ngClass]="{ 'd-none': tasksService.editMode }">
             <label class="category-title"> Category <span class="required">*</span> </label>
 
             <div
@@ -274,7 +274,7 @@
       </section>
     </div>
 
-    <div class="foot-line">
+    <div class="foot-line" [ngClass]="{ 'd-none': tasksService.editMode }">
       <div class="required-container">
         <p [ngClass]="{ 'd-none': tasksService.editMode }">
           <span class="required">*</span> This field is required
@@ -316,13 +316,6 @@
       <button class="btn-primary" (click)="tasksService.exidEditMode(getFullTask())">
         <span class="btn-txt">Ok &#10003;</span>
       </button>
-    </div>
-  }
-
-  @if (tasksService.taskSuccessDialogActive) {
-    <div class="success-dialog">
-      <span>Task erfolgreich hinzugefügt!</span>
-      <button class="btn-primary" (click)="tasksService.closeTaskSuccessDialog()">Schließen</button>
     </div>
   }
 </div>

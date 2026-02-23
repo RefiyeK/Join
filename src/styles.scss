@@ -110,8 +110,14 @@ a {
 ul {
   padding: 0;
   li {
+    font-size: 1.25rem;
     list-style: none;
   }
+}
+
+input,
+textarea {
+  font-size: 1.25rem;
 }
 
 /* Content Begrenzung für Seiten ohne Nav/Header */
