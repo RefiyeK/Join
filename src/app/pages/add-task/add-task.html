@@ -318,4 +318,11 @@
       </button>
     </div>
   }
+
+  @if (tasksService.taskSuccessDialogActive) {
+    <div class="success-dialog">
+      <span>Task erfolgreich hinzugefügt!</span>
+      <button class="btn-primary" (click)="tasksService.closeTaskSuccessDialog()">Schließen</button>
+    </div>
+  }
 </div>

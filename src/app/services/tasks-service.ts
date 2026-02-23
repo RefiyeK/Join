@@ -208,6 +208,7 @@ export class TasksService implements OnDestroy {
   }
 
   startEditMode() {
+
     this.taskEditModeSubject.next(true);
     this.editMode = true;
   }

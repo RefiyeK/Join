@@ -97,8 +97,6 @@ export class AddTask implements OnInit, OnDestroy {
   originalSubtaskTitle: string = '';
 
   async ngOnInit() {
-    await this.loadContacts();
-
     this.subEditMode = this.tasksService.taskEditMode$.subscribe((editMode) => {
       if (editMode) {
         this.setCurrentTaskData(this.tasksService.currentTask);
@@ -106,6 +104,8 @@ export class AddTask implements OnInit, OnDestroy {
         this.clearForm();
       }
     });
+
+    await this.loadContacts();
   }
 
   ngOnDestroy() {
