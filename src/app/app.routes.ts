@@ -5,10 +5,11 @@ import { PrivacyPolicy } from './pages/privacy-policy/privacy-policy';
 import { Help } from './pages/help/help';
 import { AddTask } from './pages/add-task/add-task';
 import { Board } from './pages/board/board';
+import { Summary } from './pages/summary/summary';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'contacts', pathMatch: 'full' },  // Empty path → Contacts Startseite / Zukünftig SUMMARY
-  { path: 'summary', component: Contacts },
+  { path: '', redirectTo: 'summary', pathMatch: 'full' },
+  { path: 'summary', component: Summary },
   { path: 'add-task', component: AddTask },
   { path: 'board', component: Board },
   { path: 'contacts', component: Contacts },
