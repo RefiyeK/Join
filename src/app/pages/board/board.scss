@@ -52,6 +52,7 @@ app-nav {
   flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   width: 100%;
   gap: 2rem;
   overflow-y: auto;
@@ -64,7 +65,7 @@ app-nav {
   width: 100%;
   max-width: 1208px;
   gap: 2rem;
-  padding: 80px 16px;
+  padding: 80px 8px;
 }
 
 /* ================================================================
@@ -146,10 +147,13 @@ app-nav {
   display: flex;
   gap: 10px;
   height: 100%;
+  align-items: flex-start;
 }
 
 .board-column {
-  flex: 1;
+  flex: 1 1 0;
+  min-width: 150px;
+  max-width: none;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -157,12 +161,11 @@ app-nav {
 
 .column-header {
   width: 100%;
-  max-width: 244px;
+  max-width: none;
   height: 24px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  gap: 8px;
   padding-bottom: 15px;
 
   h2 {
@@ -202,9 +205,19 @@ app-nav {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-width: 150px;
   gap: 1rem;
-  // overflow-y: auto; //NICHT SICHER, OB WIR DAS BRAUCHEN
-  // max-height: 70vh;  //NICHT SICHER, OB WIR DAS BRAUCHEN
+  overflow-y: auto;
+  max-height: calc(100vh - 250px);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-light-grey) transparent;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  app-single-task-card {
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 /* Leerer Zustand einer Spalte */
@@ -218,8 +231,9 @@ app-nav {
   text-align: center;
   height: 48px;
   width: 100%;
-  max-width: 246px;
+  // max-width: 252px;
   background-color: #d1d1d14a;
+  box-sizing: border-box;
 }
 
 /* ================================================================
@@ -231,7 +245,6 @@ app-nav {
 .cdk-drag-placeholder {
   border: 2px dashed var(--color-light-grey);
   border-radius: 24px;
-  width: 252px;
 }
 
 /* Vorschau: Die Karte am Cursor – rotate statt transform,
@@ -284,6 +297,12 @@ app-nav {
     max-width: none;
     }
   }
+
+  @media (min-width: 1025px) and (max-width: 1175px) {
+  .empty-state {
+    max-width: 180px;
+  }
+}
 
 @media (max-width: 1024px) {
 
