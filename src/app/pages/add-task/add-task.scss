@@ -242,18 +242,18 @@ textarea {
 }
 
 .urgent {
-  background-image: url('assets/icons/urgent.svg');
+  background-image: url('./../../../../public/assets/icons/urgent.svg');
   filter: brightness(0) saturate(100%) invert(22%) sepia(97%) saturate(3744%) hue-rotate(0deg)
     brightness(1.1);
 }
 
 .medium {
-  background-image: url('assets/icons/medium.svg');
+  background-image: url('./../../../../public/assets/icons/medium.svg');
   filter: brightness(0) saturate(100%) invert(66%) sepia(95%) saturate(500%) hue-rotate(0deg);
 }
 
 .low {
-  background-image: url('assets/icons/low.svg');
+  background-image: url('./../../../../public/assets/icons/low.svg');
   filter: brightness(0) saturate(100%) invert(76%) sepia(75%) saturate(500%) hue-rotate(40deg);
 }
 
@@ -323,7 +323,7 @@ textarea {
     content: '';
     width: 7.21px;
     height: 4.6px;
-    background-image: url('assets/icons/categories_arrow_drop_down.svg');
+    background-image: url('./../../../../public/assets/icons/categories_arrow_drop_down.svg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -403,7 +403,7 @@ textarea {
 .checkmark-box {
   width: 16px;
   height: 16px;
-  background-image: url('assets/icons/checkmark.svg');
+  background-image: url('./../../../../public/assets/icons/checkmark.svg');
   background-position: center;
   background-size: cover;
   position: absolute;
@@ -615,7 +615,7 @@ textarea {
 .edit-icon {
   width: 18px;
   height: 18px;
-  background-image: url('assets/icons/edit.svg');
+  background-image: url('./../../../../public/assets/icons/edit.svg');
   background-position: center;
   background-size: cover;
   border: none;
@@ -626,7 +626,7 @@ textarea {
 .delete-icon {
   width: 18px;
   height: 18px;
-  background-image: url('assets/icons/delete.svg');
+  background-image: url('./../../../../public/assets/icons/delete.svg');
   background-position: center;
   background-size: cover;
   border: none;
