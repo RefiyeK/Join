@@ -1,10 +1,9 @@
 dialog {
-  height: 90%;
-  max-height: 675px;
+  height: fit-content;
   width: 90%;
+  max-height: 1200px;
 
   @media (max-width: 1024px) {
-    height: 90%;
     width: 95%;
     max-width: unset;
   }

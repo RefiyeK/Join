@@ -275,9 +275,11 @@
     </div>
 
     <div class="foot-line">
-      <p [ngClass]="{ 'd-none': tasksService.editMode }">
-        <span class="required">*</span> This field is required
-      </p>
+      <div class="required-container">
+        <p [ngClass]="{ 'd-none': tasksService.editMode }">
+          <span class="required">*</span> This field is required
+        </p>
+      </div>
 
       <!-- BUTTONS -->
 
