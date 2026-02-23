@@ -1,13 +1,18 @@
 <div class="login-page">
 
-  <!-- Logo Animasyon -->
+  <!-- Logo -->
   <div class="logo-wrapper" [class.logo--animated]="logoAnimated">
     <img src="assets/icons/logo-dark.png" alt="Join Logo" class="logo">
   </div>
 
+  <!-- Sağ üst: Sign up -->
+  <div class="signup-hint">
+    <span class="signup-text">Not a Join user?</span>
+    <button class="btn-primary" routerLink="/signup">Sign up</button>
+  </div>
+
   <!-- Login Formu -->
   <div class="login-container" [class.form--visible]="formVisible">
-
     <div class="login-card">
       <h1>Log in</h1>
       <div class="title-underline"></div>
@@ -27,12 +32,12 @@
         <button class="btn-outline" routerLink="/summary">Guest Log in</button>
       </div>
     </div>
+  </div>
 
-    <div class="login-footer">
-      <a routerLink="/privacy-policy">Privacy Policy</a>
-      <a routerLink="/imprint">Legal notice</a>
-    </div>
-
+  <!-- Footer: sayfanın en altında -->
+  <div class="login-footer">
+    <a routerLink="/privacy-policy">Privacy Policy</a>
+    <a routerLink="/imprint">Legal notice</a>
   </div>
 
 </div>

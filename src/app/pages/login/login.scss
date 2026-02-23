@@ -47,6 +47,26 @@
   transition: all 0.8s ease-in-out;
 }
 
+
+.signup-hint {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 35px;
+
+  .signup-text {
+    font-size: 20px;
+  }
+
+  .btn-primary {
+    font-size: 16px;
+    width: 100px;
+    height: 50px;
+  }
+}
+
 // ============================================================
 // Login Container
 // ============================================================
@@ -140,6 +160,7 @@
   gap: 1rem;
   justify-content: center;
   height: 50px;
+  margin-top: 30px;
 
   button {
     font-size: 21px;
@@ -161,15 +182,25 @@
 // ============================================================
 
 .login-footer {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  gap: 2rem;
+  gap: 3rem;
+}
+
+.login-footer {
 
   a {
-    font-size: 1rem;
+    font-weight: 300;
     color: var(--color-medium-blue);
 
     &:hover {
+        font-weight: 700;
       color: var(--color-light-blue);
     }
   }
 }
+
+
