@@ -1,0 +1,206 @@
+// ============================================================
+// Login Seiten-Layout
+// ============================================================
+
+.login-page {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--color-bg-light);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .btn-outline {
+    transition: background-color 125ms ease-in-out, color 125ms ease-in-out, border-color 125ms ease-in-out;
+  }
+}
+
+// ============================================================
+// Logo Animation
+// ============================================================
+
+.logo-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.8s ease-in-out;
+  z-index: 100;
+
+  &.logo--animated {
+    top: 48px;
+    left: 48px;
+    transform: translate(0, 0);
+  }
+
+  &.logo--animated .logo {
+    width: 100px;
+    height: 120px;
+  }
+}
+
+.logo {
+  width: 280px;
+  height: 300px;
+  object-fit: contain;
+  transition: all 0.8s ease-in-out;
+}
+
+
+.signup-hint {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 35px;
+
+  .signup-text {
+    font-size: 20px;
+  }
+
+  .btn-primary {
+    font-size: 16px;
+    width: 100px;
+    height: 50px;
+  }
+}
+
+// ============================================================
+// Login Container
+// ============================================================
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+
+  &.form--visible {
+    opacity: 1;
+  }
+}
+
+// ============================================================
+// Login Karte
+// ============================================================
+
+.login-card {
+  background-color: #ffffff;
+  border-radius: 30px;
+  padding: 48px  115px;
+  width: 650px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  h1 {
+    font-size: 61px;
+    margin: 0;
+    text-align: center;
+  }
+}
+
+.title-underline {
+  width: 150px;
+  height: 3px;
+  background-color: var(--color-light-blue);
+  margin: -1rem auto 0 auto;
+}
+
+// ============================================================
+// Input Felder
+// ============================================================
+
+.input-wrapper {
+  position: relative;
+  width: 422px;
+
+  input {
+    width: 422px;
+    height: 48px;
+    padding: 0 3rem 0 1rem;
+    border: 1px solid var(--color-light-grey);
+    border-radius: 10px;
+    font-size: 20px;
+    transition: var(--transition-fast);
+    outline: none;
+
+    &:focus {
+      border-color: var(--color-light-blue);
+    }
+
+    &::placeholder {
+      color: var(--color-light-grey);
+    }
+  }
+
+  img {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+  }
+}
+
+// ============================================================
+// Buttons
+// ============================================================
+
+.login-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  height: 50px;
+  margin-top: 30px;
+
+  button {
+    font-size: 21px;
+    font-weight: 500;
+  }
+
+  .btn-outline {
+    width: 177px;
+     font-weight: 700;
+  }
+
+  .btn-primary {
+    width: 110px;
+  }
+}
+
+// ============================================================
+// Footer
+// ============================================================
+
+.login-footer {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 3rem;
+}
+
+.login-footer {
+
+  a {
+    font-weight: 300;
+    color: var(--color-medium-blue);
+
+    &:hover {
+        font-weight: 700;
+      color: var(--color-light-blue);
+    }
+  }
+}
+
+

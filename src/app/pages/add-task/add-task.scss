@@ -20,6 +20,11 @@ app-nav.d-none {
   display: none;
 }
 
+label,
+p {
+  font-size: 20px;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -129,9 +134,7 @@ textarea {
   width: 100%;
 
   &::placeholder {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 120%;
+    font-size: 20px;
   }
 
   &:focus {
@@ -267,7 +270,7 @@ textarea {
 .assign-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 
   .assigned-to-title {
     margin-top: 32px;
@@ -425,7 +428,7 @@ textarea {
 .category-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   position: relative;
 
   .category-title {
@@ -499,6 +502,7 @@ textarea {
     padding-right: 70px;
     height: 40px;
     box-sizing: border-box;
+    font-size: 20px;
   }
 
   .input-icons {
@@ -550,7 +554,7 @@ textarea {
   width: 100%;
   max-height: 68px;
   min-width: 68px;
-  padding: 10px;
+  padding: 4px 8px;
   border-radius: 10px;
   overflow-y: auto;
   border: 1px solid var(--color-light-grey);
@@ -560,10 +564,32 @@ textarea {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 16px;
-  cursor: pointer;
+  padding: 0 8px;
+  cursor: default;
   border-radius: 10px;
   font-size: 1.25rem;
+  font-size: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.subtask-item:hover {
+  background-color: rgba(209, 209, 209, 0.3);
+}
+
+.subtask-item:hover .subtask-icons {
+  opacity: 1;
+}
+
+/* Subtask View Mode */
+.subtask-view {
+  flex: 1;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.subtask-view li {
+  list-style-type: disc;
+  margin-left: 20px;
 }
 
 .subtask-icons {
@@ -571,6 +597,19 @@ textarea {
   justify-content: space-evenly;
   align-items: center;
   gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: default;
+  position: relative;
+  z-index: 2;
+}
+
+.subtask-icons:hover {
+  opacity: 1;
+}
+
+.subtask-icons div {
+  cursor: pointer;
 }
 
 .edit-icon {
@@ -581,6 +620,7 @@ textarea {
   background-size: cover;
   border: none;
   outline: none;
+  cursor: pointer;
 }
 
 .delete-icon {
@@ -591,6 +631,7 @@ textarea {
   background-size: cover;
   border: none;
   outline: none;
+  cursor: pointer;
 }
 
 .sub-line {
@@ -599,20 +640,79 @@ textarea {
   background-color: var(--color-light-grey);
 }
 
-/* Subtask Edit Mode */
 .subtask-edit-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 440px;
+  width: 100%;
   gap: 16px;
+  background-color: white;
+  border-bottom: 1px solid var(--color-light-grey);
+  padding: 4px 16px;
+
+  &:focus-within {
+    border-bottom-color: var(--color-light-blue);
+  }
 }
 
 .subtask-edit-input {
-  width: 100%;
-  border-radius: 4px;
+  flex: 1;
   font-size: 16px;
   outline: none;
+  border: none;
+  background-color: transparent;
+  padding: 4px 0;
+  min-width: 0;
+}
+
+.subtask-edit-container .subtask-icons {
+  opacity: 1 !important;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.subtask-edit-container:hover {
+  background-color: transparent !important;
+}
+
+.edit-modus-icons {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    background-color: transparent;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.subtask-item:has(.subtask-edit-container) {
+  background-color: transparent !important;
+
+  &:hover {
+    background-color: transparent !important;
+  }
+}
+
+.subtask-list:has(.subtask-edit-container) .subtask-item:hover {
+  background-color: transparent !important;
+}
+
+.subtask-list:has(.subtask-edit-container) .subtask-item:not(:has(.subtask-edit-container)) {
+  .subtask-icons {
+    opacity: 0;
+  }
+
+  &:hover .subtask-icons {
+    opacity: 1;
+  }
 }
 
 /* ========== DIALOG FOOTER ========== */
@@ -632,6 +732,11 @@ textarea {
   border-radius: 50%;
   width: 32px;
   height: 32px;
+}
+
+.edit-modus-icons {
+  width: 22px;
+  height: 22px;
 }
 
 /* ========== NAVIGATION CONTEXT ========== */

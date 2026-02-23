@@ -227,12 +227,13 @@
           </div>
 
           <!-- SUBTASK LIST -->
+          <!-- SUBTASK LIST -->
           @if (taskData.subtasks && taskData.subtasks.length > 0) {
             <div class="subtask-list">
               @for (subtask of taskData.subtasks; track subtask.id; let i = $index) {
                 <div class="subtask-item">
                   @if (editingSubtaskIndex === i) {
-                    <!-- Edit Mode - Version 1: Mit onBlurSubtaskEdit() -->
+                    <!-- Edit Mode -->
                     <div class="subtask-edit-container">
                       <input
                         type="text"
@@ -245,18 +246,28 @@
                       />
                       <div class="subtask-icons">
                         <div (click)="saveSubtaskEdit(); $event.stopPropagation()">
-                          <img src="assets/icons/small_approv_icon.svg" alt="Save" class="icon" />
+                          <img
+                            src="/assets/icons/small_approv_icon.svg"
+                            alt="Save"
+                            class="icon edit-modus-icons"
+                          />
                         </div>
                         <div class="sub-line"></div>
                         <div (click)="cancelSubtaskEdit(); $event.stopPropagation()">
-                          <img src="assets/icons/small_cancle_icon.svg" alt="Close" class="icon" />
+                          <img
+                            src="/assets/icons/delete.svg"
+                            alt="Close"
+                            class="icon edit-modus-icons"
+                          />
                         </div>
                       </div>
                     </div>
                   } @else {
-                    <!-- View Mode -->
-                    <li>{{ subtask.title }}</li>
-                    <div class="subtask-icons">
+                    <!-- View Mode - Klick auf gesamtes Element startet Edit -->
+                    <div class="subtask-view" (click)="startEditingSubtask(i, subtask.title)">
+                      <li>{{ subtask.title }}</li>
+                    </div>
+                    <div class="subtask-icons" (click)="$event.stopPropagation()">
                       <div (click)="startEditingSubtask(i, subtask.title)">
                         <div class="edit-icon"></div>
                       </div>
