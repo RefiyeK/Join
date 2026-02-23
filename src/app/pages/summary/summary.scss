@@ -1,0 +1,311 @@
+// ============================================================
+// Summary Seiten-Layout
+// ============================================================
+
+main {
+  display: flex;
+  width: 100%;
+  height: 100svh;
+  height: 100vh;
+}
+
+// Äußerer Wrapper: Hintergrundfarbe über volle Breite
+.summary__outer {
+  display: flex;
+  background-color: var(--color-bg-light);
+  width: 100%;
+  height: 100%;
+}
+
+// Hauptcontainer: Nav + Content nebeneinander
+.summary-main-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+// Wrapper: Header + Content als Spalte
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+app-header {
+  height: 96px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+app-nav {
+  width: 232px;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+// Inhaltsbereich mit Scrollfunktion
+.summary-content {
+  flex: 1;
+  background-color: var(--color-bg-light);
+  overflow-y: auto;
+}
+
+// Innerer Wrapper: Inhalt auf max. 1208px begrenzt, zentriert
+.summary-inner {
+  width: 100%;
+  max-width: 1208px;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin: 0 auto;
+}
+
+// ============================================================
+// Überschrift
+// ============================================================
+
+.summary-headline {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  h1 {
+    white-space: nowrap;
+  }
+}
+
+// Vertikale Trennlinie zwischen Titel und Untertitel
+.headline-divider {
+  width: 3px;
+  height: 59px;
+  background-color: var(--color-light-blue);
+  flex-shrink: 0;
+}
+
+.headline-subtitle {
+  font-size: 27px;
+  color: var(--color-medium-blue);
+}
+
+// ============================================================
+// Unterer Bereich: Karten + Begrüßung
+// ============================================================
+
+.summary-bottom {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+// ============================================================
+// Karten
+// ============================================================
+
+.summary-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.cards-row-top,
+.cards-row-bottom {
+  display: flex;
+  gap: 32px;
+}
+
+.cards-row-priority {
+  display: flex;
+}
+
+// Grundstil für alle Karten
+.card {
+  background-color: #ffffff;
+  border-radius: 30px;
+  width: 264px;
+  height: 168px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+
+  &:hover {
+    background-color: var(--color-medium-blue);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.15);
+    transform: scale(1.05);
+
+    .card__count,
+    .card__label,
+    .priority-date,
+    .priority-deadline {
+      color: white;
+    }
+  }
+
+  // To-do → wächst nach rechts, linke Seite bleibt fest
+  &:first-child { transform-origin: left center; }
+}
+
+// Done → wächst nach links, rechte Seite bleibt fest
+.cards-row-top .card:last-child {
+  &:hover { transform-origin: right center; }
+}
+
+// Prioritätskarte → linke obere Ecke bleibt fest
+.card--priority {
+  &:hover { transform-origin: top left; }
+}
+
+// Tasks in Board → linke Seite bleibt fest
+.cards-row-bottom .card:first-child {
+  &:hover { transform-origin: left center; }
+}
+
+// Tasks In Progress → wächst in alle Richtungen
+.cards-row-bottom .card:nth-child(2) {
+  &:hover { transform-origin: center center; }
+}
+
+// Awaiting Feedback → wächst nach links, rechte Seite bleibt fest
+.cards-row-bottom .card:last-child {
+  &:hover { transform-origin: right center; }
+}
+
+// ============================================================
+// Prioritätskarte
+// ============================================================
+
+.card--priority {
+  width: 560px;
+  height: 168px;
+  justify-content: flex-start;
+  gap: 0;
+  padding: 1.5rem 2.5rem;
+
+  .card__label {
+    font-size: 16px;
+  }
+}
+
+.priority-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+// Vertikale Trennlinie zwischen linkem und rechtem Bereich
+.priority-divider {
+  width: 1px;
+  height: 4rem;
+  background-color: var(--color-light-grey);
+  margin: 0 2rem;
+  flex-shrink: 0;
+}
+
+.priority-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.priority-date {
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.priority-deadline {
+  font-size: 16px;
+}
+
+// ============================================================
+// Icon-Bereich
+// ============================================================
+
+.card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  img {
+    width: 69px;
+    height: 69px;
+  }
+
+  // Kleineres Icon für die Prioritätskarte
+  &--priority img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+// ============================================================
+// Karteninformationen
+// ============================================================
+
+.card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.card__count {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.card__label {
+  font-size: 20px;
+}
+
+// ============================================================
+// Untere Kartenreihe (einfache Karten ohne Icon)
+// ============================================================
+
+.card--simple {
+  width: 168px;
+  height: 170px;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .card__label {
+    font-size: 20px;
+    text-align: center;
+    line-height: 1.3;
+  }
+}
+
+.cards-row-bottom {
+  display: flex;
+  gap: 28px;
+}
+
+// ============================================================
+// Begrüßungsbereich
+// ============================================================
+
+.summary-greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.greeting-text {
+  font-size: 47px;
+  font-weight: 500;
+  color: var(--color-dark-blue);
+}
+
+.greeting-name {
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--color-light-blue);
+}
