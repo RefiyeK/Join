@@ -1,246 +1,241 @@
-<app-nav
-  [ngClass]="{
-    'd-none': (tasksService.addTaskDialogIsOpen && !tasksService.smallView) || tasksService.editMode,
-    'nav-add-task-context': true
-  }"
-></app-nav>
+<app-nav [ngClass]="{
+    'd-none':
+      (tasksService.addTaskDialogIsOpen && !tasksService.smallView) || tasksService.editMode,
+    'nav-add-task-context': true,
+  }"></app-nav>
 
-<div
-  class="wrapper"
-  (click)="$event.stopPropagation()"
-  [ngClass]="{
+<div class="wrapper" (click)="$event.stopPropagation()" [ngClass]="{
     'dialog-mode': tasksService.addTaskDialogIsOpen && !tasksService.smallView,
     'edit-mode': tasksService.editMode,
-  }"
->
-  <app-header
-    [ngClass]="{
+  }">
+  <app-header [ngClass]="{
       'd-none':
         (tasksService.addTaskDialogIsOpen && !tasksService.smallView) || tasksService.editMode,
-    }"
-   ></app-header>
+    }"></app-header>
 
+  <div class="head-line">
+    <h1>Add Task</h1>
+  </div>
   <div class="contacts-wrapper add-Task-Container">
+    <!-- LEFT SIDE -->
+    <section class="form-container">
+      <form #taskForm="ngForm" (ngSubmit)="onSubmit()">
+        <!-- TITLE -->
+        <div class="input-fields">
+          <label for="title"> Title <span class="required">*</span> </label>
+          <input type="text" id="title" name="title" placeholder="Enter a title" [(ngModel)]="taskData.title"
+            #title="ngModel" required />
+          @if (title.invalid && title.touched) {
+          <small class="error-message">This field is required</small>
+          }
+        </div>
 
-      <!-- LEFT SIDE -->
-      <section class="form-container">
-        <h1>Add Task</h1>
- 
-        <form #taskForm="ngForm" (ngSubmit)="onSubmit()">
-          <!-- TITLE -->
-          <div class="input-fields">
-            <label for="title"> Title <span class="required">*</span> </label>
-            <input type="text" id="title" name="title" placeholder="Enter a title" [(ngModel)]="taskData.title"
-              #title="ngModel" required />
-            @if (title.invalid && title.touched) {
-            <small class="error-message">This field is required</small>
-            }
+        <!-- DESCRIPTION -->
+        <div class="input-fields">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" placeholder="Enter a description"
+            [(ngModel)]="taskData.description"></textarea>
+        </div>
+
+        <!-- DUE DATE -->
+        <div class="input-fields">
+          <label for="due-date"> Due date <span class="required">*</span> </label>
+          <input type="date" id="due-date" name="due_date" [min]="minDate" [(ngModel)]="taskData.dueDate"
+            #dueDate="ngModel" required />
+          @if (dueDate.invalid && dueDate.touched) {
+          <small class="error-message">This field is required</small>
+          }
+        </div>
+      </form>
+    </section>
+
+    <div class="line"></div>
+
+    <!-- RIGHT SIDE -->
+    <section class="task-details-container">
+      <div class="form-subtask">
+        <!-- PRIORITY -->
+        <div class="btns-container">
+          <p class="priority-title">Priority</p>
+
+          <div class="priority-btns">
+            <button type="button" class="priorty-level-btns btn-urgent" [class.active]="taskData.priority === 'Urgent'"
+              (click)="setPriority('Urgent')">
+              <div class="icons urgent"></div>
+              <span class="btn-txt">Urgent</span>
+            </button>
+
+            <button type="button" class="priorty-level-btns btn-medium" [class.active]="taskData.priority === 'Medium'"
+              (click)="setPriority('Medium')">
+              <div class="icons medium"></div>
+              <span class="btn-txt">Medium</span>
+            </button>
+
+            <button type="button" class="priorty-level-btns btn-low" [class.active]="taskData.priority === 'Low'"
+              (click)="setPriority('Low')">
+              <div class="icons low"></div>
+              <span class="btn-txt">Low</span>
+            </button>
           </div>
+        </div>
 
-          <!-- DESCRIPTION -->
-          <div class="input-fields">
-            <label for="description">Description</label>
-            <textarea id="description" name="description" placeholder="Enter a description"
-              [(ngModel)]="taskData.description"></textarea>
-          </div>
+        <!-- ASSIGNED TO -->
+        <div class="assign-container">
+          <label class="assigned-to-title">Assigned to</label>
 
-          <!-- DUE DATE -->
-          <div class="input-fields">
-            <label for="due-date"> Due date <span class="required">*</span> </label>
-            <input type="date" id="due-date" name="due_date" [min]="minDate" [(ngModel)]="taskData.dueDate"
-              #dueDate="ngModel" required />
-            @if (dueDate.invalid && dueDate.touched) {
-            <small class="error-message">This field is required</small>
-            }
-          </div>
-        </form>
-
-        <p [ngClass]="{ 'd-none': tasksService.editMode }">
-          <span class="required">*</span> This field is required
-        </p>
-      </section>
-
-      <div class="line"></div>
-
-      <!-- RIGHT SIDE -->
-      <section class="task-details-container">
-        <div class="form-subtask">
-          <!-- PRIORITY -->
-          <div class="btns-container">
-            <p class="priority-title">Priority</p>
-
-            <div class="priority-btns">
-              <button type="button" class="priorty-level-btns btn-urgent" [class.active]="taskData.priority === 'Urgent'"
-                (click)="setPriority('Urgent')">
-                <div class="icons urgent"></div>
-                <span class="btn-txt">Urgent</span>
-              </button>
-
-              <button type="button" class="priorty-level-btns btn-medium" [class.active]="taskData.priority === 'Medium'"
-                (click)="setPriority('Medium')">
-                <div class="icons medium"></div>
-                <span class="btn-txt">Medium</span>
-              </button>
-
-              <button type="button" class="priorty-level-btns btn-low" [class.active]="taskData.priority === 'Low'"
-                (click)="setPriority('Low')">
-                <div class="icons low"></div>
-                <span class="btn-txt">Low</span>
-              </button>
+          <div class="assign" tabindex="0" (click)="toggleDropdown()" (blur)="closeDropdown()">
+            <div class="assign-selected">
+              {{ selectedOption }}
+              <div class="categories-icon"></div>
             </div>
-          </div>
 
-          <!-- ASSIGNED TO -->
-          <div class="assign-container">
-            <label class="assigned-to-title">Assigned to</label>
-
-            <div class="assign" tabindex="0" (click)="toggleDropdown()" (blur)="closeDropdown()">
-              <div class="assign-selected">
-                {{ selectedOption }}
-                <div class="categories-icon"></div>
-              </div>
-
-              @if (isOpen) {
-              <div class="assign-options">
-                @if (loadingContacts) {
-                <div class="loading-indicator">Loading contacts...</div>
-                } @else {
-                @for (contact of contacts; track contact.id) {
-                <!-- KORRIGIERT: Checkbox mit fixer Position -->
-                <div class="assign-option" [class.selected]="isAssigned(contact)"
-                  (click)="toggleAssigned(contact); $event.stopPropagation()">
-                  <div class="contact-option">
-                    <div class="icon" [ngClass]="getContactColorClass(contact)">
-                      {{ getInitials(contact.name) }}
-                    </div>
-                    <span class="contact-name">{{ contact.name }}</span>
-                  </div>
-                  <div class="checkbox-wrapper">
-                    <div class="checkmark-box"></div>
-                    @if (isAssigned(contact)) {
-                    <span class="checkmark">✓</span>
-                    }
-                  </div>
-                </div>
-                }
-                }
-              </div>
-              }
-            </div>
-          </div>
-
-          <!-- CATEGORY -->
-          <div class="category-container">
-            <label class="category-title"> Category <span class="required">*</span> </label>
-
-            <div class="category-dropdown" tabindex="0" (click)="toggleCategoryDropdown()"
-              (blur)="closeCategoryDropdown()">
-              <div class="category-selected">
-                {{ selectedCategory }}
-                <div class="categories-icon"></div>
-              </div>
-
-              @if (isCategoryOpen) {
-              <div class="category-options">
-                @for (option of categoryOptions; track option) {
-                <div class="category-option" [class.selected]="selectedCategory === option"
-                  (click)="selectCategory(option); $event.stopPropagation()">
-                  {{ option }}
-                </div>
-                }
-              </div>
-              }
-            </div>
-            @if (categoryError) {
-            <small class="error-message">Category is required</small>
-            }
-          </div>
-
-          <!-- SUBTASK -->
-          <div class="input-fields">
-            <label for="subTask" class="subtask-title"> Subtask </label>
-
-            <div class="input-wrapper">
-              <input type="text" id="subTask" name="subTask" placeholder="Add new Subtask" [(ngModel)]="newSubtaskTitle"
-                (keyup.enter)="addSubtask()" />
-
-              <div class="input-icons">
-                <img src="/assets/icons/small_cancle_icon.svg" alt="Cancel" class="icon" (click)="clearSubtaskInput()" />
-                <div class="input-line"></div>
-                <img src="/assets/icons/small_approv_icon.svg" alt="Approve" class="icon" (click)="addSubtask()" />
-              </div>
-            </div>
-          </div>
-
-          <!-- SUBTASK LIST -->
-          @if (taskData.subtasks && taskData.subtasks.length > 0) {
-          <div class="subtask-list">
-            @for (subtask of taskData.subtasks; track subtask.id; let i = $index) {
-            <div class="subtask-item">
-              @if (editingSubtaskIndex === i) {
-              <!-- Edit Mode - Version 1: Mit onBlurSubtaskEdit() -->
-              <div class="subtask-edit-container">
-                <input type="text" [(ngModel)]="editingSubtaskTitle" 
-                      (keyup.enter)="saveSubtaskEdit()"
-                      (blur)="onBlurSubtaskEdit()" 
-                      #editInput 
-                      class="subtask-edit-input"
-                      [ngModelOptions]="{standalone: true}" />
-                <div class="subtask-icons">
-                  <div (click)="saveSubtaskEdit(); $event.stopPropagation()">
-                    <img src="/assets/icons/small_approv_icon.svg" alt="Save" class="icon" />
-                  </div>
-                  <div class="sub-line"></div>
-                  <div (click)="cancelSubtaskEdit(); $event.stopPropagation()">
-                    <img src="/assets/icons/small_cancle_icon.svg" alt="Close" class="icon" />
-                  </div>
-                </div>
-              </div>
+            @if (isOpen) {
+            <div class="assign-options">
+              @if (loadingContacts) {
+              <div class="loading-indicator">Loading contacts...</div>
               } @else {
-              <!-- View Mode -->
-              <li>{{ subtask.title }}</li>
+              @for (contact of contacts; track contact.id) {
+              <!-- KORRIGIERT: Checkbox mit fixer Position -->
+              <div class="assign-option" [class.selected]="isAssigned(contact)"
+                (click)="toggleAssigned(contact); $event.stopPropagation()">
+                <div class="contact-option">
+                  <div class="icon" [ngClass]="getContactColorClass(contact)">
+                    {{ getInitials(contact.name) }}
+                  </div>
+                  <span class="contact-name">{{ contact.name }}</span>
+                </div>
+                <div class="checkbox-wrapper">
+                  <div class="checkmark-box"></div>
+                  @if (isAssigned(contact)) {
+                  <span class="checkmark">✓</span>
+                  }
+                </div>
+              </div>
+              }
+              }
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- CATEGORY -->
+        <div class="category-container">
+          <label class="category-title"> Category <span class="required">*</span> </label>
+
+          <div class="category-dropdown" tabindex="0" (click)="toggleCategoryDropdown()"
+            (blur)="closeCategoryDropdown()">
+            <div class="category-selected">
+              {{ selectedCategory }}
+              <div class="categories-icon"></div>
+            </div>
+
+            @if (isCategoryOpen) {
+            <div class="category-options">
+              @for (option of categoryOptions; track option) {
+              <div class="category-option" [class.selected]="selectedCategory === option"
+                (click)="selectCategory(option); $event.stopPropagation()">
+                {{ option }}
+              </div>
+              }
+            </div>
+            }
+          </div>
+          @if (categoryError) {
+          <small class="error-message">Category is required</small>
+          }
+        </div>
+
+        <!-- SUBTASK -->
+        <div class="input-fields">
+          <label for="subTask" class="subtask-title"> Subtask </label>
+
+          <div class="input-wrapper">
+            <input type="text" id="subTask" name="subTask" placeholder="Add new Subtask" [(ngModel)]="newSubtaskTitle"
+              (keyup.enter)="addSubtask()" />
+
+            <div class="input-icons">
+              <img src="/assets/icons/small_cancle_icon.svg" alt="Cancel" class="icon" (click)="clearSubtaskInput()" />
+              <div class="input-line"></div>
+              <img src="/assets/icons/small_approv_icon.svg" alt="Approve" class="icon" (click)="addSubtask()" />
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTASK LIST -->
+        <!-- SUBTASK LIST -->
+        @if (taskData.subtasks && taskData.subtasks.length > 0) {
+        <div class="subtask-list">
+          @for (subtask of taskData.subtasks; track subtask.id; let i = $index) {
+          <div class="subtask-item">
+            @if (editingSubtaskIndex === i) {
+            <!-- Edit Mode -->
+            <div class="subtask-edit-container">
+              <input type="text" [(ngModel)]="editingSubtaskTitle" (keyup.enter)="saveSubtaskEdit()"
+                (blur)="onBlurSubtaskEdit()" #editInput class="subtask-edit-input"
+                [ngModelOptions]="{ standalone: true }" />
               <div class="subtask-icons">
-                <div (click)="startEditingSubtask(i, subtask.title)">
-                  <div class="edit-icon"></div>
+                <div (click)="saveSubtaskEdit(); $event.stopPropagation()">
+                  <img src="/assets/icons/small_approv_icon.svg" alt="Save" class="icon edit-modus-icons" />
                 </div>
                 <div class="sub-line"></div>
-                <div type="button" class="remove-subtask" (click)="removeSubtask(i)">
-                  <div class="delete-icon"></div>
+                <div (click)="cancelSubtaskEdit(); $event.stopPropagation()">
+                  <img src="/assets/icons/delete.svg" alt="Close" class="icon edit-modus-icons" />
                 </div>
               </div>
-              }
+            </div>
+            } @else {
+            <!-- View Mode - Klick auf gesamtes Element startet Edit -->
+            <div class="subtask-view" (click)="startEditingSubtask(i, subtask.title)">
+              <li>{{ subtask.title }}</li>
+            </div>
+            <div class="subtask-icons" (click)="$event.stopPropagation()">
+              <div (click)="startEditingSubtask(i, subtask.title)">
+                <div class="edit-icon"></div>
+              </div>
+              <div class="sub-line"></div>
+              <div type="button" class="remove-subtask" (click)="removeSubtask(i)">
+                <div class="delete-icon"></div>
+              </div>
             </div>
             }
           </div>
           }
         </div>
+        }
+      </div>
+    </section>
+  </div>
 
-        <!-- BUTTONS -->
-        <div class="create-clear-btns-container">
-          <button type="button" class="btn-outline" (click)="clearForm()">
-            <span class="btn-txt">Clear ✕</span>
-          </button>
+  <div class="foot-line">
+    <p [ngClass]="{ 'd-none': tasksService.editMode }">
+      <span class="required">*</span> This field is required
+    </p>
 
-          @if (tasksService.addTaskDialogIsOpen) {
-          <button type="submit" class="btn-primary" [disabled]="!isFormValid()"
-            (click)="onSubmit(); tasksService.closeAddTaskDialog()">
-            <span class="btn-txt">Add task ✓</span>
-          </button>
-          } @else {
-          <button type="submit" class="btn-primary" [disabled]="!isFormValid()" (click)="onSubmit()">
-            <span class="btn-txt">Add task ✓</span>
-          </button>
-          }
-        </div>
-      </section>
+    <!-- BUTTONS -->
 
+    <div class="create-clear-btns-container">
+      <button type="button" class="btn-outline" (click)="clearForm()">
+        <span class="btn-txt">Clear ✕</span>
+      </button>
+
+      @if (tasksService.addTaskDialogIsOpen) {
+      <button type="submit" class="btn-primary" [disabled]="!isFormValid()"
+        (click)="onSubmit(); tasksService.closeAddTaskDialog()">
+        <span class="btn-txt">Add task ✓</span>
+      </button>
+      } @else {
+      <button type="submit" class="btn-primary" [disabled]="!isFormValid()" (click)="onSubmit()">
+        <span class="btn-txt">Add task ✓</span>
+      </button>
+      }
+    </div>
   </div>
 
   @if (tasksService.editMode) {
-    <div class="dialog-footer">
-      <button class="btn-primary" (click)="tasksService.exidEditMode(getFullTask())">
-        <span class="btn-txt">Ok &#10003;</span>
-      </button>
-    </div>
+  <div class="dialog-footer">
+    <button class="btn-primary" (click)="tasksService.exidEditMode(getFullTask())">
+      <span class="btn-txt">Ok &#10003;</span>
+    </button>
+  </div>
   }
 </div>

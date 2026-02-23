@@ -20,6 +20,11 @@ app-nav.d-none {
   display: none;
 }
 
+label,
+p {
+  font-size: 20px;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -29,26 +34,65 @@ app-nav.d-none {
 }
 
 .contacts-wrapper {
-  width: 100%;
+  flex: 1 1 0;
   height: 100%;
+  width: 100%;
   position: relative;
   display: flex;
   background-color: #f6f7f8;
 }
 
+.contacts-wrapper,
+.head-line {
+  max-width: 1440px;
+}
+
+.head-line,
+.foot-line {
+  width: 100%;
+  padding: 32px 64px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 1440px;
+}
+
+.create-clear-btns-container {
+  display: flex;
+  justify-content: flex-end;
+  height: 56px;
+  gap: 16px;
+  margin: 1rem 0;
+}
+
+.btn-outline:hover {
+  border: 1px solid var(--color-light-blue);
+  transition: var(--transition-fast);
+}
+
+.btn-primary:hover {
+  transition: var(--transition-fast);
+}
+
 .form-container {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  width: 50%;
   gap: 32px;
-  padding: 32px 32px 64px 128px;
+  padding: 0 64px;
 }
 
-h1 {
-  font-weight: 700;
-  font-size: 61px;
-  line-height: 120%;
+.task-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 64px;
+  width: 50%;
+  height: 100%;
+}
+
+.form-subtask {
+  width: 100%;
 }
 
 form {
@@ -56,15 +100,8 @@ form {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 440px;
-  height: 376px;
+  width: 100%;
   gap: 32px;
-}
-
-p {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 120%;
 }
 
 .required {
@@ -77,16 +114,11 @@ p {
 /* ========== FORMULAR EINGABEFELDER ========== */
 .input-fields {
   display: flex;
+  width: 100%;
   flex-direction: column;
   justify-content: space-between;
   gap: 4px;
   position: relative;
-
-  input:focus,
-  textarea:focus {
-    border-color: var(--color-light-blue);
-    outline: none;
-  }
 }
 
 input,
@@ -94,12 +126,15 @@ textarea {
   border: 1px solid var(--color-light-grey);
   border-radius: 10px;
   padding: 10px;
-  width: 440px;
+  width: 100%;
 
   &::placeholder {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 120%;
+    font-size: 20px;
+  }
+
+  &:focus {
+    border-color: var(--color-light-blue);
+    outline: none;
   }
 }
 
@@ -127,32 +162,19 @@ textarea {
   align-self: center;
 }
 
-/* ========== TASK DETAILS ========== */
-.task-details-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 64px 64px 64px 32px;
-  max-height: 720px;
-}
-
-.form-subtask {
-  width: 100%;
-}
-
 /* ========== PRIORITY BUTTONS ========== */
 .btns-container {
   .priority-title {
-    margin-bottom: 8px;
-    margin-top: 64px;
+    margin-bottom: 4px;
   }
 }
 
 .priority-btns {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 2rem;
+  width: 100%;
+  justify-content: flex-start;
 }
 
 .priorty-level-btns {
@@ -161,7 +183,7 @@ textarea {
   justify-content: center;
   align-items: center;
   gap: 8px;
-  width: 136px;
+  width: 30%;
   height: 56px;
   padding: 10px;
   background-color: #fff;
@@ -214,8 +236,7 @@ textarea {
 
 .urgent {
   background-image: url('/assets/icons/urgent.svg');
-  filter: brightness(0) saturate(100%) invert(22%) sepia(97%) saturate(3744%) hue-rotate(0deg)
-    brightness(1.1);
+  filter: brightness(0) saturate(100%) invert(22%) sepia(97%) saturate(3744%) hue-rotate(0deg) brightness(1.1);
 }
 
 .medium {
@@ -229,6 +250,7 @@ textarea {
 }
 
 .active {
+
   .icons,
   .urgent,
   .medium,
@@ -241,7 +263,7 @@ textarea {
 .assign-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 
   .assigned-to-title {
     margin-top: 32px;
@@ -253,7 +275,7 @@ textarea {
   border: 1px solid var(--color-light-grey);
   border-radius: 10px;
   padding: 10px;
-  width: 440px;
+  width: 100%;
   height: 48px;
   display: flex;
   align-items: center;
@@ -399,7 +421,7 @@ textarea {
 .category-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   position: relative;
 
   .category-title {
@@ -412,7 +434,7 @@ textarea {
   border: 1px solid var(--color-light-grey);
   border-radius: 10px;
   padding: 10px;
-  width: 440px;
+  width: 100%;
   height: 48px;
   display: flex;
   align-items: center;
@@ -473,6 +495,7 @@ textarea {
     padding-right: 70px;
     height: 40px;
     box-sizing: border-box;
+    font-size: 20px;
   }
 
   .input-icons {
@@ -512,7 +535,7 @@ textarea {
     }
   }
 
-  input:focus + .input-icons .icon {
+  input:focus+.input-icons .icon {
     opacity: 1;
   }
 }
@@ -524,19 +547,41 @@ textarea {
   width: 100%;
   max-height: 68px;
   min-width: 68px;
-  padding: 10px;
+  padding: 4px 8px;
   border-radius: 10px;
   overflow-y: scroll;
-  border: 1px solid var(--color-light-grey);
 }
 
 .subtask-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 16px;
-  cursor: pointer;
+  padding: 0 8px;
+  cursor: default;
   border-radius: 10px;
+  font-size: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.subtask-item:hover {
+  background-color: rgba(209, 209, 209, 0.3);
+
+}
+
+.subtask-item:hover .subtask-icons {
+  opacity: 1;
+}
+
+/* Subtask View Mode */
+.subtask-view {
+  flex: 1;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.subtask-view li {
+  list-style-type: disc;
+  margin-left: 20px;
 }
 
 .subtask-icons {
@@ -544,6 +589,19 @@ textarea {
   justify-content: space-evenly;
   align-items: center;
   gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: default;
+  position: relative;
+  z-index: 2;
+}
+
+.subtask-icons:hover {
+  opacity: 1;
+}
+
+.subtask-icons div {
+  cursor: pointer;
 }
 
 .edit-icon {
@@ -554,6 +612,7 @@ textarea {
   background-size: cover;
   border: none;
   outline: none;
+  cursor: pointer;
 }
 
 .delete-icon {
@@ -564,6 +623,7 @@ textarea {
   background-size: cover;
   border: none;
   outline: none;
+  cursor: pointer;
 }
 
 .sub-line {
@@ -572,37 +632,79 @@ textarea {
   background-color: var(--color-light-grey);
 }
 
-/* Subtask Edit Mode */
 .subtask-edit-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 440px;
+  width: 100%;
   gap: 16px;
+  background-color: white;
+  border-bottom: 1px solid var(--color-light-grey);
+  padding: 4px 16px;
+
+  &:focus-within {
+    border-bottom-color: var(--color-light-blue);
+  }
 }
 
 .subtask-edit-input {
-  width: 100%;
-  border-radius: 4px;
+  flex: 1;
   font-size: 16px;
   outline: none;
+  border: none;
+  background-color: transparent;
+  padding: 4px 0;
+  min-width: 0;
 }
 
-/* ========== ACTION BUTTONS ========== */
-.create-clear-btns-container {
+.subtask-edit-container .subtask-icons {
+  opacity: 1 !important;
   display: flex;
-  align-self: flex-end;
-  height: 56px;
-  gap: 16px;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
 }
 
-.btn-outline:hover {
-  border: 1px solid var(--color-light-blue);
-  transition: var(--transition-fast);
+.subtask-edit-container:hover {
+  background-color: transparent !important;
 }
 
-.btn-primary:hover {
-  transition: var(--transition-fast);
+.edit-modus-icons {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    background-color: transparent;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.subtask-item:has(.subtask-edit-container) {
+  background-color: transparent !important;
+
+  &:hover {
+    background-color: transparent !important;
+  }
+}
+
+.subtask-list:has(.subtask-edit-container) .subtask-item:hover {
+  background-color: transparent !important;
+}
+
+.subtask-list:has(.subtask-edit-container) .subtask-item:not(:has(.subtask-edit-container)) {
+  .subtask-icons {
+    opacity: 0;
+  }
+
+  &:hover .subtask-icons {
+    opacity: 1;
+  }
 }
 
 /* ========== DIALOG FOOTER ========== */
@@ -622,6 +724,11 @@ textarea {
   border-radius: 50%;
   width: 32px;
   height: 32px;
+}
+
+.edit-modus-icons {
+  width: 22px;
+  height: 22px;
 }
 
 /* ========== DIALOG MODUS ========== */
@@ -875,6 +982,7 @@ textarea {
 }
 
 @media (max-width: 540px) {
+
   .form-container,
   .task-details-container {
     padding-right: 8px;
@@ -890,6 +998,7 @@ textarea {
 }
 
 @media (max-width: 472px) {
+
   input,
   textarea {
     max-width: 95%;
@@ -1094,6 +1203,7 @@ textarea {
 
 @media (max-width: 360px) {
   .edit-mode {
+
     .btn-txt,
     .assign-selected {
       font-size: 16px;
