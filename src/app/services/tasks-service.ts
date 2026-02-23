@@ -289,4 +289,41 @@ export class TasksService implements OnDestroy {
       this.taskSuccessDialogActive = false;
     }, 3000);
   }
+
+/**
+   * Gibt die Task mit dem nächsten Fälligkeitsdatum zurück.
+   * Berücksichtigt nur Tasks mit gültigem dueDate ab heute.
+   * @returns Die Task mit dem nächsten Deadline oder null
+   */
+  get upcomingTask(): SingleTask | null {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const futureTasks = this.tasks.filter((task) => {
+      if (!task.dueDate) return false;
+      return new Date(task.dueDate) >= today;
+    });
+
+    if (futureTasks.length === 0) return null;
+
+    return futureTasks.reduce((nearest, task) => {
+      return new Date(task.dueDate) < new Date(nearest.dueDate) ? task : nearest;
+    });
+  }
+
+  /**
+   * Gibt den SVG-Pfad für das Priority-Icon der nächsten Task zurück.
+   * Fallback: medium-summary.svg wenn keine Task vorhanden ist.
+   * @returns Pfad zum entsprechenden Priority-Icon
+   */
+  get upcomingTaskPriorityIcon(): string {
+    const priority = this.upcomingTask?.priority ?? 'Medium';
+    const icons: Record<string, string> = {
+      Urgent: 'assets/icons/urgent-summary.svg',
+      Medium: 'assets/icons/medium-summary.svg',
+      Low:    'assets/icons/low-summary.svg',
+    };
+    return icons[priority] ?? icons['Medium'];
+  }
+
 }
