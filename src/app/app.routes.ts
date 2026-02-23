@@ -6,9 +6,12 @@ import { Help } from './pages/help/help';
 import { AddTask } from './pages/add-task/add-task';
 import { Board } from './pages/board/board';
 import { Summary } from './pages/summary/summary';
+import { Login } from './pages/login/login';
+
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'summary', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: Login },
   { path: 'summary', component: Summary },
   { path: 'add-task', component: AddTask },
   { path: 'board', component: Board },
@@ -16,5 +19,5 @@ export const routes: Routes = [
   { path: 'imprint', component: Imprint },
   { path: 'privacy-policy', component: PrivacyPolicy },
   { path: 'help', component: Help },
-  { path: '**', redirectTo: 'contacts' }  // Wildcard: Alle ungültigen URLs → contacts / Zukünftig SUMMARY
+  { path: '**', redirectTo: 'login' }
 ];
