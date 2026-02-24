@@ -119,6 +119,27 @@ form {
   justify-content: space-between;
   gap: 4px;
   position: relative;
+
+  /* Fehlerzustand für Input-Felder */
+  input.ng-invalid.ng-touched,
+  input.input-error {
+    border: 1px solid #ff3d00 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: #fff5f5;
+
+    &:focus {
+      border-color: #ff3d00 !important;
+      outline: none !important;
+    }
+  }
+
+  /* Normale Inputs */
+  input.ng-valid.ng-touched,
+  input:focus {
+    border-color: var(--color-light-blue);
+    outline: none;
+  }
 }
 
 input,
@@ -127,6 +148,7 @@ textarea {
   border-radius: 10px;
   padding: 10px;
   width: 100%;
+  font-size: 20px;
 
   &::placeholder {
     font-size: 20px;
@@ -427,6 +449,18 @@ textarea {
   .category-title {
     margin-top: 32px;
   }
+
+  /* Fehlerzustand für Category Dropdown */
+  &.has-error {
+    .category-dropdown {
+      border: 1px solid #ff3d00 !important;
+      background-color: #fff5f5;
+
+      &:focus-within {
+        border-color: #ff3d00 !important;
+      }
+    }
+  }
 }
 
 .category-dropdown {
@@ -443,6 +477,16 @@ textarea {
 
   &:focus-within {
     border-color: var(--color-light-blue);
+  }
+
+  /* Fehlerzustand für einzelne Instanz */
+  &.input-error {
+    border: 1px solid #ff3d00 !important;
+    background-color: #fff5f5;
+
+    &:focus-within {
+      border-color: #ff3d00 !important;
+    }
   }
 }
 
