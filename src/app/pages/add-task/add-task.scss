@@ -49,14 +49,23 @@ p {
   display: flex;
   justify-content: space-between;
   max-width: 1440px;
+  flex-shrink: 0;
 }
 
+.ng-untouched.ng-pristine.ng-invalid {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* add-Task-Container bleibt flexibel */
 .add-Task-Container {
   display: flex;
   width: 100%;
   position: relative;
   background-color: #f6f7f8;
-  flex: 1;
+  flex: 1 1 auto;
   overflow-y: auto;
   min-height: 0;
 }
@@ -956,6 +965,15 @@ label.subtask-title {
 
   .add-Task-Container {
     background-color: transparent;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+
+    .form-container,
+    .task-details-container {
+      width: 100%;
+    }
   }
 
   .line,
@@ -986,14 +1004,30 @@ label.subtask-title {
   display: flex;
   flex-direction: column;
   min-height: 0;
-  .add-Task-Container {
-    // background-color: transparent;
-    flex-direction: column;
+  overflow: hidden; /* Scrollen nicht hier, sondern im Content-Bereich */
 
-    .form-container,
-    .task-details-container {
-      width: 100%;
-    }
+  .task-wrapper {
+    min-height: 0;
+  }
+
+  > .task-wrapper > form {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .add-Task-Container {
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto; /* vertikale Scrollbar bei zu großem Inhalt */
+  }
+
+  /* optional: bestehende Angular-Klassen-Regel beibehalten, aber robust ergänzen */
+  .ng-untouched.ng-pristine.ng-invalid {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
   }
 }
 
