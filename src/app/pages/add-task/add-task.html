@@ -131,7 +131,7 @@
               </div>
 
               @if (isOpen) {
-                <div class="assign-options">
+                <div class="assign-options" (click)="$event.stopPropagation()">
                   @if (loadingContacts) {
                     <div class="loading-indicator">Loading contacts...</div>
                   } @else {

@@ -294,7 +294,7 @@ export class AddTask implements OnInit, OnDestroy {
   onCategoryBlur() {
     this.categoryTouched = true;
     this.closeCategoryDropdown();
-    
+
     // Prüfe ob Category ausgewählt wurde
     if (this.selectedCategory === 'Select category') {
       this.categoryError = true;
@@ -306,7 +306,7 @@ export class AddTask implements OnInit, OnDestroy {
     const titleValid = !!(this.taskData.title && this.taskData.title.trim());
     const dueDateValid = !!this.taskData.dueDate;
     const categoryValid = this.selectedCategory !== 'Select category';
-    
+
     return titleValid && dueDateValid && categoryValid;
   }
 
@@ -314,15 +314,15 @@ export class AddTask implements OnInit, OnDestroy {
   validateAndMarkAllFields() {
     // Markiere Category als touched
     this.categoryTouched = true;
-    
+
     // Prüfe Category
     if (this.selectedCategory === 'Select category') {
       this.categoryError = true;
     }
-    
+
     // Markiere alle ngModel-Felder als touched
     if (this.taskForm) {
-      Object.keys(this.taskForm.controls).forEach(key => {
+      Object.keys(this.taskForm.controls).forEach((key) => {
         const control = this.taskForm.controls[key];
         control.markAsTouched();
       });
@@ -332,7 +332,7 @@ export class AddTask implements OnInit, OnDestroy {
   async onSubmit() {
     // Validiere und markiere alle Felder
     this.validateAndMarkAllFields();
-    
+
     if (this.selectedCategory === 'Select category') {
       this.categoryError = true;
     }
