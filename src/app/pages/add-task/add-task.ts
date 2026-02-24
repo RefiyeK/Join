@@ -63,6 +63,7 @@ export class AddTask implements OnInit, OnDestroy {
       this.selectedCategory = option;
       this.taskData.category = option;
       this.categoryError = false;
+      this.categoryTouched = true;
     }
     this.isCategoryOpen = false;
   }
@@ -88,6 +89,7 @@ export class AddTask implements OnInit, OnDestroy {
 
   // Validation flags
   categoryError: boolean = false;
+  categoryTouched: boolean = false;
 
   // Subtask handling
   newSubtaskTitle: string = '';
@@ -288,16 +290,49 @@ export class AddTask implements OnInit, OnDestroy {
     return this.contactsService.getIconColorClass(contact);
   }
 
+  // Neue Methode für Category-Blur
+  onCategoryBlur() {
+    this.categoryTouched = true;
+    this.closeCategoryDropdown();
+    
+    // Prüfe ob Category ausgewählt wurde
+    if (this.selectedCategory === 'Select category') {
+      this.categoryError = true;
+    }
+  }
+
   // Form Handling
   isFormValid(): boolean {
-    return (
-      this.selectedCategory !== 'Select category' &&
-      !!(this.taskData.title && this.taskData.title.trim()) &&
-      !!this.taskData.dueDate
-    );
+    const titleValid = !!(this.taskData.title && this.taskData.title.trim());
+    const dueDateValid = !!this.taskData.dueDate;
+    const categoryValid = this.selectedCategory !== 'Select category';
+    
+    return titleValid && dueDateValid && categoryValid;
+  }
+
+  // Methode um alle Felder zu validieren und zu markieren
+  validateAndMarkAllFields() {
+    // Markiere Category als touched
+    this.categoryTouched = true;
+    
+    // Prüfe Category
+    if (this.selectedCategory === 'Select category') {
+      this.categoryError = true;
+    }
+    
+    // Markiere alle ngModel-Felder als touched
+    if (this.taskForm) {
+      Object.keys(this.taskForm.controls).forEach(key => {
+        const control = this.taskForm.controls[key];
+        control.markAsTouched();
+      });
+    }
   }
 
   async onSubmit() {
+    // Validiere und markiere alle Felder
+    this.validateAndMarkAllFields();
+    
     if (this.selectedCategory === 'Select category') {
       this.categoryError = true;
     }
@@ -338,6 +373,7 @@ export class AddTask implements OnInit, OnDestroy {
 
     // Reset validation flags
     this.categoryError = false;
+    this.categoryTouched = false;
 
     // Reset form validation states
     if (this.taskForm) {

@@ -40,6 +40,7 @@
               [(ngModel)]="taskData.title"
               #title="ngModel"
               required
+              [class.input-error]="title.invalid && title.touched"
             />
             @if (title.invalid && title.touched) {
               <small class="error-message">This field is required</small>
@@ -68,6 +69,7 @@
               [(ngModel)]="taskData.dueDate"
               #dueDate="ngModel"
               required
+              [class.input-error]="dueDate.invalid && dueDate.touched"
             />
             @if (dueDate.invalid && dueDate.touched) {
               <small class="error-message">This field is required</small>
@@ -177,14 +179,19 @@
           </div>
 
           <!-- CATEGORY -->
-          <div class="category-container" [ngClass]="{ 'd-none': tasksService.editMode }">
+          <div
+            class="category-container"
+            [ngClass]="{ 'd-none': tasksService.editMode }"
+            [class.has-error]="categoryError && categoryTouched"
+          >
             <label class="category-title"> Category <span class="required">*</span> </label>
 
             <div
               class="category-dropdown"
               tabindex="0"
               (click)="toggleCategoryDropdown()"
-              (blur)="closeCategoryDropdown()"
+              (blur)="onCategoryBlur()"
+              [class.input-error]="categoryError && categoryTouched"
             >
               <div class="category-selected">
                 {{ selectedCategory }}
@@ -205,7 +212,7 @@
                 </div>
               }
             </div>
-            @if (categoryError) {
+            @if (categoryError && categoryTouched) {
               <small class="error-message">Category is required</small>
             }
           </div>
@@ -243,13 +250,12 @@
           </div>
 
           <!-- SUBTASK LIST -->
-          <!-- SUBTASK LIST -->
           @if (taskData.subtasks && taskData.subtasks.length > 0) {
             <div class="subtask-list">
               @for (subtask of taskData.subtasks; track subtask.id; let i = $index) {
                 <div class="subtask-item">
                   @if (editingSubtaskIndex === i) {
-                    <!-- Edit Mode -->
+                    <!-- Edit Mode - Version 1: Mit onBlurSubtaskEdit() -->
                     <div class="subtask-edit-container">
                       <input
                         type="text"
@@ -279,11 +285,9 @@
                       </div>
                     </div>
                   } @else {
-                    <!-- View Mode - Klick auf gesamtes Element startet Edit -->
-                    <div class="subtask-view" (click)="startEditingSubtask(i, subtask.title)">
-                      <li>{{ subtask.title }}</li>
-                    </div>
-                    <div class="subtask-icons" (click)="$event.stopPropagation()">
+                    <!-- View Mode -->
+                    <li>{{ subtask.title }}</li>
+                    <div class="subtask-icons">
                       <div (click)="startEditingSubtask(i, subtask.title)">
                         <div class="edit-icon"></div>
                       </div>
@@ -339,6 +343,11 @@
   </div>
 
   @if (tasksService.editMode) {
+    <div class="dialog-footer">
+      <button class="btn-primary" (click)="tasksService.exidEditMode(getFullTask())">
+        <span class="btn-txt">Ok &#10003;</span>
+      </button>
+    </div>
     <div class="dialog-footer">
       <button class="btn-primary" (click)="tasksService.exidEditMode(getFullTask())">
         <span class="btn-txt">Ok &#10003;</span>
