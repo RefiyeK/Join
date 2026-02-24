@@ -253,7 +253,7 @@
           @if (taskData.subtasks && taskData.subtasks.length > 0) {
             <div class="subtask-list">
               @for (subtask of taskData.subtasks; track subtask.id; let i = $index) {
-                <div class="subtask-item">
+                <div class="subtask-item" (click)="startEditingSubtask(i, subtask.title)">
                   @if (editingSubtaskIndex === i) {
                     <!-- Edit Mode - Version 1: Mit onBlurSubtaskEdit() -->
                     <div class="subtask-edit-container">
@@ -288,11 +288,17 @@
                     <!-- View Mode -->
                     <li>{{ subtask.title }}</li>
                     <div class="subtask-icons">
-                      <div (click)="startEditingSubtask(i, subtask.title)">
+                      <div
+                        (click)="$event.stopPropagation(); startEditingSubtask(i, subtask.title)"
+                      >
                         <div class="edit-icon"></div>
                       </div>
                       <div class="sub-line"></div>
-                      <div type="button" class="remove-subtask" (click)="removeSubtask(i)">
+                      <div
+                        type="button"
+                        class="remove-subtask"
+                        (click)="removeSubtask(i); $event.stopPropagation()"
+                      >
                         <div class="delete-icon"></div>
                       </div>
                     </div>
