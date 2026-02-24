@@ -286,7 +286,8 @@
                     </div>
                   } @else {
                     <!-- View Mode -->
-                    <li>{{ subtask.title }}</li>
+                    <span class="subtask-bullet">&#8226;</span>
+                    <span class="subtask-title">{{ subtask.title }}</span>
                     <div class="subtask-icons">
                       <div
                         (click)="$event.stopPropagation(); startEditingSubtask(i, subtask.title)"
@@ -308,11 +309,17 @@
             </div>
           }
         </div>
+
+        <div class="required-container required-container-mobile">
+          <p [ngClass]="{ 'd-none': tasksService.editMode }">
+            <span class="required">*</span> This field is required
+          </p>
+        </div>
       </section>
     </div>
 
     <div class="foot-line" [ngClass]="{ 'd-none': tasksService.editMode }">
-      <div class="required-container">
+      <div class="required-container required-container-web">
         <p [ngClass]="{ 'd-none': tasksService.editMode }">
           <span class="required">*</span> This field is required
         </p>
@@ -349,11 +356,6 @@
   </div>
 
   @if (tasksService.editMode) {
-    <div class="dialog-footer">
-      <button class="btn-primary" (click)="tasksService.exidEditMode(getFullTask())">
-        <span class="btn-txt">Ok &#10003;</span>
-      </button>
-    </div>
     <div class="dialog-footer">
       <button class="btn-primary" (click)="tasksService.exidEditMode(getFullTask())">
         <span class="btn-txt">Ok &#10003;</span>

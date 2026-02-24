@@ -29,6 +29,10 @@
   display: flex; /* ✅ YENİ */
   flex-direction: column; /* ✅ YENİ */
   overflow: hidden; /* ✅ YENİ — köşeleri koru */
+
+  @media (max-width: 360px) {
+    width: 100%;
+  }
 }
 
 .dialog-card-inner {
@@ -506,9 +510,9 @@
 }
 
 @media (max-width: 500px) {
-  .dialog-card {
-    padding: 10px 0;
-  }
+  // .dialog-card {
+  //   padding: 10px 0;
+  // }
 
   .dialog-card-inner {
     padding: 10px;
