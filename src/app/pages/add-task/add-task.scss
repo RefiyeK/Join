@@ -242,7 +242,7 @@ textarea {
 }
 
 .urgent {
-  background-image: url('./../../../../public/assets/icons/urgent.svg');
+  background-image: url('../../../../public/assets/icons/urgent.svg');
   filter: brightness(0) saturate(100%) invert(22%) sepia(97%) saturate(3744%) hue-rotate(0deg)
     brightness(1.1);
 }
@@ -1288,4 +1288,30 @@ textarea {
   display: flex;
   flex-direction: column;
   min-height: 0;
+}
+
+.assigned-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.assigned-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  font-size: 1rem;
+  color: #fff;
+  border: 2px solid #fff;
+  flex-shrink: 0;
+}
+
+.assigned-avatar-counter {
+  background-color: var(--color-light-grey);
+  color: var(--color-medium-blue);
 }

@@ -11,6 +11,7 @@ import {
 } from '@angular/fire/firestore';
 import { SingleContact } from '../interfaces/single-contact';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { AssignedAvatarItem } from '../interfaces/assigned-avatar';
 
 @Injectable({
   providedIn: 'root',
@@ -39,14 +40,8 @@ export class ContactsService implements OnDestroy {
    */
   openDialog$: Observable<boolean> = this.openDialogSubject.asObservable();
 
-  /**
-   * NEU: BehaviorSubject für Echtzeit-Kontakte (für AddTask Komponente)
-   */
   private contactsSubject = new BehaviorSubject<SingleContact[]>([]);
 
-  /**
-   * NEU: Observable für Echtzeit-Kontakte (für AddTask Komponente)
-   */
   contacts$ = this.contactsSubject.asObservable();
 
   constructor() {
@@ -271,5 +266,103 @@ export class ContactsService implements OnDestroy {
    */
   closeAddContactDialog(): void {
     this.openDialogSubject.next(false);
+  }
+
+  /**
+   * Entfernt IDs, die nicht in der aktuellen Kontaktliste existieren.
+   */
+  sanitizeAssignedIds(assignedIds: string[] = []): string[] {
+    const validIds: string[] = [];
+
+    for (const id of assignedIds) {
+      const exists = this.contacts.some((contact) => contact.id === id);
+      if (exists && !validIds.includes(id)) {
+        validIds.push(id);
+      }
+    }
+    return validIds;
+  }
+
+  /**
+   * Liefert nur aufgelöste Assigned-User mit existierenden Kontakt-IDs.
+   */
+  buildAssignedUsers(assignedIds: string[] = []): AssignedAvatarItem[] {
+    const validIds = this.sanitizeAssignedIds(assignedIds);
+    const assignedUsers: AssignedAvatarItem[] = [];
+
+    for (const contactId of validIds) {
+      const user = this.resolveAssignedAvatarItem(contactId);
+      // Sicherheitscheck, sollte durch sanitizeAssignedIds eigentlich immer true sein
+      if (user.name !== 'Unknown User') {
+        assignedUsers.push(user);
+      }
+    }
+
+    return assignedUsers;
+  }
+
+  /**
+   * Baut eine kompakte Vorschau:
+   * - visible: maximal `maxVisible` Einträge
+   * - remaining: Anzahl restlicher Kontakte für "+N"
+   * @param assignedIds Array der zugewiesenen Kontakt-IDs
+   * @param maxVisible Maximale Anzahl sichtbarer Avatare
+   * @returns Objekt mit visible und remaining
+   */
+  buildAssignedAvatarPreview(
+    assignedIds: string[] = [],
+    maxVisible: number = 3,
+  ): { visible: AssignedAvatarItem[]; remaining: number } {
+    const resolvedUsers = this.buildAssignedUsers(assignedIds);
+
+    // 2) maxVisible absichern (keine negativen Werte)
+    let safeMaxVisible = maxVisible;
+    if (safeMaxVisible < 0) {
+      safeMaxVisible = 0;
+    }
+
+    // 3) Sichtbare User-Liste manuell aufbauen (maximal safeMaxVisible)
+    const visibleUsers: AssignedAvatarItem[] = [];
+    for (let i = 0; i < resolvedUsers.length; i++) {
+      if (i >= safeMaxVisible) {
+        break;
+      }
+      visibleUsers.push(resolvedUsers[i]);
+    }
+
+    // 4) Restanzahl berechnen
+    let remainingUsersCount = resolvedUsers.length - visibleUsers.length;
+    if (remainingUsersCount < 0) {
+      remainingUsersCount = 0;
+    }
+
+    return {
+      visible: visibleUsers,
+      remaining: remainingUsersCount,
+    };
+  }
+
+  /**
+   * Interner Resolver:
+   * ID -> echter Kontakt (Name/Farbe/Initialen) oder stabiler Fallback.
+   */
+  private resolveAssignedAvatarItem(contactId: string): AssignedAvatarItem {
+    const foundContact = this.contacts.find((contact) => contact.id === contactId);
+
+    if (!foundContact) {
+      return {
+        id: contactId,
+        name: 'Unknown User',
+        initials: '??',
+        color: 'icon-1',
+      };
+    }
+
+    return {
+      id: foundContact.id || contactId,
+      name: foundContact.name,
+      initials: this.getInitials(foundContact.name),
+      color: this.getIconColorClass(foundContact),
+    };
   }
 }

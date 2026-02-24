@@ -7,6 +7,7 @@ import { TasksService } from '../../services/tasks-service';
 import { ContactsService } from '../../services/contacts-service';
 import { SingleTask } from '../../interfaces/single-task';
 import { SingleContact } from '../../interfaces/single-contact';
+import { AssignedAvatarItem } from '../../interfaces/assigned-avatar';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -91,10 +92,12 @@ export class AddTask implements OnInit, OnDestroy {
   // Subtask handling
   newSubtaskTitle: string = '';
 
-  // Subtask Edit handling - NEU HINZUGEFÜGT
   editingSubtaskIndex: number | null = null;
   editingSubtaskTitle: string = '';
   originalSubtaskTitle: string = '';
+
+  assignedPreviewUsers: AssignedAvatarItem[] = [];
+  assignedRemainingCount: number = 0;
 
   async ngOnInit() {
     this.subEditMode = this.tasksService.taskEditMode$.subscribe((editMode) => {
@@ -129,10 +132,11 @@ export class AddTask implements OnInit, OnDestroy {
           this.contacts = contacts;
           this.loadingContacts = false;
 
-          // Aktualisiere den selectedOption Text falls nötig
           if (this.taskData.assigned && this.taskData.assigned.length > 0) {
             this.updateSelectedOptionText();
           }
+
+          this.updateAssignedAvatarsPreview();
         },
       );
     } catch (error) {
@@ -140,13 +144,11 @@ export class AddTask implements OnInit, OnDestroy {
     }
   }
 
-  // Assigned Contacts Handling
   toggleAssigned(contact: SingleContact) {
     if (!this.taskData.assigned) {
       this.taskData.assigned = [];
     }
 
-    // Wir speichern die Contact-IDs im assigned Array
     const index = this.taskData.assigned.indexOf(contact.id!);
     if (index === -1) {
       this.taskData.assigned.push(contact.id!);
@@ -154,26 +156,35 @@ export class AddTask implements OnInit, OnDestroy {
       this.taskData.assigned.splice(index, 1);
     }
 
-    // Update the displayed text
     this.updateSelectedOptionText();
+    this.updateAssignedAvatarsPreview();
   }
 
-  // Check if contact is assigned (anhand der ID)
   isAssigned(contact: SingleContact): boolean {
     return this.taskData.assigned?.includes(contact.id!) || false;
   }
 
-  // Update the dropdown button text based on selections
   private updateSelectedOptionText() {
-    if (!this.taskData.assigned || this.taskData.assigned.length === 0) {
+    const validAssignedIds = this.contactsService.sanitizeAssignedIds(this.taskData.assigned ?? []);
+    this.taskData.assigned = validAssignedIds;
+
+    if (validAssignedIds.length === 0) {
       this.selectedOption = 'Select contacts to assign';
-    } else if (this.taskData.assigned.length === 1) {
-      // Hole den Namen des einzigen Kontakts
-      const contact = this.contacts.find((c) => c.id === this.taskData.assigned![0]);
+    } else if (validAssignedIds.length === 1) {
+      const contact = this.contacts.find((c) => c.id === validAssignedIds[0]);
       this.selectedOption = contact ? contact.name : '1 contact selected';
     } else {
-      this.selectedOption = `${this.taskData.assigned.length} contacts selected`;
+      this.selectedOption = `${validAssignedIds.length} contacts selected`;
     }
+  }
+
+  private updateAssignedAvatarsPreview(): void {
+    const validAssignedIds = this.contactsService.sanitizeAssignedIds(this.taskData.assigned ?? []);
+    this.taskData.assigned = validAssignedIds;
+
+    const preview = this.contactsService.buildAssignedAvatarPreview(validAssignedIds, 3);
+    this.assignedPreviewUsers = preview.visible;
+    this.assignedRemainingCount = preview.remaining;
   }
 
   // Priority Handling
@@ -339,6 +350,7 @@ export class AddTask implements OnInit, OnDestroy {
 
     // Reset edit mode - NEU HINZUGEFÜGT
     this.cancelSubtaskEdit();
+    this.updateAssignedAvatarsPreview();
   }
 
   setCurrentTaskData(currenTask: SingleTask) {
@@ -355,6 +367,8 @@ export class AddTask implements OnInit, OnDestroy {
       order: currenTask.order,
     };
     this.selectedCategory = currenTask.category;
+    this.updateSelectedOptionText();
+    this.updateAssignedAvatarsPreview();
   }
 
   getFullTask(): SingleTask {

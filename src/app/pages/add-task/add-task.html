@@ -158,6 +158,22 @@
                 </div>
               }
             </div>
+
+            @if (assignedPreviewUsers.length > 0 || assignedRemainingCount > 0) {
+              <div class="assigned-preview">
+                @for (user of assignedPreviewUsers; track user.id) {
+                  <div class="assigned-avatar" [ngClass]="user.color">
+                    {{ user.initials }}
+                  </div>
+                }
+
+                @if (assignedRemainingCount > 0) {
+                  <div class="assigned-avatar assigned-avatar-counter">
+                    +{{ assignedRemainingCount }}
+                  </div>
+                }
+              </div>
+            }
           </div>
 
           <!-- CATEGORY -->

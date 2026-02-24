@@ -8,7 +8,6 @@
       (click)="onDialogContentClick($event)"
     >
       @if (!tasksService.editMode) {
-
         <!-- ✅ Header: dialog-card-inner DIŞINDA, sabit -->
         <div class="dialog-header">
           <span class="task-badge" [ngClass]="badgeClass">
@@ -44,7 +43,7 @@
             </div>
           </div>
 
-          @if (assignedUsers.length > 0) {
+          @if (assignedUsers && assignedUsers.length > 0) {
             <div class="info-section-assigned">
               <span class="info-label">Assigned To:</span>
               <div class="assigned-list">
@@ -98,7 +97,6 @@
             Edit
           </button>
         </div>
-
       } @else {
         <div class="dialog-header dialog-header-edit-mode">
           <button

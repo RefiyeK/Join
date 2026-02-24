@@ -1,6 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { TasksService } from '../../../services/tasks-service';
+import { ContactsService } from '../../../services/contacts-service';
+import { AssignedAvatarItem } from '../../../interfaces/assigned-avatar';
+import { Subscription } from 'rxjs';
 import { AddTask } from '../../add-task/add-task';
 
 /**
@@ -15,17 +18,45 @@ import { AddTask } from '../../add-task/add-task';
   templateUrl: './single-task-dialog.html',
   styleUrl: './single-task-dialog.scss',
 })
-export class SingleTaskDialog {
+export class SingleTaskDialog implements OnInit, OnDestroy {
   tasksService = inject(TasksService);
+  contactsService = inject(ContactsService);
 
   /** Steuert die Slide-Out-Animation beim Schließen. */
   isClosing = false;
+
+  assignedUsers: AssignedAvatarItem[] = [];
+  private contactsSubscription?: Subscription;
+
+  ngOnInit(): void {
+    this.updateAssignedUsersFromService();
+
+    // sorgt dafür, dass Contacts sicher vorhanden sind
+    this.contactsService.loadContacts();
+
+    this.contactsSubscription = this.contactsService.contacts$.subscribe(() => {
+      this.updateAssignedUsersFromService();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.contactsSubscription) {
+      this.contactsSubscription.unsubscribe();
+    }
+  }
+
+  private updateAssignedUsersFromService(): void {
+    const assignedIds = this.tasksService.activeTask?.assigned ?? [];
+    const validAssignedIds = this.contactsService.sanitizeAssignedIds(assignedIds);
+    this.assignedUsers = this.contactsService.buildAssignedUsers(validAssignedIds);
+  }
 
   /**
    * Gibt die aktive Task aus dem Service zurück.
    * Wird reaktiv aktualisiert durch onSnapshot.
    */
   get task() {
+    this.updateAssignedUsersFromService();
     return this.tasksService.activeTask;
   }
 
@@ -59,27 +90,6 @@ export class SingleTaskDialog {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
-  }
-
-  /**
-   * Gibt die User-Liste zurück (assigned field).
-   */
-  get assignedUsers(): any[] {
-    const users = this.task?.assigned || [];
-
-    if (users.length === 0) return [];
-
-    // Falls string array (nur IDs), konvertiere zu User-Objekten
-    if (typeof users[0] === 'string') {
-      return users.map((userId: string, index: number) => ({
-        id: userId,
-        name: `User ${index + 1}`,
-        initials: `U${index + 1}`,
-        color: `icon-${(index % 15) + 1}`,
-      }));
-    }
-
-    return users;
   }
 
   /**
