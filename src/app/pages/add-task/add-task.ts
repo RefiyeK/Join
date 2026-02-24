@@ -10,6 +10,10 @@ import { SingleContact } from '../../interfaces/single-contact';
 import { AssignedAvatarItem } from '../../interfaces/assigned-avatar';
 import { Subscription } from 'rxjs';
 
+interface FieldErrorState {
+  [key: string]: boolean;
+}
+
 @Component({
   selector: 'app-add-task',
   standalone: true,
@@ -62,8 +66,7 @@ export class AddTask implements OnInit, OnDestroy {
     if (option === 'Technical Task' || option === 'User Story') {
       this.selectedCategory = option;
       this.taskData.category = option;
-      this.categoryError = false;
-      this.categoryTouched = true;
+      this.updateFieldError('category'); // Clear error when category is selected
     }
     this.isCategoryOpen = false;
   }
@@ -73,6 +76,17 @@ export class AddTask implements OnInit, OnDestroy {
   }
 
   // ------------------- NEUER CODE (VON MIR HINZUGEFÜGT) -------------------
+
+  // Form State
+  formSubmitted: boolean = false;
+  fieldErrors: FieldErrorState = {
+    title: false,
+    dueDate: false,
+    category: false
+  };
+
+  // Required fields for validation
+  private readonly requiredFields = ['title', 'dueDate', 'category'] as const;
 
   // Task Data Object
   taskData: Partial<SingleTask> = {
@@ -86,10 +100,6 @@ export class AddTask implements OnInit, OnDestroy {
     subtasks: [],
     order: 0,
   };
-
-  // Validation flags
-  categoryError: boolean = false;
-  categoryTouched: boolean = false;
 
   // Subtask handling
   newSubtaskTitle: string = '';
@@ -290,37 +300,61 @@ export class AddTask implements OnInit, OnDestroy {
     return this.contactsService.getIconColorClass(contact);
   }
 
-  // Neue Methode für Category-Blur
-  onCategoryBlur() {
-    this.categoryTouched = true;
-    this.closeCategoryDropdown();
+  // ============= VALIDATION METHODS =============
 
-    // Prüfe ob Category ausgewählt wurde
-    if (this.selectedCategory === 'Select category') {
-      this.categoryError = true;
+  /**
+   * Checks if a specific field is valid
+   */
+  isFieldValid(fieldName: string): boolean {
+    if (fieldName === 'category') {
+      return this.selectedCategory !== 'Select category';
+    }
+    
+    const value = this.taskData[fieldName as keyof typeof this.taskData];
+    return !!value && (typeof value !== 'string' || value.trim() !== '');
+  }
+
+  /**
+   * Updates error state for a specific field
+   */
+  private updateFieldError(fieldName: string): void {
+    this.fieldErrors[fieldName] = !this.isFieldValid(fieldName);
+  }
+
+  /**
+   * Called when user types in a field - clears error for that field
+   */
+  onFieldInput(fieldName: string): void {
+    if (this.fieldErrors[fieldName]) {
+      this.updateFieldError(fieldName);
     }
   }
 
-  // Form Handling
-  isFormValid(): boolean {
-    const titleValid = !!(this.taskData.title && this.taskData.title.trim());
-    const dueDateValid = !!this.taskData.dueDate;
-    const categoryValid = this.selectedCategory !== 'Select category';
-
-    return titleValid && dueDateValid && categoryValid;
-  }
-
-  // Methode um alle Felder zu validieren und zu markieren
-  validateAndMarkAllFields() {
-    // Markiere Category als touched
-    this.categoryTouched = true;
-
-    // Prüfe Category
-    if (this.selectedCategory === 'Select category') {
-      this.categoryError = true;
+  /**
+   * Validates all required fields and updates error states
+   */
+  validateAllFields(): boolean {
+    let isValid = true;
+    
+    // Check each required field
+    for (const field of this.requiredFields) {
+      const fieldValid = this.isFieldValid(field);
+      this.fieldErrors[field] = !fieldValid;
+      if (!fieldValid) {
+        isValid = false;
+      }
     }
 
-    // Markiere alle ngModel-Felder als touched
+    return isValid;
+  }
+
+  /**
+   * Marks form as submitted and validates all fields
+   */
+  private markFormAsSubmitted(): void {
+    this.formSubmitted = true;
+    
+    // Mark all ngModel fields as touched
     if (this.taskForm) {
       Object.keys(this.taskForm.controls).forEach((key) => {
         const control = this.taskForm.controls[key];
@@ -329,14 +363,23 @@ export class AddTask implements OnInit, OnDestroy {
     }
   }
 
-  async onSubmit() {
-    // Validiere und markiere alle Felder
-    this.validateAndMarkAllFields();
+  // Neue Methode für Category-Blur
+  onCategoryBlur() {
+    this.closeCategoryDropdown();
+    // Update error state based on current value
+    this.updateFieldError('category');
+  }
 
-    if (this.selectedCategory === 'Select category') {
-      this.categoryError = true;
-    }
-    if (!this.isFormValid()) {
+  // Form Handling
+  isFormValid(): boolean {
+    return this.requiredFields.every(field => this.isFieldValid(field));
+  }
+
+  async onSubmit() {
+    // Mark form as submitted and validate all fields
+    this.markFormAsSubmitted();
+    
+    if (!this.validateAllFields()) {
       return;
     }
 
@@ -372,8 +415,12 @@ export class AddTask implements OnInit, OnDestroy {
     this.newSubtaskTitle = '';
 
     // Reset validation flags
-    this.categoryError = false;
-    this.categoryTouched = false;
+    this.formSubmitted = false;
+    this.fieldErrors = {
+      title: false,
+      dueDate: false,
+      category: false
+    };
 
     // Reset form validation states
     if (this.taskForm) {
@@ -405,6 +452,14 @@ export class AddTask implements OnInit, OnDestroy {
     this.selectedCategory = currenTask.category;
     this.updateSelectedOptionText();
     this.updateAssignedAvatarsPreview();
+    
+    // Reset validation state when loading existing task
+    this.formSubmitted = false;
+    this.fieldErrors = {
+      title: false,
+      dueDate: false,
+      category: false
+    };
   }
 
   getFullTask(): SingleTask {
