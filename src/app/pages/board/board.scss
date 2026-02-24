@@ -164,7 +164,7 @@ app-nav {
   max-width: none;
   height: 24px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   padding-bottom: 15px;
 
@@ -231,7 +231,6 @@ app-nav {
   text-align: center;
   height: 48px;
   width: 100%;
-  // max-width: 252px;
   background-color: #d1d1d14a;
   box-sizing: border-box;
 }
@@ -298,9 +297,17 @@ app-nav {
     }
   }
 
-  @media (min-width: 1025px) and (max-width: 1175px) {
+
+  @media (min-width: 1025px) and (max-width: 1185px) {
   .empty-state {
     max-width: 180px;
+  }
+
+  .column-content {
+    app-single-task-card {
+      max-width: 175px;
+      width: 175px;
+    }
   }
 }
 
