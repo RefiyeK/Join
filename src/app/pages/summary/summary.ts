@@ -47,8 +47,34 @@ export class Summary implements OnInit, OnDestroy {
       });
   }
 
+
+      get todoCount(): number {
+    return this.tasksService.tasks.filter(t => t.status === 'To do').length;
+  }
+
+  get doneCount(): number {
+    return this.tasksService.tasks.filter(t => t.status === 'Done').length;
+  }
+
+  get inProgressCount(): number {
+    return this.tasksService.tasks.filter(t => t.status === 'In progress').length;
+  }
+
+  get awaitFeedbackCount(): number {
+    return this.tasksService.tasks.filter(t => t.status === 'Await feedback').length;
+  }
+
+  get totalCount(): number {
+    return this.tasksService.tasks.length;
+  }
+
+  get urgentCount(): number {
+    return this.tasksService.tasks.filter(t => t.priority === 'Urgent').length;
+  }
+  
   ngOnDestroy(): void {
     this.bpSub?.unsubscribe();
     clearTimeout(this.greetingTimeout);
   }
 }
+

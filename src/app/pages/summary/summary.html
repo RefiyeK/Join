@@ -33,7 +33,7 @@
                         <img [src]="todoHover ? 'assets/icons/edit-summary-hover.svg' : 'assets/icons/edit-summary.svg'" alt="To-do">
                       </div>
                       <div class="card__info">
-                        <span class="card__count">1</span>
+                        <span class="card__count">{{ todoCount }}</span>
                         <span class="card__label">To-do</span>
                       </div>
                     </div>
@@ -43,7 +43,7 @@
                         <img [src]="doneHover ? 'assets/icons/done-summary-hover.svg' : 'assets/icons/done-summary.svg'" alt="Done">
                       </div>
                       <div class="card__info">
-                        <span class="card__count">1</span>
+                        <span class="card__count">{{ doneCount }}</span>
                         <span class="card__label">Done</span>
                       </div>
                     </div>
@@ -56,7 +56,7 @@
                           <img [src]="tasksService.upcomingTaskPriorityIcon" [alt]="tasksService.upcomingTask?.priority ?? 'No upcoming task'">
                         </div>
                         <div class="card__info">
-                          <span class="card__count">0</span>
+                          <span class="card__count">{{ urgentCount }}</span>
                           <span class="card__label">{{ tasksService.upcomingTask?.priority ?? 'Medium' }}</span>
                         </div>
                       </div>
@@ -70,15 +70,15 @@
 
                   <div class="cards-row-bottom">
                     <div class="card card--simple">
-                      <span class="card__count">0</span>
+                      <span class="card__count">{{ totalCount }}</span>
                       <span class="card__label">Tasks in<br>Board</span>
                     </div>
                     <div class="card card--simple">
-                      <span class="card__count">0</span>
+                      <span class="card__count">{{ inProgressCount }}</span>
                       <span class="card__label">Tasks In<br>Progress</span>
                     </div>
                     <div class="card card--simple">
-                      <span class="card__count">0</span>
+                      <span class="card__count">{{ awaitFeedbackCount }}</span>
                       <span class="card__label">Awaiting<br>Feedback</span>
                     </div>
                   </div>
