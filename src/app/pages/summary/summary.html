@@ -1,104 +1,100 @@
 <main>
-    <div class="summary__outer">
-        <div class="summary-main-container">
-            <app-nav></app-nav>
-            <div class="wrapper">
-                <app-header></app-header>
-                <div class="summary-content">
-                    <div class="summary-inner">
+  <div class="summary__outer">
+    <div class="summary-main-container">
+      <app-nav></app-nav>
+      <div class="wrapper">
+        <app-header></app-header>
+        <div class="summary-content">
 
-        <!-- Überschrift -->
-        <div class="summary-headline">
-          <h1>Join 360</h1>
-          <span class="headline-divider"></span>
-          <p class="headline-subtitle">Key Metrics at a Glance</p>
-        </div>
-
-        <!-- Unterer Bereich: Karten + Begrüßung -->
-        <div class="summary-bottom">
-
-          <!-- Karten -->
-          <div class="summary-cards">
-
-            <!-- Reihe 1: To-do + Done -->
-            <div class="cards-row-top">
-
-              <!-- To-do Karte -->
-              <div class="card" (mouseenter)="todoHover = true" (mouseleave)="todoHover = false">
-                <div class="card__icon">
-                  <img [src]="todoHover ? 'assets/icons/edit-summary-hover.svg' : 'assets/icons/edit-summary.svg'" alt="To-do">
-                </div>
-                <div class="card__info">
-                  <span class="card__count">1</span>
-                  <span class="card__label">To-do</span>
-                </div>
-              </div>
-
-              <!-- Done Karte -->
-              <div class="card" (mouseenter)="doneHover = true" (mouseleave)="doneHover = false">
-                <div class="card__icon">
-                  <img [src]="doneHover ? 'assets/icons/done-summary-hover.svg' : 'assets/icons/done-summary.svg'" alt="Done">
-                </div>
-                <div class="card__info">
-                  <span class="card__count">1</span>
-                  <span class="card__label">Done</span>
-                </div>
-              </div>
+          <!-- Mobile Greeting Screen -->
+          @if (isMobile && showGreeting) {
+            <div class="mobile-greeting">
+              <p class="greeting-text">Good morning,</p>
+              <p class="greeting-name">Sofia Müller</p>
             </div>
+          }
 
-            <!-- Reihe 2: Prioritätskarte -->
-            <div class="cards-row-priority">
-              <div class="card card--priority">
-                <div class="priority-left">
-                  <div class="card__icon card__icon--priority">
-                    <img
-                      [src]="tasksService.upcomingTaskPriorityIcon"
-                      [alt]="tasksService.upcomingTask?.priority ?? 'No upcoming task'">
+          <!-- Summary Inhalt -->
+          @if (!isMobile || !showGreeting) {
+            <div class="summary-inner">
+
+              <div class="summary-headline">
+                <h1>Join 360</h1>
+                <span class="headline-divider"></span>
+                <p class="headline-subtitle">Key Metrics at a Glance</p>
+              </div>
+
+              <div class="summary-bottom">
+                <div class="summary-cards">
+
+                  <div class="cards-row-top">
+                    <div class="card" (mouseenter)="todoHover = true" (mouseleave)="todoHover = false">
+                      <div class="card__icon">
+                        <img [src]="todoHover ? 'assets/icons/edit-summary-hover.svg' : 'assets/icons/edit-summary.svg'" alt="To-do">
+                      </div>
+                      <div class="card__info">
+                        <span class="card__count">1</span>
+                        <span class="card__label">To-do</span>
+                      </div>
+                    </div>
+
+                    <div class="card" (mouseenter)="doneHover = true" (mouseleave)="doneHover = false">
+                      <div class="card__icon">
+                        <img [src]="doneHover ? 'assets/icons/done-summary-hover.svg' : 'assets/icons/done-summary.svg'" alt="Done">
+                      </div>
+                      <div class="card__info">
+                        <span class="card__count">1</span>
+                        <span class="card__label">Done</span>
+                      </div>
+                    </div>
                   </div>
-                  <div class="card__info">
-                    <span class="card__count">0</span>
-                    <span class="card__label">{{ tasksService.upcomingTask?.priority ?? 'Medium' }}</span>
+
+                  <div class="cards-row-priority">
+                    <div class="card card--priority">
+                      <div class="priority-left">
+                        <div class="card__icon card__icon--priority">
+                          <img [src]="tasksService.upcomingTaskPriorityIcon" [alt]="tasksService.upcomingTask?.priority ?? 'No upcoming task'">
+                        </div>
+                        <div class="card__info">
+                          <span class="card__count">0</span>
+                          <span class="card__label">{{ tasksService.upcomingTask?.priority ?? 'Medium' }}</span>
+                        </div>
+                      </div>
+                      <div class="priority-divider"></div>
+                      <div class="priority-right">
+                        <span class="priority-date">October 16, 2022</span>
+                        <span class="priority-deadline">Upcoming Deadline</span>
+                      </div>
+                    </div>
                   </div>
+
+                  <div class="cards-row-bottom">
+                    <div class="card card--simple">
+                      <span class="card__count">0</span>
+                      <span class="card__label">Tasks in<br>Board</span>
+                    </div>
+                    <div class="card card--simple">
+                      <span class="card__count">0</span>
+                      <span class="card__label">Tasks In<br>Progress</span>
+                    </div>
+                    <div class="card card--simple">
+                      <span class="card__count">0</span>
+                      <span class="card__label">Awaiting<br>Feedback</span>
+                    </div>
+                  </div>
+
                 </div>
-                <div class="priority-divider"></div>
-                <div class="priority-right">
-                  <span class="priority-date">October 16, 2022</span>
-                  <span class="priority-deadline">Upcoming Deadline</span>
+
+                <div class="summary-greeting">
+                  <p class="greeting-text">Good morning,</p>
                 </div>
               </div>
+
             </div>
-
-            <!-- Reihe 3: Tasks im Board + In Bearbeitung + Warte auf Feedback -->
-            <div class="cards-row-bottom">
-              <div class="card card--simple">
-                <span class="card__count">0</span>
-                <span class="card__label">Tasks in<br>Board</span>
-              </div>
-
-              <div class="card card--simple">
-                <span class="card__count">0</span>
-                <span class="card__label">Tasks In<br>Progress</span>
-              </div>
-
-              <div class="card card--simple">
-                <span class="card__count">0</span>
-                <span class="card__label">Awaiting<br>Feedback</span>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Begrüßungsbereich -->
-          <div class="summary-greeting">
-            <p class="greeting-text">Good morning,</p>
-            <!-- Wird nach dem Login mit dem Benutzernamen befüllt -->
-            <!-- <p class="greeting-name">Sofia Müller</p> -->
-          </div>
+          }
 
         </div>
       </div>
     </div>
   </div>
-</div>
-</div>
 </main>

@@ -1,7 +1,6 @@
 // ============================================================
 // Summary Seiten-Layout
 // ============================================================
-
 main {
   display: flex;
   width: 100%;
@@ -124,7 +123,8 @@ app-nav {
 .card {
   background-color: #ffffff;
   border-radius: 30px;
-  width: 264px;
+  // width: 264px;
+  width: clamp(200px, 25vw, 264px);
   height: 168px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
   display: flex;
@@ -181,7 +181,8 @@ app-nav {
 // ============================================================
 
 .card--priority {
-  width: 560px;
+  // width: 560px;
+  width: clamp(300px, 55vw, 560px);
   height: 168px;
   justify-content: flex-start;
   gap: 0;
@@ -271,7 +272,8 @@ app-nav {
 // ============================================================
 
 .card--simple {
-  width: 168px;
+  // width: 168px;
+    width: clamp(100px, 16vw, 168px);
   height: 170px;
   flex-direction: column;
   gap: 0.5rem;
@@ -309,3 +311,204 @@ app-nav {
   font-weight: 700;
   color: var(--color-light-blue);
 }
+
+// ============================================================
+// Mobile Greeting Screen
+// ============================================================
+
+.mobile-greeting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 1rem;
+
+  .greeting-text {
+    font-size: 47px;
+    font-weight: 500;
+    color: var(--color-dark-blue);
+    text-align: center;
+  }
+
+  .greeting-name {
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--color-light-blue);
+    text-align: center;
+  }
+}
+
+.summary-inner {
+  padding: 80px 20px;
+}
+
+// ============================================================
+// Responsive Design
+// ============================================================
+
+@media (max-width: 1024px) {
+
+  .summary-content {
+    padding-bottom: 80px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .summary-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .summary-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .summary-greeting {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1230px) {
+  .summary-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .summary-greeting {
+    order: -1;
+  }
+
+  .summary-inner {
+    align-items: center;
+  }
+}
+
+
+@media (max-width: 768px) {
+  app-nav {
+    width: 0;
+  }
+
+  .summary-headline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    h1 {
+      font-size: 47px;
+    }
+  }
+
+  .summary-inner {
+    align-items: center;
+  }
+
+  .headline-divider {
+    display: none;
+  }
+
+  .headline-subtitle {
+    font-size: 20px;
+    position: relative;
+
+    &::after {
+    content: '';
+    display: block;
+    width: 90px;
+    height: 3px;
+    background-color: var(--color-light-blue);
+    margin-top: 8px;
+  }
+  }
+
+  .cards-row-top .card {
+    width: 185px;
+    height: 110px;
+    gap: 30px;
+  }
+
+  .cards-row-top .card__icon img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .cards-row-top .card__count {
+    font-size: 47px;
+  }
+
+  .cards-row-top .card__label {
+    font-size: 16px;
+  }
+
+  .card--priority {
+    width: 400px;
+    height: 110px;
+  }
+
+  .card--priority .card__icon--priority img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .card--priority .card__count {
+    font-size: 47px;
+  }
+
+  .priority-date {
+    font-size: 16px;
+  }
+
+  .priority-right {
+    white-space: nowrap;
+  }
+
+  .cards-row-bottom {
+    gap: 20px;
+
+    .card--simple {
+      width: 120px;
+      height: 110px;
+    }
+
+    .card__count {
+    font-size: 47px;
+  }
+
+  .card__label {
+    font-size: 16px;
+  }
+  }
+}
+
+// @media (max-width: 480px) {
+//   .cards-row-top,
+//   .cards-row-bottom {
+//     gap: 10px;
+//   }
+
+//   .card {
+//     width: 120px;
+//     height: 110px;
+//     gap: 0.75rem;
+//   }
+
+//   .card--simple {
+//     width: 90px;
+//     height: 110px;
+//   }
+
+//   .card__count {
+//     font-size: 40px;
+//   }
+
+//   .card__icon img {
+//     width: 50px;
+//     height: 50px;
+//   }
+// }
