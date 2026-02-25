@@ -82,7 +82,7 @@ export class AddTask implements OnInit, OnDestroy {
   fieldErrors: FieldErrorState = {
     title: false,
     dueDate: false,
-    category: false
+    category: false,
   };
 
   // Required fields for validation
@@ -309,7 +309,7 @@ export class AddTask implements OnInit, OnDestroy {
     if (fieldName === 'category') {
       return this.selectedCategory !== 'Select category';
     }
-    
+
     const value = this.taskData[fieldName as keyof typeof this.taskData];
     return !!value && (typeof value !== 'string' || value.trim() !== '');
   }
@@ -335,7 +335,7 @@ export class AddTask implements OnInit, OnDestroy {
    */
   validateAllFields(): boolean {
     let isValid = true;
-    
+
     // Check each required field
     for (const field of this.requiredFields) {
       const fieldValid = this.isFieldValid(field);
@@ -353,7 +353,7 @@ export class AddTask implements OnInit, OnDestroy {
    */
   private markFormAsSubmitted(): void {
     this.formSubmitted = true;
-    
+
     // Mark all ngModel fields as touched
     if (this.taskForm) {
       Object.keys(this.taskForm.controls).forEach((key) => {
@@ -372,13 +372,13 @@ export class AddTask implements OnInit, OnDestroy {
 
   // Form Handling
   isFormValid(): boolean {
-    return this.requiredFields.every(field => this.isFieldValid(field));
+    return this.requiredFields.every((field) => this.isFieldValid(field));
   }
 
   async onSubmit() {
     // Mark form as submitted and validate all fields
     this.markFormAsSubmitted();
-    
+
     if (!this.validateAllFields()) {
       return;
     }
@@ -419,7 +419,7 @@ export class AddTask implements OnInit, OnDestroy {
     this.fieldErrors = {
       title: false,
       dueDate: false,
-      category: false
+      category: false,
     };
 
     // Reset form validation states
@@ -452,13 +452,13 @@ export class AddTask implements OnInit, OnDestroy {
     this.selectedCategory = currenTask.category;
     this.updateSelectedOptionText();
     this.updateAssignedAvatarsPreview();
-    
+
     // Reset validation state when loading existing task
     this.formSubmitted = false;
     this.fieldErrors = {
       title: false,
       dueDate: false,
-      category: false
+      category: false,
     };
   }
 

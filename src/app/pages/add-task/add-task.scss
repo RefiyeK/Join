@@ -52,7 +52,9 @@ p {
   flex-shrink: 0;
 }
 
-.ng-untouched.ng-pristine.ng-invalid {
+.ng-untouched,
+.ng-pristine,
+.ng-invalid {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
@@ -1022,8 +1024,7 @@ label.subtask-title {
     overflow-y: auto; /* vertikale Scrollbar bei zu großem Inhalt */
   }
 
-  /* optional: bestehende Angular-Klassen-Regel beibehalten, aber robust ergänzen */
-  .ng-untouched.ng-pristine.ng-invalid {
+  .ng-untouched .ng-pristine .ng-invalid {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
