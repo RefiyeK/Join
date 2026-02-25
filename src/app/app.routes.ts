@@ -7,10 +7,11 @@ import { AddTask } from './pages/add-task/add-task';
 import { Board } from './pages/board/board';
 import { Summary } from './pages/summary/summary';
 import { Login } from './pages/login/login';
-
+import { SignUp } from './pages/sign-up/sign-up';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'sign-up', component: SignUp },
   { path: 'login', component: Login },
   { path: 'summary', component: Summary },
   { path: 'add-task', component: AddTask },
@@ -19,5 +20,5 @@ export const routes: Routes = [
   { path: 'imprint', component: Imprint },
   { path: 'privacy-policy', component: PrivacyPolicy },
   { path: 'help', component: Help },
-  { path: '**', redirectTo: 'login' }
+  { path: '**', redirectTo: 'login' },
 ];
