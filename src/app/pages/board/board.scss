@@ -336,15 +336,25 @@ app-nav {
 
   .column-content {
     flex-direction: row;
+    align-items: stretch;
     overflow-x: auto;
     padding: 12px 0;
     touch-action: pan-x pan-y;
     -webkit-overflow-scrolling: touch;
 
     &::-webkit-scrollbar {
-      display: none;
+      height: 4px;
     }
-    scrollbar-width: none;
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--color-light-grey);
+      border-radius: 4px;
+    }
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-light-grey) transparent;
   }
 
   .column-header {
@@ -364,6 +374,13 @@ app-nav {
   /* CDK drag disabled */
   .cdk-drag {
     touch-action: pan-x !important;
+  }
+
+  .empty-state {
+    width: 252px;
+    min-width: 252px;
+    max-width: 252px;
+    flex-shrink: 0;
   }
 }
 

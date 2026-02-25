@@ -191,7 +191,8 @@
 }
 
 .login-footer {
-
+  display: flex;
+  
   a {
     font-weight: 300;
     color: var(--color-medium-blue);
