@@ -141,7 +141,8 @@ export class AddTask implements OnInit, OnDestroy {
       // Abonniere Contacts-Änderungen
       this.contactsSubscription = this.contactsService.contacts$.subscribe(
         (contacts: SingleContact[]) => {
-          this.contacts = contacts;
+          // Kontakte alphabetisch sortieren
+          this.contacts = this.sortContactsAlphabetically(contacts);
           this.loadingContacts = false;
 
           if (this.taskData.assigned && this.taskData.assigned.length > 0) {
@@ -154,6 +155,20 @@ export class AddTask implements OnInit, OnDestroy {
     } catch (error) {
       this.loadingContacts = false;
     }
+  }
+
+  /**
+   * Sortiert Kontakte alphabetisch nach Namen
+   */
+  private sortContactsAlphabetically(contacts: SingleContact[]): SingleContact[] {
+    return [...contacts].sort((a, b) => {
+      const nameA = a.name?.toLowerCase() || '';
+      const nameB = b.name?.toLowerCase() || '';
+      
+      if (nameA < nameB) return -1;
+      if (nameA > nameB) return 1;
+      return 0;
+    });
   }
 
   toggleAssigned(contact: SingleContact) {
