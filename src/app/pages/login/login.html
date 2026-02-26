@@ -16,20 +16,55 @@
       <h1>Log in</h1>
       <div class="title-underline"></div>
 
-      <div class="input-wrapper">
-        <input type="email" placeholder="Email" />
-        <img src="assets/icons/mail.svg" alt="Email" />
-      </div>
+      <!-- Fehlermeldung mit @if -->
+      @if (errorMessage) {
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+      }
 
-      <div class="input-wrapper">
-        <input type="password" placeholder="Password" />
-        <img src="assets/icons/lock.svg" alt="Password" />
-      </div>
+      <!-- Login Form mit ngSubmit -->
+      <form (ngSubmit)="login()">
+        <div class="input-wrapper" [class.error]="emailError">
+          <input
+            type="email"
+            placeholder="Email"
+            [(ngModel)]="email"
+            name="email"
+            required
+            #emailInput="ngModel"
+            (input)="emailError = false"
+          />
+          <img src="assets/icons/mail.svg" alt="Email" />
+        </div>
 
-      <div class="login-buttons">
-        <button class="btn-primary" routerLink="/summary">Log in</button>
-        <button class="btn-outline" routerLink="/summary">Guest Log in</button>
-      </div>
+        <div class="input-wrapper" [class.error]="passwordError">
+          <input
+            type="password"
+            placeholder="Password"
+            [(ngModel)]="password"
+            name="password"
+            required
+            #passwordInput="ngModel"
+            (input)="passwordError = false"
+          />
+          <img src="assets/icons/lock.svg" alt="Password" />
+        </div>
+
+        <!-- Lade-Indikator mit @if -->
+        @if (isLoading) {
+          <div class="loading-spinner">
+            <span>Logging in…</span>
+          </div>
+        }
+
+        <div class="login-buttons">
+          <button type="submit" class="btn-primary" [disabled]="isLoading">Log in</button>
+          <button type="button" class="btn-outline" (click)="guestLogin()" [disabled]="isLoading">
+            Guest Log in
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
