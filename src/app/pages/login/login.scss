@@ -12,7 +12,10 @@
   justify-content: center;
 
   .btn-outline {
-    transition: background-color 125ms ease-in-out, color 125ms ease-in-out, border-color 125ms ease-in-out;
+    transition:
+      background-color 125ms ease-in-out,
+      color 125ms ease-in-out,
+      border-color 125ms ease-in-out;
   }
 }
 
@@ -46,7 +49,6 @@
   object-fit: contain;
   transition: all 0.8s ease-in-out;
 }
-
 
 .signup-hint {
   position: fixed;
@@ -91,9 +93,11 @@
 .login-card {
   background-color: #ffffff;
   border-radius: 30px;
-  padding: 48px  115px;
+  padding: 48px 115px;
   width: 650px;
-  height: 450px;
+  // Höhe automatisch anpassen für Fehlermeldungen
+  min-height: 450px;
+  height: auto;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -114,15 +118,86 @@
 }
 
 // ============================================================
+// Fehlermeldung
+// ============================================================
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin: -10px 0 5px 0;
+  text-align: center;
+  font-size: 15px;
+  border-left: 4px solid #c62828;
+  width: 422px;
+  align-self: center;
+  animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================================
+// Loading Spinner
+// ============================================================
+
+.loading-spinner {
+  text-align: center;
+  margin: 10px 0;
+
+  span {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #f5f5f5;
+    border-radius: 30px;
+    color: var(--color-medium-blue);
+    font-size: 15px;
+    font-weight: 500;
+    position: relative;
+    padding-left: 40px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--color-light-blue);
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+// ============================================================
 // Input Felder
 // ============================================================
 
 .input-wrapper {
   position: relative;
   width: 422px;
+  margin-bottom: 25px;
 
   input {
-    width: 422px;
+    width: 100%;
     height: 48px;
     padding: 0 3rem 0 1rem;
     border: 1px solid var(--color-light-grey);
@@ -130,6 +205,7 @@
     font-size: 20px;
     transition: var(--transition-fast);
     outline: none;
+    box-sizing: border-box;
 
     &:focus {
       border-color: var(--color-light-blue);
@@ -137,6 +213,24 @@
 
     &::placeholder {
       color: var(--color-light-grey);
+    }
+
+    // Style für ungültige Eingaben (leere Felder)
+    &.ng-invalid.ng-touched {
+      border-color: #c62828;
+      background-color: #fff8f8;
+    }
+
+    // Style für gültige Eingaben
+    &.ng-valid.ng-touched {
+      border-color: #2e7d32;
+    }
+
+    // Deaktivierter State für Loading
+    &:disabled {
+      background-color: #f5f5f5;
+      cursor: not-allowed;
+      opacity: 0.7;
     }
   }
 
@@ -152,6 +246,42 @@
 }
 
 // ============================================================
+// Input Error State (bei falschen Anmeldedaten)
+// ============================================================
+
+.input-wrapper.error {
+  input {
+    border-color: #c62828;
+    background-color: #fff8f8;
+    animation: shake 0.3s ease-in-out;
+  }
+
+  img {
+    filter: brightness(0) saturate(100%);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-2px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+// ============================================================
 // Buttons
 // ============================================================
 
@@ -160,20 +290,41 @@
   gap: 1rem;
   justify-content: center;
   height: 50px;
-  margin-top: 30px;
+  margin-top: 20px;
 
   button {
     font-size: 21px;
     font-weight: 500;
+    transition: all 125ms ease-in-out;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    &:not(:disabled):hover {
+      transform: scale(1.02);
+    }
   }
 
   .btn-outline {
     width: 177px;
-     font-weight: 700;
+    font-weight: 700;
+
+    &:not(:disabled):hover {
+      background-color: var(--color-light-blue);
+      color: white;
+      border-color: var(--color-light-blue);
+    }
   }
 
   .btn-primary {
     width: 110px;
+
+    &:not(:disabled):hover {
+      background-color: var(--color-dark-blue);
+    }
   }
 }
 
@@ -188,20 +339,86 @@
   transform: translateX(-50%);
   display: flex;
   gap: 3rem;
-}
 
-.login-footer {
-  display: flex;
-  
   a {
     font-weight: 300;
     color: var(--color-medium-blue);
+    text-decoration: none;
+    transition: all 125ms ease-in-out;
+    padding: 5px 10px;
+    border-radius: 5px;
 
     &:hover {
-        font-weight: 700;
+      font-weight: 700;
       color: var(--color-light-blue);
+      background-color: rgba(0, 0, 0, 0.02);
     }
   }
 }
 
+// ============================================================
+// Responsive Anpassungen
+// ============================================================
 
+@media (max-width: 768px) {
+  .login-card {
+    width: 90%;
+    padding: 48px 20px;
+
+    h1 {
+      font-size: 45px;
+    }
+  }
+
+  .input-wrapper {
+    width: 100%;
+
+    input {
+      width: 100%;
+    }
+  }
+
+  .error-message {
+    width: 100%;
+  }
+
+  .signup-hint {
+    top: 1rem;
+    right: 1rem;
+    gap: 15px;
+
+    .signup-text {
+      font-size: 16px;
+    }
+
+    .btn-primary {
+      width: 80px;
+      height: 40px;
+      font-size: 14px;
+    }
+  }
+
+  .logo-wrapper.logo--animated .logo {
+    width: 60px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-buttons {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    gap: 15px;
+
+    .btn-primary,
+    .btn-outline {
+      width: 200px;
+    }
+  }
+
+  .login-footer {
+    gap: 1.5rem;
+    font-size: 14px;
+  }
+}
