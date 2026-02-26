@@ -160,6 +160,11 @@ input {
 
 .invalid {
   border-color: var(--color-error) !important;
+  background-color: #ffeeee !important; // Heller roter Hintergrund
+  
+  input {
+    background-color: #ffeeee !important;
+  }
 }
 
 .error-text {
