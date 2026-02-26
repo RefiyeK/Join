@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NewUser } from '../../interfaces/new-user';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,14 +11,12 @@ import { FormsModule, NgForm } from '@angular/forms';
   styleUrl: './sign-up.scss',
 })
 export class SignUp implements OnInit {
-  checkPrivacyPolicy = false;
-
   newUser: NewUser = {
     name: '',
     email: '',
     passwort: '',
     confirmPassword: '',
-    privacyPolicy: true,
+    privacyPolicy: false,
   };
 
   ngOnInit(): void {
@@ -30,14 +29,14 @@ export class SignUp implements OnInit {
       email: 'test@test.de',
       passwort: '12345678',
       confirmPassword: '12345678',
-      privacyPolicy: false,
+      privacyPolicy: true,
     };
   }
 
   onSubmit() {
-    // this.setUserData();
-    console.log(this.newUser);
+    this.createUser(this.newUser);
     this.clearInput();
+    console.log(this.newUser);
   }
 
   clearInput() {
@@ -45,15 +44,30 @@ export class SignUp implements OnInit {
     this.newUser.email = '';
     this.newUser.passwort = '';
     this.newUser.confirmPassword = '';
-    this.newUser.privacyPolicy = true;
+    this.newUser.privacyPolicy = false;
   }
 
   setPrivacyPolicy() {
     if (this.newUser.privacyPolicy) {
       this.newUser.privacyPolicy = false;
-      this.checkPrivacyPolicy = false;
     } else {
       this.newUser.privacyPolicy = true;
     }
+  }
+
+  createUser(newUser: NewUser) {
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, newUser.email, newUser.passwort)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(error);
+        // ..
+      });
   }
 }
