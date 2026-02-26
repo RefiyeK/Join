@@ -188,18 +188,27 @@
   transform: translateX(-50%);
   display: flex;
   gap: 3rem;
-}
-
-.login-footer {
-  display: flex;
   
   a {
+    position: relative;
     font-weight: 300;
     color: var(--color-medium-blue);
 
     &:hover {
         font-weight: 700;
       color: var(--color-light-blue);
+    }
+    &::after {
+      content: attr(data-text);
+      font-weight: 700;
+      position: absolute;
+      left: 0;
+      top: 0;
+      visibility: hidden;
+      height: 0;
+      overflow: hidden;
+      display: block;
+      white-space: nowrap;
     }
   }
 }
