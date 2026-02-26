@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { NewUser } from '../../interfaces/new-user';
 import { FormsModule } from '@angular/forms';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
@@ -18,6 +18,7 @@ export class SignUp implements OnInit {
     confirmPassword: '',
     privacyPolicy: false,
   };
+  router = inject(Router);
 
   ngOnInit(): void {
     this.setInitalValues();
@@ -35,8 +36,8 @@ export class SignUp implements OnInit {
 
   onSubmit() {
     this.createUser(this.newUser);
-    this.clearInput();
     console.log(this.newUser);
+    this.clearInput();
   }
 
   clearInput() {
@@ -61,12 +62,16 @@ export class SignUp implements OnInit {
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
+        console.log(`wurde angelegt`);
+        setTimeout(() => this.router.navigateByUrl('/login'), 2000);
+
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(error);
+        console.log(`existiert schon`);
         // ..
       });
   }
