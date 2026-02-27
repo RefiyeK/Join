@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-login',
@@ -15,17 +15,8 @@ export class Login implements OnInit {
   logoAnimated = false;
   formVisible = false;
 
-  // Formular Variablen
-  email: string = '';
-  password: string = '';
-  errorMessage: string = '';
-  isLoading: boolean = false;
-
-  // Für Input Error Styling
-  emailError: boolean = false;
-  passwordError: boolean = false;
-
-  constructor(private router: Router) {}
+  private router = inject(Router);
+  private authService = inject(AuthService);
 
   ngOnInit(): void {
     // Logo Animation
@@ -42,12 +33,21 @@ export class Login implements OnInit {
   /**
    * Login mit E-Mail und Passwort
    */
+
+  // Formular Variablen
+  email: string = '';
+  password: string = '';
+  errorMessage: string = '';
+  isLoading: boolean = false;
+
+  // Für Input Error Styling
+  emailError: boolean = false;
+  passwordError: boolean = false;
+
   async login() {
-    // Error States zurücksetzen
     this.emailError = false;
     this.passwordError = false;
 
-    // Validierung
     if (!this.email || !this.password) {
       this.errorMessage = 'Please enter email and password';
       if (!this.email) this.emailError = true;
@@ -58,13 +58,14 @@ export class Login implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
-    const auth = getAuth();
-
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
+      const userCredential = await this.authService.login(this.email, this.password);
 
       // Erfolgreich eingeloggt
       console.log('Successfully logged in:', userCredential.user.uid);
+
+      // UID speichern (z.B. im localStorage)
+      localStorage.setItem('uid', userCredential.user.uid);
 
       // Weiterleitung zur Summary-Seite
       this.router.navigate(['/summary']);

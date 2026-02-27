@@ -20,7 +20,8 @@ export class SignUp implements OnInit {
     privacyPolicy: false,
   };
   router = inject(Router);
-  authService = inject(AuthService); // <--- NEU
+  authService = inject(AuthService);
+  testname = 'hallo';
 
   ngOnInit(): void {
     this.setInitalValues();
@@ -28,17 +29,16 @@ export class SignUp implements OnInit {
 
   setInitalValues() {
     this.newUser = {
-      name: 'test',
-      email: 'test@test.de',
+      name: 'test test',
+      email: 'testa@testa.de',
       passwort: '12345678',
       confirmPassword: '12345678',
       privacyPolicy: true,
     };
   }
 
-  onSubmit() {
-    this.authService.createUser(this.newUser);
-    console.log(this.newUser);
+  async onSubmit() {
+    await this.authService.createUser(this.newUser);
     this.clearInput();
   }
 

@@ -57,6 +57,7 @@ export class ContactsService implements OnDestroy {
   setContactObject(obj: any, id: string): SingleContact {
     return {
       id: id,
+      uid: obj.uid || '',
       name: obj.name || '',
       email: obj.email || '',
       phone: obj.phone || '',
@@ -83,6 +84,7 @@ export class ContactsService implements OnDestroy {
       });
       this.updateContactGroups();
       this.refreshActivContact();
+      console.log(this.contacts);
 
       // NEU: Aktualisiere auch das contactsSubject
       this.contactsSubject.next(this.contacts);
