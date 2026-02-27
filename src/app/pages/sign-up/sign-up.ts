@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NewUser } from '../../interfaces/new-user';
 import { FormsModule } from '@angular/forms';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { AuthService } from '../../services/auth-service'; // <--- NEU
 
 @Component({
@@ -21,7 +20,6 @@ export class SignUp implements OnInit {
   };
   router = inject(Router);
   authService = inject(AuthService);
-  testname = 'hallo';
 
   ngOnInit(): void {
     this.setInitalValues();
@@ -29,8 +27,8 @@ export class SignUp implements OnInit {
 
   setInitalValues() {
     this.newUser = {
-      name: 'test test',
-      email: 'testa@testa.de',
+      name: 'Test Person',
+      email: 'person@test.de',
       passwort: '12345678',
       confirmPassword: '12345678',
       privacyPolicy: true,

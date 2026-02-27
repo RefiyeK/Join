@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactsService } from '../../../../services/contacts-service';
+import { AuthService } from '../../../../services/auth-service';
+import { Router } from '@angular/router';
 
 /**
  * ContactDetails – Zeigt die Detailansicht des ausgewählten Kontakts.
@@ -24,6 +26,8 @@ export class ContactDetails {
    * Public, damit das Template darauf zugreifen kann.
    */
   contactsService = inject(ContactsService);
+  authService = inject(AuthService);
+  router = inject(Router);
 
   /**
    * Steuert die Sichtbarkeit des FAB-Dropdown-Menüs.
@@ -72,7 +76,15 @@ export class ContactDetails {
   protected async onDelete(): Promise<void> {
     const contact = this.contactsService.activContact;
     if (contact && contact.id) {
-      await this.contactsService.deleteContact(contact.id);
+      if (contact.uid == '') {
+        await this.contactsService.deleteContact(contact.id);
+      } else if (this.authService.loggetInUserUid == contact.uid) {
+        await this.contactsService.deleteContact(contact.id);
+        this.router.navigateByUrl('/login');
+        this.authService.deleteUser();
+      } else {
+        console.error('User must be logged in to delete');
+      }
     }
   }
 }

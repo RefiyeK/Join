@@ -60,6 +60,7 @@ export class Login implements OnInit {
 
     try {
       const userCredential = await this.authService.login(this.email, this.password);
+      this.authService.loggetInUserUid = userCredential.user.uid;
 
       // Erfolgreich eingeloggt
       console.log('Successfully logged in:', userCredential.user.uid);

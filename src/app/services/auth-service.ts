@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   UserCredential,
+  deleteUser,
 } from 'firebase/auth';
 import { NewUser } from '../interfaces/new-user';
 import { ContactsService } from './contacts-service';
@@ -14,6 +15,7 @@ import { SingleContact } from '../interfaces/single-contact';
 export class AuthService {
   private router = inject(Router);
   private contactsService = inject(ContactsService);
+  loggetInUserUid?: string;
 
   //Achtung funktion ist nur für den loginbereich gedacht und leitet automatisch zur startseite weiter
   async createUser(newUser: NewUser) {
@@ -30,7 +32,7 @@ export class AuthService {
           uid: uid,
           name: validUserName,
           email: newUser.email,
-          phone: '01737984315',
+          phone: '',
         };
         this.contactsService.addNewSingleContactToDB(newContact);
         setTimeout(() => this.router.navigateByUrl('/login'), 2000);
@@ -43,6 +45,21 @@ export class AuthService {
         console.log(`existiert schon`);
         // ..
       });
+  }
+
+  deleteUser() {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+      deleteUser(user)
+        .then(() => {
+          // User deleted.
+        })
+        .catch((error) => {
+          // An error ocurred
+          // ...
+        });
+    }
   }
 
   /**
