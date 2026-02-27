@@ -198,3 +198,13 @@
     <a routerLink="/imprint" target="_blank">Legal notice</a>
   </footer>
 </section>
+
+<dialog #dialogRef>
+  <div class="container">
+    @if (this.authService.isNewUser) {
+      <p>User successfully created</p>
+    } @else {
+      <p>User already exists</p>
+    }
+  </div>
+</dialog>

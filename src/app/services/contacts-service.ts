@@ -84,7 +84,6 @@ export class ContactsService implements OnDestroy {
       });
       this.updateContactGroups();
       this.refreshActivContact();
-      console.log(this.contacts);
 
       // NEU: Aktualisiere auch das contactsSubject
       this.contactsSubject.next(this.contacts);

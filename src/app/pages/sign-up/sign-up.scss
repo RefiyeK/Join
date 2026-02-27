@@ -220,6 +220,23 @@ footer {
   }
 }
 
+dialog {
+  height: fit-content !important;
+  width: fit-content !important;
+
+  &:focus {
+    outline: none;
+  }
+
+  .container {
+    padding: 1rem;
+    background-color: var(--color-primary-blue);
+    color: var(--color-font-bright);
+    text-align: center;
+    text-wrap: nowrap;
+  }
+}
+
 @media (max-width: 680px) {
   .headline {
     margin-bottom: 1rem;

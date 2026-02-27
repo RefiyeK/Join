@@ -16,35 +16,38 @@ export class AuthService {
   private router = inject(Router);
   private contactsService = inject(ContactsService);
   loggetInUserUid?: string;
+  isNewUser?: boolean;
 
   //Achtung funktion ist nur für den loginbereich gedacht und leitet automatisch zur startseite weiter
   async createUser(newUser: NewUser) {
     const auth = getAuth();
-    await createUserWithEmailAndPassword(auth, newUser.email, newUser.passwort)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        const uid = user.uid;
-        let validUserName = newUser.name;
-        validUserName = validUserName.charAt(0).toUpperCase() + validUserName.slice(1);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        newUser.email,
+        newUser.passwort,
+      );
+      const user = userCredential.user;
+      const uid = user.uid;
 
-        const newContact: SingleContact = {
-          uid: uid,
-          name: validUserName,
-          email: newUser.email,
-          phone: '',
-        };
-        this.contactsService.addNewSingleContactToDB(newContact);
-        setTimeout(() => this.router.navigateByUrl('/login'), 2000);
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(error);
-        console.log(`existiert schon`);
-        // ..
-      });
+      let validUserName = newUser.name;
+      validUserName = validUserName.charAt(0).toUpperCase() + validUserName.slice(1);
+
+      const newContact: SingleContact = {
+        uid: uid,
+        name: validUserName,
+        email: newUser.email,
+        phone: '',
+      };
+
+      this.isNewUser = true;
+      this.contactsService.addNewSingleContactToDB(newContact);
+      // ...
+    } catch (error) {
+      this.isNewUser = false;
+      console.error('The user already exists');
+    }
+    setTimeout(() => this.router.navigateByUrl('/login'), 3000);
   }
 
   deleteUser() {

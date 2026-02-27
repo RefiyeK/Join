@@ -1,8 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NewUser } from '../../interfaces/new-user';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth-service'; // <--- NEU
+import { AuthService } from '../../services/auth-service';
+import { SetDialogAnimation } from '../../shared/directives/set-dialog-animation';
 
 @Component({
   selector: 'app-sign-up',
@@ -20,6 +21,8 @@ export class SignUp implements OnInit {
   };
   router = inject(Router);
   authService = inject(AuthService);
+  @ViewChild('dialogRef') dialogRef!: ElementRef;
+  dialogIsClosing = true;
 
   ngOnInit(): void {
     this.setInitalValues();
@@ -37,7 +40,7 @@ export class SignUp implements OnInit {
 
   async onSubmit() {
     await this.authService.createUser(this.newUser);
-    this.clearInput();
+    this.openDialog();
   }
 
   clearInput() {
@@ -54,5 +57,30 @@ export class SignUp implements OnInit {
     } else {
       this.newUser.privacyPolicy = true;
     }
+  }
+
+  openDialog() {
+    this.openDialogWithAnimation();
+    setTimeout(() => {
+      this.closeDialogWithAnimation();
+    }, 2500);
+  }
+
+  openDialogWithAnimation() {
+    this.dialogIsClosing = false;
+    this.dialogRef.nativeElement.showModal();
+    this.dialogRef.nativeElement.classList.remove('slide-out');
+    this.dialogRef.nativeElement.classList.add('slide-in');
+  }
+
+  closeDialogWithAnimation() {
+    this.dialogRef.nativeElement.classList.remove('slide-in');
+    this.dialogRef.nativeElement.classList.add('slide-out');
+
+    setTimeout(() => {
+      this.dialogIsClosing = true;
+      this.dialogRef.nativeElement.classList.remove('slide-out');
+      this.dialogRef.nativeElement.close();
+    }, 500);
   }
 }
