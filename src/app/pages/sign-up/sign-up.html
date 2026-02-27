@@ -43,7 +43,10 @@
       </div>
     </div>
     <form #signUpForm="ngForm" (ngSubmit)="onSubmit()">
-      <div class="input-container">
+      <div
+        class="input-container"
+        [ngClass]="{ 'input-error': userName.touched && userName.invalid && userName.value !== '' }"
+      >
         <input
           name="userName"
           id="userName"
@@ -66,8 +69,10 @@
         }
       </div>
 
-      <!-- input-error -->
-      <div class="input-container">
+      <div
+        class="input-container"
+        [ngClass]="{ 'input-error': email.touched && email.invalid && email.value !== '' }"
+      >
         <input
           name="email"
           id="email"
@@ -95,7 +100,10 @@
           <p class="error-text">Check your email.</p>
         }
       </div>
-      <div class="input-container">
+      <div
+        class="input-container"
+        [ngClass]="{ 'input-error': passwort.touched && passwort.invalid && passwort.value !== '' }"
+      >
         <input
           name="passwort"
           id="passwort"
@@ -123,7 +131,12 @@
           <p class="error-text">Please enter minimum 8 characters.</p>
         }
       </div>
-      <div class="input-container">
+      <div
+        class="input-container"
+        [ngClass]="{
+          'input-error': passwort.value !== confirmPassword.value && confirmPassword.touched,
+        }"
+      >
         <input
           name="confirmPassword"
           id="confirm-password"

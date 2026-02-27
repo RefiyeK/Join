@@ -3,11 +3,11 @@ import { Router, RouterLink } from '@angular/router';
 import { NewUser } from '../../interfaces/new-user';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
-import { SetDialogAnimation } from '../../shared/directives/set-dialog-animation';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sign-up',
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule, CommonModule],
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.scss',
 })
@@ -23,6 +23,7 @@ export class SignUp implements OnInit {
   authService = inject(AuthService);
   @ViewChild('dialogRef') dialogRef!: ElementRef;
   dialogIsClosing = true;
+  showPrivacyPolicyError = false;
 
   ngOnInit(): void {
     this.setInitalValues();
@@ -41,6 +42,20 @@ export class SignUp implements OnInit {
   async onSubmit() {
     await this.authService.createUser(this.newUser);
     this.openDialog();
+    this.showPrivacyPolicyError = false;
+  }
+
+  onSignUpClick(form: any, passwortValue: string, confirmPasswordValue: string) {
+    if (!this.newUser.privacyPolicy) {
+      this.showPrivacyPolicyError = true;
+      return;
+    }
+    if (form.invalid || passwortValue !== confirmPasswordValue) {
+      this.showPrivacyPolicyError = false;
+      return;
+    }
+    this.showPrivacyPolicyError = false;
+    this.onSubmit();
   }
 
   clearInput() {

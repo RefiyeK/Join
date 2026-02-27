@@ -168,6 +168,13 @@ form {
           color: var(--color-primary-blue);
         }
       }
+
+      .error-text {
+        position: absolute;
+        color: var(--priority-urgent);
+        left: 0;
+        bottom: -1.5rem;
+      }
     }
   }
 
