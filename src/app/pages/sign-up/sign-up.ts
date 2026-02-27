@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { NewUser } from '../../interfaces/new-user';
 import { FormsModule } from '@angular/forms';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { AuthService } from '../../services/auth-service'; // <--- NEU
 
 @Component({
   selector: 'app-sign-up',
@@ -19,6 +20,7 @@ export class SignUp implements OnInit {
     privacyPolicy: false,
   };
   router = inject(Router);
+  authService = inject(AuthService); // <--- NEU
 
   ngOnInit(): void {
     this.setInitalValues();
@@ -35,7 +37,7 @@ export class SignUp implements OnInit {
   }
 
   onSubmit() {
-    this.createUser(this.newUser);
+    this.authService.createUser(this.newUser);
     console.log(this.newUser);
     this.clearInput();
   }
@@ -54,25 +56,5 @@ export class SignUp implements OnInit {
     } else {
       this.newUser.privacyPolicy = true;
     }
-  }
-
-  createUser(newUser: NewUser) {
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, newUser.email, newUser.passwort)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        console.log(`wurde angelegt`);
-        setTimeout(() => this.router.navigateByUrl('/login'), 2000);
-
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(error);
-        console.log(`existiert schon`);
-        // ..
-      });
   }
 }
