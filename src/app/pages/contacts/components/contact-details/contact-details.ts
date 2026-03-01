@@ -78,7 +78,7 @@ export class ContactDetails {
     if (contact && contact.id) {
       if (contact.uid == '') {
         await this.contactsService.deleteContact(contact.id);
-      } else if (this.authService.loggetInUserUid == contact.uid) {
+      } else if (this.authService.loggetInUserUid() == contact.uid) {
         await this.contactsService.deleteContact(contact.id);
         this.router.navigateByUrl('/login');
         this.authService.deleteUser();

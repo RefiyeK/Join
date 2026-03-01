@@ -4,12 +4,22 @@
     <p class="project-management-tool">Kanban Project Management Tool</p>
 
     <div class="help-and-profile">
-      <a routerLink="/help"
-        ><img class="help-icon" src="assets/icons/help.png" alt="help_icon"
-      /></a>
+      <a routerLink="/help">
+        <img class="help-icon" src="assets/icons/help.png" alt="help_icon" />
+      </a>
 
       <div class="profile-wrapper">
-        <button class="profile" (click)="toggleDropdown(); $event.stopPropagation()">SM</button>
+        <button
+          class="profile"
+          [class]="currentUser() ? contactsService.getIconColorClass(currentUser()!) : 'icon-1'"
+          (click)="toggleDropdown(); $event.stopPropagation()"
+        >
+          @if (currentUser()) {
+            {{ contactsService.getInitials(currentUser()!.name) }}
+          } @else {
+            GU
+          }
+        </button>
 
         @if (isDropdownOpen) {
           <div
@@ -30,7 +40,7 @@
             <a routerLink="/privacy-policy" class="dropdown__link" (click)="closeDropdown()"
               >Privacy Policy</a
             >
-            <a class="dropdown__link" (click)="closeDropdown()">Log out</a>
+            <a class="dropdown__link" (click)="logout()">Log out</a>
           </div>
         }
       </div>

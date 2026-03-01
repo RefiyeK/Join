@@ -9,6 +9,7 @@ import { SingleTask } from '../../interfaces/single-task';
 import { SingleContact } from '../../interfaces/single-contact';
 import { AssignedAvatarItem } from '../../interfaces/assigned-avatar';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../services/auth-service';
 
 interface FieldErrorState {
   [key: string]: boolean;
@@ -22,12 +23,14 @@ interface FieldErrorState {
   styleUrl: './add-task.scss',
 })
 export class AddTask implements OnInit, OnDestroy {
-  @ViewChild('taskForm') taskForm!: NgForm; // Referenz zum Formular hinzugefügt
-  @ViewChild('editInput') editInput!: ElementRef; // Referenz für Edit-Input
+  @ViewChild('taskForm') taskForm!: NgForm; 
+  @ViewChild('editInput') editInput!: ElementRef; 
 
   tasksService = inject(TasksService);
-  private subEditMode!: Subscription;
   contactsService = inject(ContactsService);
+  authService = inject(AuthService); // AuthService injiziert für (You) Logik
+
+  private subEditMode!: Subscription;
 
   // Contacts als Array für das Template
   contacts: SingleContact[] = [];
@@ -66,7 +69,7 @@ export class AddTask implements OnInit, OnDestroy {
     if (option === 'Technical Task' || option === 'User Story') {
       this.selectedCategory = option;
       this.taskData.category = option;
-      this.updateFieldError('category'); // Clear error when category is selected
+      this.updateFieldError('category'); 
     }
     this.isCategoryOpen = false;
   }
@@ -74,8 +77,6 @@ export class AddTask implements OnInit, OnDestroy {
   closeCategoryDropdown() {
     this.isCategoryOpen = false;
   }
-
-  // ------------------- NEUER CODE (VON MIR HINZUGEFÜGT) -------------------
 
   // Form State
   formSubmitted: boolean = false;
@@ -124,25 +125,41 @@ export class AddTask implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Cleanup Subscription
     if (this.contactsSubscription) {
       this.contactsSubscription.unsubscribe();
     }
     this.subEditMode.unsubscribe();
   }
 
+  /**
+   * Lädt Kontakte und markiert den aktuellen User mit (You)
+   */
   async loadContacts() {
     this.loadingContacts = true;
 
     try {
-      // Lade Contacts von Firebase
       await this.contactsService.loadContacts();
 
-      // Abonniere Contacts-Änderungen
       this.contactsSubscription = this.contactsService.contacts$.subscribe(
         (contacts: SingleContact[]) => {
-          // Kontakte alphabetisch sortieren
-          this.contacts = this.sortContactsAlphabetically(contacts);
+          // 1. Alphabetisch sortieren
+          let sortedContacts = this.sortContactsAlphabetically(contacts);
+
+          // 2. Logged-in User finden und "(You)" hinzufügen + nach oben schieben
+          const currentUid = this.authService.loggetInUserUid();
+          const meIndex = sortedContacts.findIndex(c => c.uid === currentUid);
+
+          if (meIndex !== -1) {
+            // User kurz entfernen
+            const me = sortedContacts.splice(meIndex, 1)[0];
+            // Mit Zusatz "(You)" ganz vorne wieder einfügen
+            sortedContacts.unshift({
+              ...me,
+              name: me.name + ' (You)'
+            });
+          }
+
+          this.contacts = sortedContacts;
           this.loadingContacts = false;
 
           if (this.taskData.assigned && this.taskData.assigned.length > 0) {
@@ -153,6 +170,7 @@ export class AddTask implements OnInit, OnDestroy {
         },
       );
     } catch (error) {
+      console.error('Error loading contacts:', error);
       this.loadingContacts = false;
     }
   }
@@ -164,7 +182,7 @@ export class AddTask implements OnInit, OnDestroy {
     return [...contacts].sort((a, b) => {
       const nameA = a.name?.toLowerCase() || '';
       const nameB = b.name?.toLowerCase() || '';
-      
+
       if (nameA < nameB) return -1;
       if (nameA > nameB) return 1;
       return 0;
@@ -214,12 +232,10 @@ export class AddTask implements OnInit, OnDestroy {
     this.assignedRemainingCount = preview.remaining;
   }
 
-  // Priority Handling
   setPriority(priority: 'Urgent' | 'Medium' | 'Low') {
     this.taskData.priority = priority;
   }
 
-  // Subtask Handling - KORRIGIERT
   addSubtask() {
     if (this.newSubtaskTitle && this.newSubtaskTitle.trim()) {
       if (!this.taskData.subtasks) {
@@ -232,7 +248,6 @@ export class AddTask implements OnInit, OnDestroy {
         completed: false,
       });
 
-      // Subtask clear machen nach dem Hinzufügen
       this.clearSubtaskInput();
     }
   }
@@ -242,19 +257,16 @@ export class AddTask implements OnInit, OnDestroy {
       this.taskData.subtasks.splice(index, 1);
     }
 
-    // Wenn der gelöschte Subtask gerade im Edit-Modus war, Edit-Modus beenden
     if (this.editingSubtaskIndex === index) {
       this.cancelSubtaskEdit();
     }
   }
 
-  // Subtask Edit Methods - NEU HINZUGEFÜGT
   startEditingSubtask(index: number, currentTitle: string) {
     this.editingSubtaskIndex = index;
     this.editingSubtaskTitle = currentTitle;
     this.originalSubtaskTitle = currentTitle;
 
-    // Fokussiere das Input-Feld nach einem kurzen Delay
     setTimeout(() => {
       if (this.editInput) {
         this.editInput.nativeElement.focus();
@@ -268,22 +280,15 @@ export class AddTask implements OnInit, OnDestroy {
       this.taskData.subtasks &&
       this.editingSubtaskTitle.trim()
     ) {
-      // Speichere den bearbeiteten Titel
       this.taskData.subtasks[this.editingSubtaskIndex].title = this.editingSubtaskTitle.trim();
-
-      // Beende den Edit-Modus
       this.cancelSubtaskEdit();
     } else if (this.editingSubtaskIndex !== null && !this.editingSubtaskTitle.trim()) {
-      // Wenn der Titel leer ist, breche ab und behalte den Originaltitel
       this.cancelSubtaskEdit();
     }
   }
 
-  // NEUE METHODE für Version 1
   onBlurSubtaskEdit() {
-    // Kleine Verzögerung, damit der Click auf die Icons noch registriert wird
     setTimeout(() => {
-      // Prüfen ob wir noch im Edit-Modus sind (nicht durch Icon-Click abgebrochen)
       if (this.editingSubtaskIndex !== null) {
         this.saveSubtaskEdit();
       }
@@ -296,17 +301,14 @@ export class AddTask implements OnInit, OnDestroy {
     this.originalSubtaskTitle = '';
   }
 
-  // Subtask Input clear - KORRIGIERT
   clearSubtaskInput() {
     this.newSubtaskTitle = '';
   }
 
-  // Helper to generate unique IDs for subtasks
   private generateId(): string {
     return Date.now().toString(36) + Math.random().toString(36).substring(2);
   }
 
-  // Contact Helper Methods (von ContactsService)
   getInitials(name: string): string {
     return this.contactsService.getInitials(name);
   }
@@ -315,11 +317,6 @@ export class AddTask implements OnInit, OnDestroy {
     return this.contactsService.getIconColorClass(contact);
   }
 
-  // ============= VALIDATION METHODS =============
-
-  /**
-   * Checks if a specific field is valid
-   */
   isFieldValid(fieldName: string): boolean {
     if (fieldName === 'category') {
       return this.selectedCategory !== 'Select category';
@@ -329,29 +326,18 @@ export class AddTask implements OnInit, OnDestroy {
     return !!value && (typeof value !== 'string' || value.trim() !== '');
   }
 
-  /**
-   * Updates error state for a specific field
-   */
   private updateFieldError(fieldName: string): void {
     this.fieldErrors[fieldName] = !this.isFieldValid(fieldName);
   }
 
-  /**
-   * Called when user types in a field - clears error for that field
-   */
   onFieldInput(fieldName: string): void {
     if (this.fieldErrors[fieldName]) {
       this.updateFieldError(fieldName);
     }
   }
 
-  /**
-   * Validates all required fields and updates error states
-   */
   validateAllFields(): boolean {
     let isValid = true;
-
-    // Check each required field
     for (const field of this.requiredFields) {
       const fieldValid = this.isFieldValid(field);
       this.fieldErrors[field] = !fieldValid;
@@ -359,17 +345,11 @@ export class AddTask implements OnInit, OnDestroy {
         isValid = false;
       }
     }
-
     return isValid;
   }
 
-  /**
-   * Marks form as submitted and validates all fields
-   */
   private markFormAsSubmitted(): void {
     this.formSubmitted = true;
-
-    // Mark all ngModel fields as touched
     if (this.taskForm) {
       Object.keys(this.taskForm.controls).forEach((key) => {
         const control = this.taskForm.controls[key];
@@ -378,20 +358,16 @@ export class AddTask implements OnInit, OnDestroy {
     }
   }
 
-  // Neue Methode für Category-Blur
   onCategoryBlur() {
     this.closeCategoryDropdown();
-    // Update error state based on current value
     this.updateFieldError('category');
   }
 
-  // Form Handling
   isFormValid(): boolean {
     return this.requiredFields.every((field) => this.isFieldValid(field));
   }
 
   async onSubmit() {
-    // Mark form as submitted and validate all fields
     this.markFormAsSubmitted();
 
     if (!this.validateAllFields()) {
@@ -399,13 +375,9 @@ export class AddTask implements OnInit, OnDestroy {
     }
 
     try {
-      // Setze die Kategorie basierend auf der Auswahl
       this.taskData.category = this.selectedCategory as 'User Story' | 'Technical Task';
-
       await this.tasksService.addTask(this.taskData as SingleTask);
       this.clearForm();
-      // Optional: Navigate to board or show success message
-
       this.tasksService.openTaskSuccessDialog();
     } catch (error) {
       console.error('Error adding task:', error);
@@ -413,7 +385,6 @@ export class AddTask implements OnInit, OnDestroy {
   }
 
   clearForm() {
-    this.tasksService.resetStatus();
     this.tasksService.resetStatus();
     this.taskData.status = this.statusCondition;
     this.taskData.title = '';
@@ -424,29 +395,18 @@ export class AddTask implements OnInit, OnDestroy {
     this.taskData.category = 'User Story';
     this.taskData.subtasks = [];
     this.taskData.order = 0;
-    // Reset dropdowns
     this.selectedOption = 'Select contacts to assign';
     this.selectedCategory = 'Select category';
     this.newSubtaskTitle = '';
-
-    // Reset validation flags
     this.formSubmitted = false;
-    this.fieldErrors = {
-      title: false,
-      dueDate: false,
-      category: false,
-    };
+    this.fieldErrors = { title: false, dueDate: false, category: false };
 
-    // Reset form validation states
     if (this.taskForm) {
       this.taskForm.resetForm();
     }
 
-    // Schließe alle offenen Dropdowns
     this.isOpen = false;
     this.isCategoryOpen = false;
-
-    // Reset edit mode - NEU HINZUGEFÜGT
     this.cancelSubtaskEdit();
     this.updateAssignedAvatarsPreview();
   }
@@ -467,14 +427,8 @@ export class AddTask implements OnInit, OnDestroy {
     this.selectedCategory = currenTask.category;
     this.updateSelectedOptionText();
     this.updateAssignedAvatarsPreview();
-
-    // Reset validation state when loading existing task
     this.formSubmitted = false;
-    this.fieldErrors = {
-      title: false,
-      dueDate: false,
-      category: false,
-    };
+    this.fieldErrors = { title: false, dueDate: false, category: false };
   }
 
   getFullTask(): SingleTask {
