@@ -95,7 +95,6 @@
   border-radius: 30px;
   padding: 48px 115px;
   width: 650px;
-  // Höhe automatisch anpassen für Fehlermeldungen
   min-height: 450px;
   height: auto;
   display: flex;
@@ -219,11 +218,6 @@
     &.ng-invalid.ng-touched {
       border-color: #c62828;
       background-color: #fff8f8;
-    }
-
-    // Style für gültige Eingaben
-    &.ng-valid.ng-touched {
-      border-color: #2e7d32;
     }
 
     // Deaktivierter State für Loading
