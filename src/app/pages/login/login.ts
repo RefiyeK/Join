@@ -115,8 +115,7 @@ export class Login implements OnInit {
    * Leitet direkt zur Summary-Seite
    */
   guestLogin() {
-    // Hier kommt später die Guest Login Logik
-    // Erstmal nur Weiterleitung ohne Firebase
+    this.authService.loggetInUserUid.set('guest');
     this.router.navigate(['/summary']);
   }
 }

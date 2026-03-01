@@ -9,8 +9,10 @@
           <!-- Mobile Greeting Screen -->
           @if (isMobile && showGreeting) {
             <div class="mobile-greeting">
-              <p class="greeting-text">Good morning,</p>
-              <p class="greeting-name">Sofia Müller</p>
+              <p class="greeting-text">Good morning@if (loggedInUserName){,}</p>
+              @if (loggedInUserName) {
+              <p class="greeting-name">{{ loggedInUserName }}</p>
+              }
             </div>
           }
 
@@ -86,7 +88,7 @@
                 </div>
 
                 <div class="summary-greeting">
-                  <p class="greeting-text">Good morning!@if (loggedInUserName){,}</p>
+                  <p class="greeting-text">Good morning@if (loggedInUserName){,} @if (!loggedInUserName){!}</p>
                   @if (loggedInUserName) {
                     <p class="greeting-name">{{ loggedInUserName }}</p>
                   }
