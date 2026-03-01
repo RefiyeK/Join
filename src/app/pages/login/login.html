@@ -4,72 +4,83 @@
     <img src="assets/icons/logo-dark.png" alt="Join Logo" class="logo" />
   </div>
 
-  <!-- Sağ üst: Sign up -->
+  <!-- Registrierungshinweis oben rechts -->
   <div class="signup-hint">
     <span class="signup-text">Not a Join user?</span>
     <button class="btn-primary" routerLink="/sign-up">Sign up</button>
   </div>
 
-  <!-- Login Formu -->
+  <!-- Login-Formular -->
   <div class="login-container" [class.form--visible]="formVisible">
     <div class="login-card">
       <h1>Log in</h1>
       <div class="title-underline"></div>
 
-      <!-- Fehlermeldung mit @if -->
+      <!-- E-Mail Eingabefeld -->
+      <div class="input-wrapper" [class.error]="emailError">
+        <input
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="email"
+          name="email"
+          (input)="emailError = false"
+        />
+        <img src="assets/icons/mail.svg" alt="E-Mail" />
+      </div>
+
+      <!-- Passwort Eingabefeld mit Sichtbarkeitsumschalter -->
+      <div class="input-wrapper" [class.error]="passwordError">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Password"
+          [(ngModel)]="password"
+          name="password"
+          (input)="passwordError = false"
+        />
+        @if (!password) {
+        <img src="assets/icons/lock.svg" alt="Passwort" class="icon-lock" />
+          } @else if (showPassword) {
+        <img
+          src="assets/icons/visibility.svg"
+          alt="Passwort verbergen"
+          class="password-icon toggle-password"
+          (click)="showPassword = false"
+        />
+        } @else {
+        <img
+          src="assets/icons/visibility_off.svg"
+          alt="Passwort anzeigen"
+          class="password-icon toggle-password"
+          (click)="showPassword = true"
+        />
+        }
+    </div>
+
+     <!-- Fehlermeldung -->
       @if (errorMessage) {
-        <div class="error-message">
-          {{ errorMessage }}
+        <div class="error-message">{{ errorMessage }}</div>
+      }
+
+
+      <!-- Ladeindikator -->
+      @if (isLoading) {
+        <div class="loading-spinner">
+          <span>Logging in…</span>
         </div>
       }
 
-      <!-- Login Form mit ngSubmit -->
-      <form (ngSubmit)="login()">
-        <div class="input-wrapper" [class.error]="emailError">
-          <input
-            type="email"
-            placeholder="Email"
-            [(ngModel)]="email"
-            name="email"
-            required
-            #emailInput="ngModel"
-            (input)="emailError = false"
-          />
-          <img src="assets/icons/mail.svg" alt="Email" />
-        </div>
+      <!-- Aktionsbuttons -->
+      <div class="login-buttons">
+        <button class="btn-primary" (click)="login()" [disabled]="isLoading">Log in</button>
+        <button class="btn-outline" (click)="guestLogin()" [disabled]="isLoading">Guest Log in</button>
+      </div>
 
-        <div class="input-wrapper" [class.error]="passwordError">
-          <input
-            type="password"
-            placeholder="Password"
-            [(ngModel)]="password"
-            name="password"
-            required
-            #passwordInput="ngModel"
-            (input)="passwordError = false"
-          />
-          <img src="assets/icons/lock.svg" alt="Password" />
-        </div>
-
-        <!-- Lade-Indikator mit @if -->
-        @if (isLoading) {
-          <div class="loading-spinner">
-            <span>Logging in…</span>
-          </div>
-        }
-
-        <div class="login-buttons">
-          <button type="submit" class="btn-primary" [disabled]="isLoading">Log in</button>
-          <button type="button" class="btn-outline" (click)="guestLogin()" [disabled]="isLoading">
-            Guest Log in
-          </button>
-        </div>
-      </form>
     </div>
   </div>
 
-  <!-- Footer: sayfanın en altında -->
+  <!-- Fußzeile -->
   <div class="login-footer">
-      <a routerLink="/privacy-policy" data-text="Privacy Policy">Privacy Policy</a>
-      <a routerLink="/imprint" data-text="Legal notice">Legal notice</a>
+    <a routerLink="/privacy-policy" data-text="Privacy Policy">Privacy Policy</a>
+    <a routerLink="/imprint" data-text="Legal notice">Legal notice</a>
+  </div>
 </div>

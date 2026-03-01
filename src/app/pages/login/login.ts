@@ -14,6 +14,7 @@ import { AuthService } from '../../services/auth-service';
 export class Login implements OnInit {
   logoAnimated = false;
   formVisible = false;
+  showPassword = false;
 
   private router = inject(Router);
   private authService = inject(AuthService);
@@ -83,7 +84,7 @@ export class Login implements OnInit {
         case 'auth/invalid-credential':
         case 'auth/user-not-found':
         case 'auth/wrong-password':
-          this.errorMessage = 'Incorrect email or password';
+          this.errorMessage = 'Incorrect your email or password. Please try again.';
           break;
         case 'auth/invalid-email':
           this.errorMessage = 'Ungültiges E-Mail-Format';
