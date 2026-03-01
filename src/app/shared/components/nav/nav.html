@@ -29,6 +29,7 @@
       <a 
         [routerLink]="link.route" 
         routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
         class="nav__footer-link"
         [attr.data-text]="link.label"
       >
