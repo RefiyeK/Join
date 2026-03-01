@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Header } from '../../shared/components/header/header';
 import { Nav } from '../../shared/components/nav/nav';
 import { TasksService } from '../../services/tasks-service';
+import { ContactsService } from '../../services/contacts-service';
+import { AuthService } from '../../services/auth-service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
@@ -14,6 +16,8 @@ import { Subscription } from 'rxjs';
 })
 export class Summary implements OnInit, OnDestroy {
   tasksService = inject(TasksService);
+  contactsService = inject(ContactsService);
+  authService = inject(AuthService);
   breakpointObserver = inject(BreakpointObserver);
 
   todoHover = false;
@@ -24,16 +28,11 @@ export class Summary implements OnInit, OnDestroy {
   private bpSub!: Subscription;
   private greetingTimeout!: ReturnType<typeof setTimeout>;
 
-  currentUserName: string = 'Sofia Müller';
-
   constructor() {
     document.body.classList.add('summary-page');
   }
 
   ngOnInit(): void {
-    document.body.classList.remove('summary-page');
-    this.bpSub?.unsubscribe();
-    clearTimeout(this.greetingTimeout);
     this.bpSub = this.breakpointObserver
       .observe(['(max-width: 1024px)'])
       .subscribe((result) => {
@@ -47,8 +46,14 @@ export class Summary implements OnInit, OnDestroy {
       });
   }
 
+  get loggedInUserName(): string {
+    const uid = this.authService.loggetInUserUid();
+    if (!uid) return '';
+    const contact = this.contactsService.contacts.find(c => c.uid === uid);
+    return contact?.name ?? '';
+  }
 
-      get todoCount(): number {
+  get todoCount(): number {
     return this.tasksService.tasks.filter(t => t.status === 'To do').length;
   }
 
@@ -71,10 +76,10 @@ export class Summary implements OnInit, OnDestroy {
   get urgentCount(): number {
     return this.tasksService.tasks.filter(t => t.priority === 'Urgent').length;
   }
-  
+
   ngOnDestroy(): void {
+    document.body.classList.remove('summary-page');
     this.bpSub?.unsubscribe();
     clearTimeout(this.greetingTimeout);
   }
 }
-

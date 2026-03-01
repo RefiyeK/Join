@@ -86,7 +86,10 @@
                 </div>
 
                 <div class="summary-greeting">
-                  <p class="greeting-text">Good morning,</p>
+                  <p class="greeting-text">Good morning!@if (loggedInUserName){,}</p>
+                  @if (loggedInUserName) {
+                    <p class="greeting-name">{{ loggedInUserName }}</p>
+                  }
                 </div>
               </div>
 
