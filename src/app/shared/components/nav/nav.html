@@ -1,18 +1,25 @@
 <nav class="nav">
 
-    <div class="nav__logo">
+  <div class="nav__logo">
     <img src="assets/icons/logo-light.svg" alt="Join Logo" />
-    </div>
+  </div>
 
   <div class="nav__menu">
-    @for (item of menuItems; track item.route) {
-      <a 
-        [routerLink]="item.route" 
-        routerLinkActive="active"
-        class="nav__link"
-      >
-        <img [src]="'assets/icons/' + item.icon + '.svg'" [alt]="item.label" />
-        <span>{{ item.label }}</span>
+    @if (authService.loggetInUserUid()) {
+      @for (item of menuItems; track item.route) {
+        <a 
+          [routerLink]="item.route" 
+          routerLinkActive="active"
+          class="nav__link"
+        >
+          <img [src]="'assets/icons/' + item.icon + '.svg'" [alt]="item.label" />
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    } @else {
+      <a routerLink="/login" class="nav__link">
+        <img src="assets/icons/login.svg" alt="Login" />
+        <span>Log In</span>
       </a>
     }
   </div>

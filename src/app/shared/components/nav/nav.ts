@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../../services/auth-service';
 
 
 /**
@@ -45,6 +46,8 @@ interface FooterLink {
 
 
 export class Nav {
+  authService = inject(AuthService);
+
   /**
    * Main navigation menu items displayed in sidebar/bottom bar
    * @protected
