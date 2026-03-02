@@ -20,13 +20,20 @@ export class Login implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
 
-  /**
-   * Initialisiert die Animationen für das Logo und das Formular
-   */
+  // Form variables
+  email: string = '';
+  password: string = '';
+  errorMessage: string = '';
+  isLoading: boolean = false;
+
+  // Input error styling flags
+  emailError: boolean = false;
+  passwordError: boolean = false;
+
+  /** Initializes the logo and form animations */
   ngOnInit(): void {
     const firstVisit = !sessionStorage.getItem('logoAnimationPlayed');
     sessionStorage.setItem('logoAnimationPlayed', 'true');
-
     if (firstVisit) {
       setTimeout(() => {
         this.logoAnimated = true;
@@ -41,60 +48,36 @@ export class Login implements OnInit {
     }
   }
 
-  /**
-   * Login mit E-Mail und Passwort
-   */
-
-  // Formular Variablen
-  email: string = '';
-  password: string = '';
-  errorMessage: string = '';
-  isLoading: boolean = false;
-
-  // Für Input Error Styling
-  emailError: boolean = false;
-  passwordError: boolean = false;
-
-  /**
-   * Führt den Login aus und behandelt Fehler sowie Weiterleitung
-   */
+  /** Performs login and handles errors and redirection */
   async login() {
     this.emailError = false;
     this.passwordError = false;
-
     if (!this.email || !this.password) {
       this.errorMessage = 'Please enter email and password';
       if (!this.email) this.emailError = true;
       if (!this.password) this.passwordError = true;
       return;
     }
-
     this.isLoading = true;
     this.errorMessage = '';
-
     try {
       const userCredential = await this.authService.login(this.email, this.password);
       this.authService.loggetInUserUid.set(userCredential.user.uid);
-
-      // Erfolgreich eingeloggt
       localStorage.setItem('uid', userCredential.user.uid);
-
-      // Weiterleitung zur Summary-Seite
+      // Redirect to summary page
       this.router.navigate(['/summary']);
     } catch (error: any) {
-      // Fehlerbehandlung
       this.emailError = true;
       this.passwordError = true;
-
-      // Firebase Fehlercodes auswerten
+      // Evaluate Firebase error codes
       switch (error.code) {
         case 'auth/invalid-credential':
         case 'auth/user-not-found':
         case 'auth/wrong-password':
-          this.errorMessage = 'Incorrect your email or password. Please try again.';
+          this.errorMessage = 'Incorrect email or password. Please try again.';
           break;
         case 'auth/invalid-email':
-          this.errorMessage = 'Ungültiges E-Mail-Format';
+          this.errorMessage = 'Invalid email format';
           this.passwordError = false;
           break;
         case 'auth/too-many-requests':
@@ -117,10 +100,7 @@ export class Login implements OnInit {
     }
   }
 
-  /**
-   * Guest Login - ohne automatische Testdaten
-   * Leitet direkt zur Summary-Seite
-   */
+  /** Guest login - redirects directly to the summary page */
   guestLogin() {
     this.authService.loggetInUserUid.set('guest');
     this.router.navigate(['/summary']);

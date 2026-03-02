@@ -1,5 +1,5 @@
 // ============================================================
-// Login Seiten-Layout
+// Login Page Layout
 // ============================================================
 
 .login-page {
@@ -51,7 +51,7 @@
   transition: all 0.8s ease-in-out;
 }
 
-// Deaktiviert alle Animationen bei wiederholtem Besuch der Login-Seite
+// Disables all animations on repeated visits to the login page
 .logo--no-transition,
 .logo--no-transition .logo {
   transition: none;
@@ -92,14 +92,14 @@
     opacity: 1;
   }
 
-  // Formular sofort sichtbar ohne Fade-In bei wiederholtem Besuch
+  // Form immediately visible without fade-in on repeated visits
   &.form--no-transition {
     transition: none;
   }
 }
 
 // ============================================================
-// Login Karte
+// Login Card
 // ============================================================
 
 .login-card {
@@ -129,7 +129,7 @@
 }
 
 // ============================================================
-// Fehlermeldung
+// Error Message
 // ============================================================
 
 .error-message {
@@ -191,7 +191,7 @@
 }
 
 // ============================================================
-// Input Felder
+// Input Fields
 // ============================================================
 
 .input-wrapper {
@@ -217,18 +217,18 @@
       color: var(--color-light-grey);
     }
 
-    // Style für ungültige Eingaben (leere Felder)
+    // Style for invalid inputs (empty fields)
     &.ng-invalid.ng-touched {
       border-color: #c62828;
       background-color: #fff8f8;
     }
 
-    // Style für gültige Eingaben
+    // Style for valid inputs
     &.ng-valid.ng-touched {
       border-color: var(--color-light-blue);
     }
 
-    // Deaktivierter State für Loading
+    // Disabled state during loading
     &:disabled {
       background-color: #f5f5f5;
       cursor: not-allowed;
@@ -248,7 +248,7 @@
 }
 
 // ============================================================
-// Input Error State (bei falschen Anmeldedaten)
+// Input Error State (wrong credentials)
 // ============================================================
 
 .input-wrapper.error {
@@ -268,17 +268,12 @@
   100% {
     transform: translateX(0);
   }
-  10%,
-  30%,
-  50%,
-  70%,
-  90% {
+  10%,30%,50%,70%,90% 
+  {
     transform: translateX(-2px);
   }
-  20%,
-  40%,
-  60%,
-  80% {
+  20%,40%,60%,80% 
+  {
     transform: translateX(2px);
   }
 }
@@ -391,7 +386,7 @@
 }
 
 // ============================================================
-// Responsive Anpassungen
+// Responsive Adjustments
 // ============================================================
 
 @media (max-width: 768px) {
@@ -436,6 +431,7 @@
     width: 60px;
     height: 80px;
   }
+
   .login-buttons {
     flex-direction: column;
     align-items: center;
