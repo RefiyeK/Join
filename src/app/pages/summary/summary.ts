@@ -39,17 +39,15 @@ export class Summary implements OnInit, OnDestroy {
    * Initialisiert die Komponente und setzt das Greeting auf Mobilgeräten
    */
   ngOnInit(): void {
-    this.bpSub = this.breakpointObserver
-      .observe(['(max-width: 1024px)'])
-      .subscribe((result) => {
-        this.isMobile = result.matches;
-        if (this.isMobile) {
-          this.showGreeting = true;
-          this.greetingTimeout = setTimeout(() => {
-            this.showGreeting = false;
-          }, 2000);
-        }
-      });
+    this.bpSub = this.breakpointObserver.observe(['(max-width: 1024px)']).subscribe((result) => {
+      this.isMobile = result.matches;
+      if (this.isMobile) {
+        this.showGreeting = true;
+        this.greetingTimeout = setTimeout(() => {
+          this.showGreeting = false;
+        }, 2000);
+      }
+    });
   }
 
   /**
@@ -58,7 +56,7 @@ export class Summary implements OnInit, OnDestroy {
   get loggedInUserName(): string {
     const uid = this.authService.loggetInUserUid();
     if (!uid) return '';
-    const contact = this.contactsService.contacts.find(c => c.uid === uid);
+    const contact = this.contactsService.contacts.find((c) => c.uid === uid);
     return contact?.name ?? '';
   }
 
@@ -66,28 +64,28 @@ export class Summary implements OnInit, OnDestroy {
    * Anzahl der "To do"-Tasks
    */
   get todoCount(): number {
-    return this.tasksService.tasks.filter(t => t.status === 'To do').length;
+    return this.tasksService.tasks.filter((t) => t.status === 'To do').length;
   }
 
   /**
    * Anzahl der "Done"-Tasks
    */
   get doneCount(): number {
-    return this.tasksService.tasks.filter(t => t.status === 'Done').length;
+    return this.tasksService.tasks.filter((t) => t.status === 'Done').length;
   }
 
   /**
    * Anzahl der "In progress"-Tasks
    */
   get inProgressCount(): number {
-    return this.tasksService.tasks.filter(t => t.status === 'In progress').length;
+    return this.tasksService.tasks.filter((t) => t.status === 'In progress').length;
   }
 
   /**
    * Anzahl der "Await feedback"-Tasks
    */
   get awaitFeedbackCount(): number {
-    return this.tasksService.tasks.filter(t => t.status === 'Await feedback').length;
+    return this.tasksService.tasks.filter((t) => t.status === 'Await feedback').length;
   }
 
   /**
@@ -101,7 +99,24 @@ export class Summary implements OnInit, OnDestroy {
    * Anzahl der "Urgent"-Tasks
    */
   get urgentCount(): number {
-    return this.tasksService.tasks.filter(t => t.priority === 'Urgent').length;
+    return this.tasksService.tasks.filter((t) => t.priority === 'Urgent').length;
+  }
+
+  /**
+   * Formatiert das Datum der nächsten Deadline für die Anzeige.
+   * Gibt z. B. "March 15, 2026" zurück.
+   * Falls kein Task mit Deadline existiert, wird "No deadline" angezeigt.
+   * @returns Formatiertes Datum als lesbarer String
+   */
+  get formattedUpcomingDeadline(): string {
+    const task = this.tasksService.upcomingTask;
+    if (!task?.dueDate) return 'No deadline';
+    const date = new Date(task.dueDate);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
   }
 
   /**
