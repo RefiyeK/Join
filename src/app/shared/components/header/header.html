@@ -1,9 +1,8 @@
 <section class="header-outer" (click)="closeDropdown()">
   <div class="header-container">
     <img class="header-logo" src="assets/icons/logo-dark.svg" alt="Join Logo" />
-      @if (authService.loggetInUserUid()) {
-    <p class="project-management-tool">Kanban Project Management Tool</p>
-
+      <p class="project-management-tool">Kanban Project Management Tool</p>
+    @if (authService.loggetInUserUid()) {
     <div class="help-and-profile">
       <a routerLink="/help">
         <img class="help-icon" src="assets/icons/help.png" alt="help_icon" />
