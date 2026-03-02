@@ -36,18 +36,35 @@ export class Summary implements OnInit, OnDestroy {
   }
 
   /**
-   * Initialisiert die Komponente und setzt das Greeting auf Mobilgeräten
+   * Initializes the component.
+   * Checks if the greeting has already been displayed (sessionStorage).
+   * Mobile: Greeting is hidden after 2 seconds.
+   * Desktop: Greeting is only shown on the first visit.
    */
   ngOnInit(): void {
+    const alreadyGreeted = sessionStorage.getItem('greetingShown');
+    if (alreadyGreeted) {
+      this.showGreeting = false;
+    } else {
+      sessionStorage.setItem('greetingShown', 'true');
+    }
+
     this.bpSub = this.breakpointObserver.observe(['(max-width: 1024px)']).subscribe((result) => {
       this.isMobile = result.matches;
-      if (this.isMobile) {
-        this.showGreeting = true;
-        this.greetingTimeout = setTimeout(() => {
-          this.showGreeting = false;
-        }, 2000);
-      }
+      this.handleMobileGreeting();
     });
+  }
+
+  /**
+   * Controls the greeting behavior on mobile devices.
+   * Shows the greeting for 2 seconds, then hides it.
+   * Only executed if the greeting has not been shown yet.
+   */
+  private handleMobileGreeting(): void {
+    if (!this.isMobile || !this.showGreeting) return;
+    this.greetingTimeout = setTimeout(() => {
+      this.showGreeting = false;
+    }, 2000);
   }
 
   /**

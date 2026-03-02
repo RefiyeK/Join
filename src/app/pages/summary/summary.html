@@ -87,12 +87,14 @@
 
                 </div>
 
-                <div class="summary-greeting">
-                  <p class="greeting-text">Good morning@if (loggedInUserName){,} @if (!loggedInUserName){!}</p>
-                  @if (loggedInUserName) {
-                    <p class="greeting-name">{{ loggedInUserName }}</p>
-                  }
-                </div>
+                @if (showGreeting) {
+                  <div class="summary-greeting">
+                    <p class="greeting-text">Good morning@if (loggedInUserName){,} @if (!loggedInUserName){!}</p>
+                    @if (loggedInUserName) {
+                      <p class="greeting-name">{{ loggedInUserName }}</p>
+                    }
+                  </div>
+                }
               </div>
 
             </div>
