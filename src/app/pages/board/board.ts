@@ -20,11 +20,11 @@ import { AddTaskDialog } from './add-task-dialog/add-task-dialog';
 import { RouterLink } from '@angular/router';
 
 /**
- * Board – Kanban-Board mit 4 Spalten, Drag & Drop und Task-Detail-Dialog.
+ * Board – Kanban board with 4 columns, drag & drop, and task detail dialog.
  *
- * Bezieht alle Tasks aus dem TasksService (Firebase Echtzeit-Daten).
- * Klick auf eine Karte öffnet den Detail-Dialog.
- * Drag & Drop nutzt Angular CDK für Verschiebung und Sortierung.
+ * Gets all tasks from TasksService (Firebase real-time data).
+ * Clicking a card opens the detail dialog.
+ * Drag & drop uses Angular CDK for reordering and moving between columns.
  */
 @Component({
   selector: 'app-board',
@@ -44,17 +44,15 @@ import { RouterLink } from '@angular/router';
   styleUrl: './board.scss',
 })
 export class Board implements OnDestroy {
-  /** Zugriff auf den zentralen TasksService (Firebase-Daten). */
+  /** Central TasksService for Firebase data access */
   tasksService = inject(TasksService);
   private breakpointObserver = inject(BreakpointObserver);
 
-  /** Suchbegriff für die Task-Filterung. */
+  /** Search term for task filtering */
   searchTerm = '';
   isMobile = false;
 
-  /**
-   * Initialisiert die Board-Seite und setzt die mobile Ansicht
-   */
+  /** Initializes the board page and sets up mobile view detection */
   constructor() {
     this.breakpointObserver.observe(['(max-width: 768px)']).subscribe((result) => {
       this.isMobile = result.matches;
@@ -62,18 +60,16 @@ export class Board implements OnDestroy {
     document.body.classList.add('board-page');
   }
 
-  /**
-   * Entfernt die CSS-Klasse beim Zerstören der Komponente
-   */
+  /** Removes the CSS class when the component is destroyed */
   ngOnDestroy(): void {
     document.body.classList.remove('board-page');
   }
 
   /**
-   * Filtert Tasks nach Status, sortiert nach order-Feld.
-   * Wendet optional den Suchbegriff an.
-   * @param status - Der Spalten-Status ('To do', 'In progress', etc.)
-   * @returns Sortierte und gefilterte Tasks für diese Spalte
+   * Filters tasks by status, sorted by order field.
+   * Optionally applies the search term.
+   * @param status - The column status ('To do', 'In progress', etc.)
+   * @returns Sorted and filtered tasks for this column
    */
   getTasksByStatus(status: string): SingleTask[] {
     return this.tasksService.tasks
@@ -88,30 +84,30 @@ export class Board implements OnDestroy {
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
   }
 
-  /** Gibt alle Tasks mit Status 'To do' zurück, sortiert nach Position. */
+  /** Returns all tasks with status 'To do', sorted by position */
   get todoTasks(): SingleTask[] {
     return this.getTasksByStatus('To do');
   }
 
-  /** Gibt alle Tasks mit Status 'In progress' zurück, sortiert nach Position. */
+  /** Returns all tasks with status 'In progress', sorted by position */
   get inProgressTasks(): SingleTask[] {
     return this.getTasksByStatus('In progress');
   }
 
-  /** Gibt alle Tasks mit Status 'Await feedback' zurück, sortiert nach Position. */
+  /** Returns all tasks with status 'Await feedback', sorted by position */
   get awaitFeedbackTasks(): SingleTask[] {
     return this.getTasksByStatus('Await feedback');
   }
 
-  /** Gibt alle Tasks mit Status 'Done' zurück, sortiert nach Position. */
+  /** Returns all tasks with status 'Done', sorted by position */
   get doneTasks(): SingleTask[] {
     return this.getTasksByStatus('Done');
   }
 
   /**
-   * Verarbeitet das Drop-Event nach Drag & Drop.
-   * Unterscheidet: gleiche Spalte (umsortieren) vs. andere Spalte (verschieben).
-   * @param event - Das CDK Drop-Event
+   * Handles the drop event after drag & drop.
+   * Distinguishes: same column (reorder) vs. different column (move).
+   * @param event - The CDK drop event
    */
   onTaskDrop(event: CdkDragDrop<SingleTask[]>): void {
     if (event.previousContainer === event.container) {
@@ -122,8 +118,8 @@ export class Board implements OnDestroy {
   }
 
   /**
-   * Sortiert eine Karte innerhalb derselben Spalte um.
-   * @param event - Das CDK Drop-Event
+   * Reorders a card within the same column.
+   * @param event - The CDK drop event
    */
   private handleSameColumnDrop(event: CdkDragDrop<SingleTask[]>): void {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -132,9 +128,9 @@ export class Board implements OnDestroy {
   }
 
   /**
-   * Verschiebt eine Karte von einer Spalte in eine andere.
-   * Speichert beide Spalten mit neuen Positionen.
-   * @param event - Das CDK Drop-Event
+   * Moves a card from one column to another.
+   * Saves both columns with updated positions.
+   * @param event - The CDK drop event
    */
   private handleCrossColumnDrop(event: CdkDragDrop<SingleTask[]>): void {
     transferArrayItem(
@@ -150,17 +146,17 @@ export class Board implements OnDestroy {
   }
 
   /**
-   * Öffnet den Task-Detail-Dialog.
-   * Delegiert an den TasksService, der activeTask setzt.
-   * @param taskId - Die ID der angeklickten Task
+   * Opens the task detail dialog.
+   * Delegates to TasksService which sets activeTask.
+   * @param taskId - The ID of the clicked task
    */
   openTaskDialog(taskId: string): void {
     this.tasksService.openTaskDialog(taskId);
   }
 
   /**
-   * Liest den Suchbegriff aus dem Input-Feld.
-   * @param event - Das native Input-Event
+   * Reads the search term from the input field.
+   * @param event - The native input event
    */
   onSearch(event: Event): void {
     const input = event.target as HTMLInputElement;

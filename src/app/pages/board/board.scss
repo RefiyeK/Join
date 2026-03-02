@@ -1,15 +1,15 @@
 /* ================================================================
- * board.scss – Layout für die Board-Seite (Kanban).
- * Nutzt globale CSS-Variablen aus styles.scss.
+ * board.scss – Layout for the Board page (Kanban).
+ * Uses global CSS variables from styles.scss.
  * ================================================================ */
 
-/* Seiten-Container */
+/* Page Container */
 main {
   width: 100%;
   height: 100vh;
 }
 
-/* Äußerer Wrapper: Hintergrund über volle Breite */
+/* Outer Wrapper: Background across full width */
 .board__outer {
   display: flex;
   background-color: var(--color-bg-light);
@@ -17,14 +17,14 @@ main {
   height: 100%;
 }
 
-/* Hauptcontainer: Nav + Board nebeneinander */
+/* Main Container: Nav + Board side by side */
 .board-main-container {
   display: flex;
   width: 100%;
   height: 100%;
 }
 
-/* Board-Wrapper: Header + Content als Spalte */
+/* Board Wrapper: Header + Content as column */
 .board-wrapper {
   display: flex;
   flex-direction: column;
@@ -32,7 +32,7 @@ main {
   height: 100%;
 }
 
-/* Komponenten-Dimensionen */
+/* Component Dimensions */
 app-header {
   height: 96px;
   width: 100%;
@@ -46,7 +46,7 @@ app-nav {
 }
 
 /* ================================================================
- * Board Content – scrollbarer Bereich unter dem Header
+ * Board Content – Scrollable area below the header
  * ================================================================ */
 .board-content {
   flex: 1;
@@ -58,7 +58,7 @@ app-nav {
   overflow-y: auto;
 }
 
-/* Inner Wrapper: Begrenzt den Inhalt auf max. 1208px */
+/* Inner Wrapper: Limits content to max 1208px */
 .board-inner {
   display: flex;
   flex-direction: column;
@@ -69,8 +69,8 @@ app-nav {
 }
 
 /* ================================================================
- * Board Header (Titel + Suche + Add Task Button)
- * font-size kommt global (h1 = 61px), margin kommt global (* = 0).
+ * Board Header (Title + Search + Add Task Button)
+ * font-size comes from global (h1 = 61px), margin from global (* = 0).
  * ================================================================ */
 .board-header {
   display: flex;
@@ -105,7 +105,7 @@ app-nav {
   }
 }
 
-/* Suchfeld */
+/* Search Field */
 .search-box {
   position: relative;
 
@@ -141,7 +141,7 @@ app-nav {
 }
 
 /* ================================================================
- * Board Spalten (To do, In progress, Await feedback, Done)
+ * Board Columns (To do, In progress, Await feedback, Done)
  * ================================================================ */
 .board-columns {
   display: flex;
@@ -175,7 +175,7 @@ app-nav {
   }
 }
 
-/* Plus-Button in jeder Spalte */
+/* Plus button in each column */
 .add-task-btn {
   width: 30px;
   height: 30px;
@@ -200,7 +200,7 @@ app-nav {
 }
 
 /* ================================================================
- * Spalten-Inhalt (Drop Zone für CDK Drag & Drop)
+ * Column Content (Drop zone for CDK Drag & Drop)
  * ================================================================ */
 .column-content {
   flex: 1;
@@ -221,7 +221,7 @@ app-nav {
   }
 }
 
-/* Leerer Zustand einer Spalte */
+/* Empty state of a column */
 .empty-state {
   display: flex;
   align-items: center;
@@ -238,17 +238,17 @@ app-nav {
 
 /* ================================================================
  * Angular CDK Drag & Drop Styles
- * Diese Klassen werden automatisch von CDK gesetzt.
+ * These classes are automatically set by CDK.
  * ================================================================ */
 
-/* Platzhalter: Leere Box zeigt an, wo die Karte landen wird */
+/* Placeholder: Empty box shows where the card will land */
 .cdk-drag-placeholder {
   border: 2px dashed var(--color-light-grey);
   border-radius: 24px;
 }
 
-/* Vorschau: Die Karte am Cursor – rotate statt transform,
- * weil CDK inline transform: translate3d() setzt */
+/* Preview: The card at the cursor – uses rotate instead of transform
+ * because CDK sets inline transform: translate3d() */
 .cdk-drag-preview {
   border-radius: 24px;
   box-shadow: 0.2px 1px 1px rgba(0, 0, 0, 0.1);
@@ -257,16 +257,15 @@ app-nav {
   opacity: 0.9;
 }
 
-/* Animation: Karte gleitet sanft an ihre neue Position */
+/* Animation: Card slides smoothly to its new position */
 .cdk-drag-animating {
   transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Andere Karten rutschen sanft zur Seite während des Ziehens */
+/* Other cards slide smoothly aside during dragging */
 .cdk-drop-list-dragging .cdk-drag-placeholder ~ * {
   transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-
 
 /* ================================================================
  * Responsive Design
@@ -299,7 +298,6 @@ app-nav {
   }
 }
 
-
 @media (min-width: 1025px) and (max-width: 1260px) {
   .empty-state {
     max-width: 170px;
@@ -317,8 +315,12 @@ app-nav {
   .board-inner {
     padding: 80px 0 80px 28px;
   }
- }
+}
 
+/* ================================================================
+ * Tablet Breakpoint (max-width: 1024px)
+ * Nav becomes fixed bottom bar, columns stack vertically
+ * ================================================================ */
 @media (max-width: 1024px) {
   .board-inner {
     padding: 80px 24px;
@@ -380,7 +382,7 @@ app-nav {
     touch-action: pan-x pan-y;
   }
 
-  /* CDK drag disabled */
+  /* CDK drag disabled on touch */
   .cdk-drag {
     touch-action: pan-x !important;
   }
@@ -393,9 +395,9 @@ app-nav {
   }
 }
 
-/* ============================================
-   900px - 320px: Header Grid + Plus Button
-   ============================================ */
+/* ================================================================
+ * Small Screen (max-width: 900px) - Header Grid + Plus Button
+ * ================================================================ */
 @media (max-width: 900px) {
   .board-inner {
     padding: 80px 20px;
@@ -451,6 +453,9 @@ app-nav {
   }
 }
 
+/* ================================================================
+ * Extra Small (max-width: 350px)
+ * ================================================================ */
 @media (max-width: 350px) {
   .board-actions .btn-primary {
     width: 28px;
