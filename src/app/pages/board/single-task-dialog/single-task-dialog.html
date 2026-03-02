@@ -8,7 +8,7 @@
       (click)="onDialogContentClick($event)"
     >
       @if (!tasksService.editMode) {
-        <!-- ✅ Header: dialog-card-inner DIŞINDA, sabit -->
+        <!-- Header: Fixed, outside dialog-card-inner -->
         <div class="dialog-header">
           <span class="task-badge" [ngClass]="badgeClass">
             {{ task.category }}
@@ -25,7 +25,7 @@
           </button>
         </div>
 
-        <!-- ✅ Sadece scroll eden orta içerik -->
+        <!-- Scrollable middle content only -->
         <div class="dialog-card-inner">
           <h1 class="task-title">{{ task.title }}</h1>
           <p class="task-description">{{ task.description }}</p>
@@ -85,7 +85,7 @@
           }
         </div>
 
-        <!-- ✅ Footer: dialog-card-inner DIŞINDA, sabit -->
+        <!-- Footer: Fixed, outside dialog-card-inner -->
         <div class="dialog-footer">
           <button class="btn-delete" (click)="onDeleteTask()">
             <img src="assets/icons/delete.svg" alt="Delete" width="24" height="24" />
@@ -98,6 +98,7 @@
           </button>
         </div>
       } @else {
+        <!-- Edit Mode Header -->
         <div class="dialog-header dialog-header-edit-mode">
           <button
             class="close-btn"

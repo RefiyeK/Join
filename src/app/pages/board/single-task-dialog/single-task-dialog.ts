@@ -7,10 +7,10 @@ import { Subscription } from 'rxjs';
 import { AddTask } from '../../add-task/add-task';
 
 /**
- * SingleTaskDialog - Zeigt alle Details einer Task in einem großen Dialog.
+ * SingleTaskDialog – Displays all details of a task in a large dialog.
  *
- * Nutzt TasksService.activeTask für reaktive Daten-Anzeige.
- * Alle Änderungen (Subtask-Toggle, Delete) werden über den Service durchgeführt.
+ * Uses TasksService.activeTask for reactive data display.
+ * All changes (subtask toggle, delete) are performed via the service.
  */
 @Component({
   selector: 'app-single-task-dialog',
@@ -22,19 +22,15 @@ export class SingleTaskDialog implements OnInit, OnDestroy {
   tasksService = inject(TasksService);
   contactsService = inject(ContactsService);
 
-  /** Steuert die Slide-Out-Animation beim Schließen. */
+  /** Controls the slide-out animation when closing */
   isClosing = false;
 
   assignedUsers: AssignedAvatarItem[] = [];
   private contactsSubscription?: Subscription;
 
-  /**
-   * Initialisiert die Komponente und abonniert die Kontakte
-   */
+  /** Initializes the component and subscribes to contacts */
   ngOnInit(): void {
     this.updateAssignedUsersFromService();
-
-    // sorgt dafür, dass Contacts sicher vorhanden sind
     this.contactsService.loadContacts();
 
     this.contactsSubscription = this.contactsService.contacts$.subscribe(() => {
@@ -42,43 +38,32 @@ export class SingleTaskDialog implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * Bereinigt die Subscription beim Zerstören der Komponente
-   */
+  /** Cleans up the subscription when the component is destroyed */
   ngOnDestroy(): void {
     if (this.contactsSubscription) {
       this.contactsSubscription.unsubscribe();
     }
   }
 
-  /**
-   * Aktualisiert die Liste der zugewiesenen User aus dem Service
-   */
+  /** Updates the list of assigned users from the service */
   private updateAssignedUsersFromService(): void {
     const assignedIds = this.tasksService.activeTask?.assigned ?? [];
     const validAssignedIds = this.contactsService.sanitizeAssignedIds(assignedIds);
     this.assignedUsers = this.contactsService.buildAssignedUsers(validAssignedIds);
   }
 
-  /**
-   * Gibt die aktive Task aus dem Service zurück.
-   * Wird reaktiv aktualisiert durch onSnapshot.
-   */
+  /** Returns the active task from the service. Reactively updated via onSnapshot. */
   get task() {
     this.updateAssignedUsersFromService();
     return this.tasksService.activeTask;
   }
 
-  /**
-   * Gibt die CSS-Klasse für das Kategorie-Badge zurück.
-   */
+  /** Returns the CSS class for the category badge */
   get badgeClass(): string {
     return this.task?.category === 'User Story' ? 'badge-user-story' : 'badge-technical-task';
   }
 
-  /**
-   * Gibt den Pfad zum Priority-Icon zurück.
-   */
+  /** Returns the path to the priority icon */
   get priorityIcon(): string {
     const icons: { [key: string]: string } = {
       Urgent: 'assets/icons/prio-urgent.svg',
@@ -88,10 +73,7 @@ export class SingleTaskDialog implements OnInit, OnDestroy {
     return icons[this.task?.priority || 'Medium'] || icons['Medium'];
   }
 
-  /**
-   * Formatiert das Due-Date für Anzeige.
-   * Format: "DD/MM/YYYY"
-   */
+  /** Formats the due date for display. Format: "DD/MM/YYYY" */
   get formattedDueDate(): string {
     if (!this.task?.dueDate) return '';
     const date = new Date(this.task.dueDate);
@@ -102,9 +84,9 @@ export class SingleTaskDialog implements OnInit, OnDestroy {
   }
 
   /**
-   * Schließt den Dialog mit Slide-Out-Animation.
-   * Setzt isClosing auf true → CSS wechselt zu slide-out.
-   * Nach 500ms (Animationsdauer) wird activeTask auf null gesetzt.
+   * Closes the dialog with slide-out animation.
+   * Sets isClosing to true → CSS switches to slide-out.
+   * After 500ms (animation duration) activeTask is set to null.
    */
   closeDialog(): void {
     this.isClosing = true;
@@ -117,29 +99,20 @@ export class SingleTaskDialog implements OnInit, OnDestroy {
     }, 500);
   }
 
-  /**
-   * Löscht die aktuelle Task aus Firebase.
-   */
+  /** Deletes the current task from Firebase */
   async onDeleteTask(): Promise<void> {
     if (!this.task || !this.task.id) return;
-
     await this.tasksService.deleteTask(this.task.id);
     this.closeDialog();
   }
 
-  /**
-   * Toggled den completed-Status eines Subtasks.
-   */
+  /** Toggles the completed status of a subtask */
   async onSubtaskToggle(subtaskId: string, currentStatus: boolean): Promise<void> {
     if (!this.task || !this.task.id) return;
-
     await this.tasksService.updateSubtaskStatus(this.task.id, subtaskId, !currentStatus);
   }
 
-  /**
-   * Verhindert Event-Propagation beim Klick auf Dialog-Content.
-   * Damit schließt sich der Dialog nicht, wenn man ins Innere klickt.
-   */
+  /** Prevents event propagation when clicking on dialog content. Keeps dialog open on inner clicks. */
   onDialogContentClick(event: Event): void {
     event.stopPropagation();
   }
