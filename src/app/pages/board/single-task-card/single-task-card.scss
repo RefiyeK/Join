@@ -1,4 +1,15 @@
+/* ================================================================
+ * Host Element
+ * ================================================================ */
+:host {
+  width: 100%;
+  min-width: 150px;
+  display: block;
+}
 
+/* ================================================================
+ * Task Card
+ * ================================================================ */
 .task-card {
   background: #FFFFFF;
   border-radius: 24px;
@@ -11,18 +22,18 @@
   gap: 12px;
   width: 100%;
   min-width: 150px;
-
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.15);
   }
-
   &:active {
     cursor: grabbing;
     opacity: 0.8;
   }
 }
 
-// Category Badge
+/* ================================================================
+ * Category Badge
+ * ================================================================ */
 .task-badge {
   display: inline-block;
   padding: 4px 10px;
@@ -38,31 +49,32 @@
 
 .badge-technical-task {
   background-color: var(--category-technical-task);
-   margin-bottom: 14px;
+  margin-bottom: 14px;
 }
 
-// Task Title
+/* ================================================================
+ * Task Title
+ * ================================================================ */
 .task-title {
   font-size: 16px;
   color: var(--color-medium-blue);
   text-overflow: ellipsis;
   line-height: 1.4;
-  hyphens: auto; //Automatische Silbentrennung
-
+  hyphens: auto;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
   word-break: break-word;
 }
 
-// Task Description
+/* ================================================================
+ * Task Description
+ * ================================================================ */
 .task-description {
   color: var(--color-light-grey);
   line-height: 1.2;
-  hyphens: auto; // Automatische Silbentrennung
-
+  hyphens: auto;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -70,7 +82,9 @@
   text-overflow: ellipsis;
 }
 
-// Progress Bar Container
+/* ================================================================
+ * Progress Bar
+ * ================================================================ */
 .progress-container {
   display: flex;
   align-items: center;
@@ -97,7 +111,9 @@
   white-space: nowrap;
 }
 
-// Footer
+/* ================================================================
+ * Card Footer
+ * ================================================================ */
 .task-footer {
   display: flex;
   justify-content: space-between;
@@ -105,7 +121,9 @@
   margin-top: auto;
 }
 
-// Avatars Container
+/* ================================================================
+ * Avatars
+ * ================================================================ */
 .avatars {
   display: flex;
   align-items: center;
@@ -121,13 +139,12 @@
   color: white;
   border: 2px solid white;
   margin-left: -8px;
-
   &:first-child {
     margin-left: 0;
   }
 }
 
-// Avatar Counter (+X Badge)
+/* Avatar counter (+X badge) */
 .avatar-counter {
   background-color: var(--color-light-grey);
   color: var(--color-medium-blue);
@@ -135,13 +152,18 @@
   border: 2px solid white;
 }
 
-// Priority Icon
+/* ================================================================
+ * Priority Icon
+ * ================================================================ */
 .priority-icon {
   width: 17px;
   height: 12px;
   flex-shrink: 0;
 }
 
+/* ================================================================
+ * Responsive Design
+ * ================================================================ */
 @media (min-width: 1025px) and (max-width: 1125px) {
   :host {
     max-width: 180px;
@@ -149,6 +171,7 @@
   }
 }
 
+/* Tablet Breakpoint (max-width: 1024px) */
 @media (max-width: 1024px) {
   :host {
     width: 252px;
@@ -156,26 +179,19 @@
     max-width: 252px;
     flex-shrink: 0;
   }
-
-   .task-card {
+  .task-card {
     width: 100%;
     height: 100%;
   }
-
   .task-badge {
     padding: 3px 20px;
   }
 }
 
-@media (max-width: 768px) {  
+/* Mobile Breakpoint (max-width: 768px) */
+@media (max-width: 768px) {
   .priority-icon {
     width: 20px;
     height: 20px;
   }
-}
-
-:host {
-  width: 100%;
-  min-width: 150px;
-  display: block;
 }
