@@ -24,6 +24,8 @@ export class SignUp implements OnInit {
   @ViewChild('dialogRef') dialogRef!: ElementRef;
   dialogIsClosing = true;
   showPrivacyPolicyError = false;
+  pwType = 'password';
+  confirmPwType = 'password';
 
   ngOnInit(): void {
     this.setInitalValues();
@@ -78,7 +80,8 @@ export class SignUp implements OnInit {
     this.openDialogWithAnimation();
     setTimeout(() => {
       this.closeDialogWithAnimation();
-    }, 2500);
+    }, 1500);
+    setTimeout(() => this.router.navigateByUrl('/login'), 2000);
   }
 
   openDialogWithAnimation() {
@@ -97,5 +100,13 @@ export class SignUp implements OnInit {
       this.dialogRef.nativeElement.classList.remove('slide-out');
       this.dialogRef.nativeElement.close();
     }, 500);
+  }
+
+  changePwIcon(elementType: 'pwType' | 'confirmPwType') {
+    if (this[elementType] == 'password') {
+      this[elementType] = 'text';
+    } else {
+      this[elementType] = 'password';
+    }
   }
 }

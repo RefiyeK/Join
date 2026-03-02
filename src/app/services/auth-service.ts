@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
   UserCredential,
   deleteUser,
-  signOut
+  signOut,
 } from 'firebase/auth';
 import { NewUser } from '../interfaces/new-user';
 import { ContactsService } from './contacts-service';
@@ -19,7 +19,7 @@ export class AuthService {
 
   // Diese Variable hält die UID. Wir nutzen ein Signal, damit der Header reaktiv bleibt.
   loggetInUserUid = signal<string | null>(localStorage.getItem('uid'));
-  
+
   isNewUser?: boolean;
 
   // Achtung funktion ist nur für den loginbereich gedacht und leitet automatisch zur startseite weiter
@@ -50,7 +50,6 @@ export class AuthService {
       this.isNewUser = false;
       console.error('The user already exists');
     }
-    setTimeout(() => this.router.navigateByUrl('/login'), 3000);
   }
 
   /**
@@ -59,11 +58,11 @@ export class AuthService {
   async login(email: string, password: string): Promise<UserCredential> {
     const auth = getAuth();
     const credential = await signInWithEmailAndPassword(auth, email, password);
-    
+
     // Hier wird deine Variable gesetzt!
     this.loggetInUserUid.set(credential.user.uid);
     localStorage.setItem('uid', credential.user.uid);
-    
+
     return credential;
   }
 
@@ -82,7 +81,9 @@ export class AuthService {
     const auth = getAuth();
     const user = auth.currentUser;
     if (user) {
-      deleteUser(user).then(() => {}).catch((error) => {});
+      deleteUser(user)
+        .then(() => {})
+        .catch((error) => {});
     }
   }
 }

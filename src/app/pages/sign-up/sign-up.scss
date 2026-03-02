@@ -52,6 +52,12 @@ section {
     aspect-ratio: 16/21;
   }
 
+  .passwort-icon-not-visible,
+  .passwort-icon-visible {
+    height: 1rem;
+    aspect-ratio: 24/24;
+  }
+
   path {
     fill: #a8a8a8;
   }
@@ -120,6 +126,10 @@ form {
       color: var(--priority-urgent);
       left: 0;
       bottom: -1.5rem;
+    }
+
+    .pointer {
+      cursor: pointer;
     }
   }
 
