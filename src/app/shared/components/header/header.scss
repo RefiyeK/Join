@@ -130,12 +130,6 @@
   }
 }
 
-// @keyframes bounceLeft {
-//   0% { transform: translateX(0); }
-//   50% { transform: translateX(-2px); }
-//   100% { transform: translateX(0); }
-// }
-
 @media (max-width: 1024px) {
   app-contacts-list {
     width: clamp(280px, 30vw, 456px);

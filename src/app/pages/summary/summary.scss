@@ -95,7 +95,7 @@ app-nav {
 .summary-bottom {
   display: flex;
   align-items: center;
-  gap: 4rem;
+  gap: clamp(1px, 4vw, 4rem);
 }
 
 // ============================================================
@@ -308,6 +308,8 @@ app-nav {
 }
 
 .greeting-name {
+  word-break: break-word;
+  overflow-wrap: break-word;
   font-size: 64px;
   font-weight: 700;
   color: var(--color-light-blue);
@@ -343,7 +345,7 @@ app-nav {
 }
 
 .summary-inner {
-  padding: 80px 20px;
+  padding: 80px 40px 80px 60px;
 }
 
 // ============================================================

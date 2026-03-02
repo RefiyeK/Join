@@ -20,15 +20,25 @@ export class Login implements OnInit {
   private authService = inject(AuthService);
 
   ngOnInit(): void {
-    // Logo Animation
-    setTimeout(() => {
-      this.logoAnimated = true;
-    }, 400);
+    // // Logo Animation
+    // setTimeout(() => {
+    //   this.logoAnimated = true;
+    // }, 400);
 
-    // Form einblenden
-    setTimeout(() => {
-      this.formVisible = true;
-    }, 1200);
+    // // Form einblenden
+    // setTimeout(() => {
+    //   this.formVisible = true;
+    // }, 1200);
+    const firstVisit = !sessionStorage.getItem('logoAnimationPlayed');
+  sessionStorage.setItem('logoAnimationPlayed', 'true');
+
+  if (firstVisit) {
+    setTimeout(() => { this.logoAnimated = true; }, 400);
+    setTimeout(() => { this.formVisible = true; }, 1200);
+  } else {
+    this.logoAnimated = true;
+    this.formVisible = true;
+  }
   }
 
   /**
