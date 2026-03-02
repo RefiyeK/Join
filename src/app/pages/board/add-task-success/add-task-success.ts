@@ -2,6 +2,8 @@ import { AfterViewInit, Component, ElementRef, inject, OnDestroy, ViewChild } fr
 import { TasksService } from '../../../services/tasks-service';
 import { Subscription } from 'rxjs';
 import { SetDialogAnimation } from '../../../shared/directives/set-dialog-animation';
+import { routes } from '../../../app.routes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-task-success',
@@ -11,6 +13,7 @@ import { SetDialogAnimation } from '../../../shared/directives/set-dialog-animat
 })
 export class AddTaskSuccess implements AfterViewInit, OnDestroy {
   tasksService = inject(TasksService);
+  private router = inject(Router);
   private sucessDialogSub!: Subscription;
   @ViewChild('dialogRef') dialog!: ElementRef;
   @ViewChild(SetDialogAnimation) dialogAnimation!: SetDialogAnimation;
@@ -22,6 +25,7 @@ export class AddTaskSuccess implements AfterViewInit, OnDestroy {
         setTimeout(() => {
           this.dialogAnimation.closeDialogWithAnimation();
         }, 2000);
+        setTimeout(() => this.router.navigateByUrl('/board'), 2500);
       }
     });
   }
