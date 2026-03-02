@@ -52,6 +52,9 @@ p {
   flex-shrink: 0;
 }
 
+.ng-dirty,
+.ng-touched,
+.ng-valid,
 .ng-untouched,
 .ng-pristine,
 .ng-invalid {
