@@ -1,5 +1,5 @@
 // ============================================================
-// Summary Seiten-Layout
+// Summary Page Layout
 // ============================================================
 main {
   display: flex;
@@ -8,7 +8,7 @@ main {
   height: 100vh;
 }
 
-// Äußerer Wrapper: Hintergrundfarbe über volle Breite
+// Outer Wrapper: Background color across full width
 .summary__outer {
   display: flex;
   background-color: var(--color-bg-light);
@@ -16,14 +16,14 @@ main {
   height: 100%;
 }
 
-// Hauptcontainer: Nav + Content nebeneinander
+// Main Container: Nav + Content side by side
 .summary-main-container {
   display: flex;
   width: 100%;
   height: 100%;
 }
 
-// Wrapper: Header + Content als Spalte
+// Wrapper: Header + Content as column
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -43,14 +43,14 @@ app-nav {
   flex-shrink: 0;
 }
 
-// Inhaltsbereich mit Scrollfunktion
+// Content area with scroll functionality
 .summary-content {
   flex: 1;
   background-color: var(--color-bg-light);
   overflow-y: auto;
 }
 
-// Innerer Wrapper: Inhalt auf max. 1208px begrenzt, zentriert
+// Inner Wrapper: Content limited to max 1208px, centered
 .summary-inner {
   width: 100%;
   max-width: 1208px;
@@ -61,7 +61,7 @@ app-nav {
 }
 
 // ============================================================
-// Überschrift
+// Headline
 // ============================================================
 
 .summary-headline {
@@ -74,7 +74,7 @@ app-nav {
   }
 }
 
-// Vertikale Trennlinie zwischen Titel und Untertitel
+// Vertical divider between title and subtitle
 .headline-divider {
   width: 3px;
   height: 59px;
@@ -88,7 +88,7 @@ app-nav {
 }
 
 // ============================================================
-// Unterer Bereich: Karten + Begrüßung
+// Bottom Section: Cards + Greeting
 // ============================================================
 
 .summary-bottom {
@@ -98,7 +98,7 @@ app-nav {
 }
 
 // ============================================================
-// Karten
+// Cards
 // ============================================================
 
 .summary-cards {
@@ -118,11 +118,10 @@ app-nav {
   display: flex;
 }
 
-// Grundstil für alle Karten
+// Base style for all cards
 .card {
   background-color: #ffffff;
   border-radius: 30px;
-  // width: 264px;
   width: clamp(200px, 25vw, 264px);
   height: 168px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
@@ -146,41 +145,40 @@ app-nav {
     }
   }
 
-  // To-do → wächst nach rechts, linke Seite bleibt fest
+  // To-do: Scales from left, left side stays fixed
   &:first-child { transform-origin: left center; }
 }
 
-// Done → wächst nach links, rechte Seite bleibt fest
+// Done: Scales from right, right side stays fixed
 .cards-row-top .card:last-child {
   &:hover { transform-origin: right center; }
 }
 
-// Prioritätskarte → linke obere Ecke bleibt fest
+// Priority card: Top-left corner stays fixed
 .card--priority {
   &:hover { transform-origin: top left; }
 }
 
-// Tasks in Board → linke Seite bleibt fest
+// Tasks in Board: Left side stays fixed
 .cards-row-bottom .card:first-child {
   &:hover { transform-origin: left center; }
 }
 
-// Tasks In Progress → wächst in alle Richtungen
+// Tasks In Progress: Scales from center in all directions
 .cards-row-bottom .card:nth-child(2) {
   &:hover { transform-origin: center center; }
 }
 
-// Awaiting Feedback → wächst nach links, rechte Seite bleibt fest
+// Awaiting Feedback: Scales from right, right side stays fixed
 .cards-row-bottom .card:last-child {
   &:hover { transform-origin: right center; }
 }
 
 // ============================================================
-// Prioritätskarte
+// Priority Card
 // ============================================================
 
 .card--priority {
-  // width: 560px;
   width: clamp(300px, 55vw, 560px);
   height: 168px;
   justify-content: flex-start;
@@ -199,7 +197,7 @@ app-nav {
   flex: 1;
 }
 
-// Vertikale Trennlinie zwischen linkem und rechtem Bereich
+// Vertical divider between left and right section
 .priority-divider {
   width: 1px;
   height: 4rem;
@@ -225,7 +223,7 @@ app-nav {
 }
 
 // ============================================================
-// Icon-Bereich
+// Icon Section
 // ============================================================
 
 .card__icon {
@@ -239,7 +237,7 @@ app-nav {
     height: 69px;
   }
 
-  // Kleineres Icon für die Prioritätskarte
+  // Smaller icon for the priority card
   &--priority img {
     width: 60px;
     height: 60px;
@@ -247,7 +245,7 @@ app-nav {
 }
 
 // ============================================================
-// Karteninformationen
+// Card Information
 // ============================================================
 
 .card__info {
@@ -268,12 +266,11 @@ app-nav {
 }
 
 // ============================================================
-// Untere Kartenreihe (einfache Karten ohne Icon)
+// Bottom Card Row (simple cards without icon)
 // ============================================================
 
 .card--simple {
-  // width: 168px;
-    width: clamp(100px, 16vw, 168px);
+  width: clamp(100px, 16vw, 168px);
   height: 170px;
   flex-direction: column;
   gap: 0.5rem;
@@ -291,7 +288,7 @@ app-nav {
 }
 
 // ============================================================
-// Begrüßungsbereich
+// Greeting Section
 // ============================================================
 
 .summary-greeting {
@@ -392,7 +389,6 @@ app-nav {
   }
 }
 
-
 @media (max-width: 768px) {
   app-nav {
     width: 0;
@@ -421,13 +417,13 @@ app-nav {
     position: relative;
 
     &::after {
-    content: '';
-    display: block;
-    width: 90px;
-    height: 3px;
-    background-color: var(--color-light-blue);
-    margin-top: 8px;
-  }
+      content: '';
+      display: block;
+      width: 90px;
+      height: 3px;
+      background-color: var(--color-light-blue);
+      margin-top: 8px;
+    }
   }
 
   .cards-row-top .card {
@@ -480,12 +476,12 @@ app-nav {
     }
 
     .card__count {
-    font-size: 47px;
-  }
+      font-size: 47px;
+    }
 
-  .card__label {
-    font-size: 16px;
-  }
+    .card__label {
+      font-size: 16px;
+    }
   }
 
   .mobile-greeting {
@@ -521,6 +517,7 @@ app-nav {
     gap: 0.75rem;
     padding: 1rem;
   }
+
   .priority-divider {
     width: 150px;
     height: 2px;

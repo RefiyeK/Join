@@ -28,9 +28,7 @@ export class Summary implements OnInit, OnDestroy {
   private bpSub!: Subscription;
   private greetingTimeout!: ReturnType<typeof setTimeout>;
 
-  /**
-   * Fügt die CSS-Klasse für die Summary-Seite beim Erstellen hinzu
-   */
+  /** Adds the CSS class for the summary page on creation */
   constructor() {
     document.body.classList.add('summary-page');
   }
@@ -67,9 +65,7 @@ export class Summary implements OnInit, OnDestroy {
     }, 2000);
   }
 
-  /**
-   * Liefert den Namen des eingeloggten Users
-   */
+  /** Returns the name of the currently logged-in user */
   get loggedInUserName(): string {
     const uid = this.authService.loggetInUserUid();
     if (!uid) return '';
@@ -77,53 +73,41 @@ export class Summary implements OnInit, OnDestroy {
     return contact?.name ?? '';
   }
 
-  /**
-   * Anzahl der "To do"-Tasks
-   */
+  /** Number of "To do" tasks */
   get todoCount(): number {
     return this.tasksService.tasks.filter((t) => t.status === 'To do').length;
   }
 
-  /**
-   * Anzahl der "Done"-Tasks
-   */
+  /** Number of "Done" tasks */
   get doneCount(): number {
     return this.tasksService.tasks.filter((t) => t.status === 'Done').length;
   }
 
-  /**
-   * Anzahl der "In progress"-Tasks
-   */
+  /** Number of "In progress" tasks */
   get inProgressCount(): number {
     return this.tasksService.tasks.filter((t) => t.status === 'In progress').length;
   }
 
-  /**
-   * Anzahl der "Await feedback"-Tasks
-   */
+  /** Number of "Await feedback" tasks */
   get awaitFeedbackCount(): number {
     return this.tasksService.tasks.filter((t) => t.status === 'Await feedback').length;
   }
 
-  /**
-   * Gesamtanzahl aller Tasks
-   */
+  /** Total number of all tasks */
   get totalCount(): number {
     return this.tasksService.tasks.length;
   }
 
-  /**
-   * Anzahl der "Urgent"-Tasks
-   */
+  /** Number of "Urgent" tasks */
   get urgentCount(): number {
     return this.tasksService.tasks.filter((t) => t.priority === 'Urgent').length;
   }
 
   /**
-   * Formatiert das Datum der nächsten Deadline für die Anzeige.
-   * Gibt z. B. "March 15, 2026" zurück.
-   * Falls kein Task mit Deadline existiert, wird "No deadline" angezeigt.
-   * @returns Formatiertes Datum als lesbarer String
+   * Formats the upcoming deadline date for display.
+   * Returns e.g. "March 15, 2026".
+   * Shows "No deadline" if no task with a deadline exists.
+   * @returns Formatted date as a readable string
    */
   get formattedUpcomingDeadline(): string {
     const task = this.tasksService.upcomingTask;
@@ -136,9 +120,7 @@ export class Summary implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * Entfernt die CSS-Klasse und bereinigt Subscriptions/Timeouts beim Zerstören
-   */
+  /** Removes the CSS class and cleans up subscriptions/timeouts on destroy */
   ngOnDestroy(): void {
     document.body.classList.remove('summary-page');
     this.bpSub?.unsubscribe();
