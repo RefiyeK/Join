@@ -420,3 +420,20 @@ h3 {
     bottom: 110px;
   }
 }
+
+dialog {
+  height: fit-content !important;
+  width: fit-content !important;
+
+  &:focus {
+    outline: none;
+  }
+
+  .container {
+    padding: 1rem;
+    background-color: var(--color-primary-blue);
+    color: var(--color-font-bright);
+    text-align: center;
+    text-wrap: nowrap;
+  }
+}

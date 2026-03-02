@@ -28,6 +28,9 @@ export class SingleTaskDialog implements OnInit, OnDestroy {
   assignedUsers: AssignedAvatarItem[] = [];
   private contactsSubscription?: Subscription;
 
+  /**
+   * Initialisiert die Komponente und abonniert die Kontakte
+   */
   ngOnInit(): void {
     this.updateAssignedUsersFromService();
 
@@ -39,12 +42,18 @@ export class SingleTaskDialog implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Bereinigt die Subscription beim Zerstören der Komponente
+   */
   ngOnDestroy(): void {
     if (this.contactsSubscription) {
       this.contactsSubscription.unsubscribe();
     }
   }
 
+  /**
+   * Aktualisiert die Liste der zugewiesenen User aus dem Service
+   */
   private updateAssignedUsersFromService(): void {
     const assignedIds = this.tasksService.activeTask?.assigned ?? [];
     const validAssignedIds = this.contactsService.sanitizeAssignedIds(assignedIds);

@@ -17,12 +17,17 @@ export class AuthService {
   private router = inject(Router);
   private contactsService = inject(ContactsService);
 
-  // Diese Variable hält die UID. Wir nutzen ein Signal, damit der Header reaktiv bleibt.
+  /**
+   * Signal für die UID des eingeloggten Users (für reaktiven Header)
+   */
   loggetInUserUid = signal<string | null>(localStorage.getItem('uid'));
 
   isNewUser?: boolean;
 
-  // Achtung funktion ist nur für den loginbereich gedacht und leitet automatisch zur startseite weiter
+  /**
+   * Erstellt einen neuen User und legt ihn als Kontakt an.
+   * @param newUser Die Daten des neuen Users
+   */
   async createUser(newUser: NewUser) {
     const auth = getAuth();
     try {
@@ -54,12 +59,14 @@ export class AuthService {
 
   /**
    * Login mit E-Mail und Passwort
+   * @param email E-Mail-Adresse
+   * @param password Passwort
+   * @returns UserCredential
    */
   async login(email: string, password: string): Promise<UserCredential> {
     const auth = getAuth();
     const credential = await signInWithEmailAndPassword(auth, email, password);
 
-    // Hier wird deine Variable gesetzt!
     this.loggetInUserUid.set(credential.user.uid);
     localStorage.setItem('uid', credential.user.uid);
 
@@ -67,7 +74,7 @@ export class AuthService {
   }
 
   /**
-   * Logt den User aus und löscht die UID
+   * Loggt den User aus und löscht die UID
    */
   async logout() {
     const auth = getAuth();
@@ -77,6 +84,9 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  /**
+   * Löscht den aktuell eingeloggten User aus Firebase
+   */
   deleteUser() {
     const auth = getAuth();
     const user = auth.currentUser;

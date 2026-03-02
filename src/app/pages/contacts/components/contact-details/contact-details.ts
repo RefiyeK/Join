@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactsService } from '../../../../services/contacts-service';
 import { AuthService } from '../../../../services/auth-service';
 import { Router } from '@angular/router';
+import { SetDialogAnimation } from '../../../../shared/directives/set-dialog-animation';
 
 /**
  * ContactDetails – Zeigt die Detailansicht des ausgewählten Kontakts.
@@ -16,7 +17,7 @@ import { Router } from '@angular/router';
  */
 @Component({
   selector: 'app-contact-details',
-  imports: [CommonModule],
+  imports: [CommonModule, SetDialogAnimation],
   templateUrl: './contact-details.html',
   styleUrl: './contact-details.scss',
 })
@@ -28,6 +29,7 @@ export class ContactDetails {
   contactsService = inject(ContactsService);
   authService = inject(AuthService);
   router = inject(Router);
+  @ViewChild(SetDialogAnimation) dialogAnimationDirective!: SetDialogAnimation;
 
   /**
    * Steuert die Sichtbarkeit des FAB-Dropdown-Menüs.
@@ -83,7 +85,8 @@ export class ContactDetails {
         this.router.navigateByUrl('/login');
         this.authService.deleteUser();
       } else {
-        console.error('User must be logged in to delete');
+        this.dialogAnimationDirective.openDialogWithAnimation();
+        setTimeout(() => this.dialogAnimationDirective.closeDialogWithAnimation(), 2500);
       }
     }
   }

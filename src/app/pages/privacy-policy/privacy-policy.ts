@@ -5,7 +5,7 @@ import { Header } from '../../shared/components/header/header';
 
 /**
  * Privacy Policy page component
- * @description Displays the privacy policy content with GDPR compliance information
+ * @description Zeigt die Datenschutzerklärung mit DSGVO-Informationen an
  */
 @Component({
   selector: 'app-privacy-policy',
@@ -15,10 +15,14 @@ import { Header } from '../../shared/components/header/header';
   styleUrl: './privacy-policy.scss'
 })
 export class PrivacyPolicy {
+  /**
+   * Konstruktor injiziert Location für die Navigation
+   * @param location Angular Location Service
+   */
   constructor(private location: Location) {}
 
   /**
-   * Navigates back to the previous page
+   * Navigiert zurück zur vorherigen Seite
    */
   goBack(): void {
     this.location.back();

@@ -2,12 +2,11 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
 
-
 /**
- * Represents a navigation menu item
- * @property {string} icon - Icon filename without extension (e.g., 'summary', 'board')
- * @property {string} label - Display text for the menu item
- * @property {string} route - Angular router path
+ * Repräsentiert ein Navigationsmenü-Item
+ * @property {string} icon - Icon-Dateiname ohne Erweiterung (z.B. 'summary', 'board')
+ * @property {string} label - Anzeige-Text für das Menü-Item
+ * @property {string} route - Angular Router-Pfad
  */
 interface NavItem {
   icon: string;
@@ -16,23 +15,22 @@ interface NavItem {
 }
 
 /**
- * Represents a footer link item
- * @property {string} label - Display text for the link
- * @property {string} route - Angular router path
+ * Repräsentiert einen Footer-Link
+ * @property {string} label - Anzeige-Text für den Link
+ * @property {string} route - Angular Router-Pfad
  */
 interface FooterLink {
   label: string;
   route: string;
 }
 
-
 /**
- * Main navigation component
- * 
- * @description Responsive navigation that displays as:
- * - Desktop (≥768px): Vertical sidebar (232px) with logo, menu, and footer links
- * - Mobile (<768px): Horizontal bottom bar with menu icons only
- * 
+ * Haupt-Navigationskomponente
+ *
+ * @description Responsive Navigation, die wie folgt angezeigt wird:
+ * - Desktop (≥768px): Vertikale Sidebar (232px) mit Logo, Menü und Footer-Links
+ * - Mobile (<768px): Horizontale Bottom-Bar mit Menü-Icons
+ *
  * @example
  * <app-nav></app-nav>
  */
@@ -43,31 +41,28 @@ interface FooterLink {
   templateUrl: './nav.html',
   styleUrl: './nav.scss',
 })
-
-
 export class Nav {
   authService = inject(AuthService);
 
   /**
-   * Main navigation menu items displayed in sidebar/bottom bar
+   * Hauptmenü-Items für Sidebar/Bottom-Bar
    * @protected
    * @readonly
    */
-
   protected readonly menuItems: NavItem[] = [
     { icon: 'summary', label: 'Summary', route: '/summary' },
     { icon: 'add-task', label: 'Add Task', route: '/add-task' },
     { icon: 'board', label: 'Board', route: '/board' },
-    { icon: 'contacts', label: 'Contacts', route: '/contacts' }
+    { icon: 'contacts', label: 'Contacts', route: '/contacts' },
   ];
 
   /**
-   * Footer links displayed only on desktop view
+   * Footer-Links, nur auf Desktop sichtbar
    * @protected
    * @readonly
    */
   protected readonly footerLinks: FooterLink[] = [
     { label: 'Privacy Policy', route: '/privacy-policy' },
-    { label: 'Legal notice', route: '/imprint' }
+    { label: 'Legal notice', route: '/imprint' },
   ];
 }

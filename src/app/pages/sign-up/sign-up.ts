@@ -11,7 +11,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.scss',
 })
-export class SignUp implements OnInit {
+export class SignUp {
+  /**
+   * Objekt für die neuen Userdaten
+   */
   newUser: NewUser = {
     name: '',
     email: '',
@@ -27,26 +30,21 @@ export class SignUp implements OnInit {
   pwType = 'password';
   confirmPwType = 'password';
 
-  ngOnInit(): void {
-    this.setInitalValues();
-  }
-
-  setInitalValues() {
-    this.newUser = {
-      name: 'Test Person',
-      email: 'person@test.de',
-      passwort: '12345678',
-      confirmPassword: '12345678',
-      privacyPolicy: true,
-    };
-  }
-
+  /**
+   * Führt die Registrierung durch und öffnet den Dialog
+   */
   async onSubmit() {
     await this.authService.createUser(this.newUser);
     this.openDialog();
     this.showPrivacyPolicyError = false;
   }
 
+  /**
+   * Validiert die Eingaben und startet den Registrierungsprozess
+   * @param form Formularreferenz
+   * @param passwortValue Passwortwert
+   * @param confirmPasswordValue Bestätigungswert
+   */
   onSignUpClick(form: any, passwortValue: string, confirmPasswordValue: string) {
     if (!this.newUser.privacyPolicy) {
       this.showPrivacyPolicyError = true;
@@ -60,6 +58,9 @@ export class SignUp implements OnInit {
     this.onSubmit();
   }
 
+  /**
+   * Setzt alle Eingabefelder zurück
+   */
   clearInput() {
     this.newUser.name = '';
     this.newUser.email = '';
@@ -68,6 +69,9 @@ export class SignUp implements OnInit {
     this.newUser.privacyPolicy = false;
   }
 
+  /**
+   * Setzt oder entfernt die Zustimmung zur Datenschutzrichtlinie
+   */
   setPrivacyPolicy() {
     if (this.newUser.privacyPolicy) {
       this.newUser.privacyPolicy = false;
@@ -76,6 +80,9 @@ export class SignUp implements OnInit {
     }
   }
 
+  /**
+   * Öffnet den Dialog mit Animation und navigiert nach kurzer Zeit zum Login
+   */
   openDialog() {
     this.openDialogWithAnimation();
     setTimeout(() => {
@@ -84,6 +91,9 @@ export class SignUp implements OnInit {
     setTimeout(() => this.router.navigateByUrl('/login'), 2000);
   }
 
+  /**
+   * Öffnet den Dialog mit Slide-In-Animation
+   */
   openDialogWithAnimation() {
     this.dialogIsClosing = false;
     this.dialogRef.nativeElement.showModal();
@@ -91,6 +101,9 @@ export class SignUp implements OnInit {
     this.dialogRef.nativeElement.classList.add('slide-in');
   }
 
+  /**
+   * Schließt den Dialog mit Slide-Out-Animation
+   */
   closeDialogWithAnimation() {
     this.dialogRef.nativeElement.classList.remove('slide-in');
     this.dialogRef.nativeElement.classList.add('slide-out');
@@ -102,6 +115,10 @@ export class SignUp implements OnInit {
     }, 500);
   }
 
+  /**
+   * Wechselt die Anzeige des Passwortfeldes zwischen Text und Passwort
+   * @param elementType Feldtyp ('pwType' oder 'confirmPwType')
+   */
   changePwIcon(elementType: 'pwType' | 'confirmPwType') {
     if (this[elementType] == 'password') {
       this[elementType] = 'text';

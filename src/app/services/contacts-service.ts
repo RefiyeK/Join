@@ -91,7 +91,7 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * NEU: Lädt Kontakte einmalig von Firebase (für AddTask Komponente)
+   * Lädt Kontakte einmalig von Firebase (für AddTask Komponente)
    * @returns Promise mit den geladenen Kontakten
    */
   async loadContacts(): Promise<SingleContact[]> {
@@ -271,6 +271,8 @@ export class ContactsService implements OnDestroy {
 
   /**
    * Entfernt IDs, die nicht in der aktuellen Kontaktliste existieren.
+   * @param assignedIds Array der zugewiesenen Kontakt-IDs
+   * @returns Array der gültigen Kontakt-IDs
    */
   sanitizeAssignedIds(assignedIds: string[] = []): string[] {
     const validIds: string[] = [];
@@ -286,6 +288,8 @@ export class ContactsService implements OnDestroy {
 
   /**
    * Liefert nur aufgelöste Assigned-User mit existierenden Kontakt-IDs.
+   * @param assignedIds Array der zugewiesenen Kontakt-IDs
+   * @returns Array von AssignedAvatarItem
    */
   buildAssignedUsers(assignedIds: string[] = []): AssignedAvatarItem[] {
     const validIds = this.sanitizeAssignedIds(assignedIds);
@@ -346,6 +350,8 @@ export class ContactsService implements OnDestroy {
   /**
    * Interner Resolver:
    * ID -> echter Kontakt (Name/Farbe/Initialen) oder stabiler Fallback.
+   * @param contactId Kontakt-ID
+   * @returns AssignedAvatarItem
    */
   private resolveAssignedAvatarItem(contactId: string): AssignedAvatarItem {
     const foundContact = this.contacts.find((contact) => contact.id === contactId);

@@ -52,19 +52,23 @@ export class Board implements OnDestroy {
   searchTerm = '';
   isMobile = false;
 
-
+  /**
+   * Initialisiert die Board-Seite und setzt die mobile Ansicht
+   */
   constructor() {
-    this.breakpointObserver
-      .observe(['(max-width: 768px)'])
-      .subscribe(result => {
-        this.isMobile = result.matches;
-      });
-      document.body.classList.add('board-page');
+    this.breakpointObserver.observe(['(max-width: 768px)']).subscribe((result) => {
+      this.isMobile = result.matches;
+    });
+    document.body.classList.add('board-page');
   }
+
+  /**
+   * Entfernt die CSS-Klasse beim Zerstören der Komponente
+   */
   ngOnDestroy(): void {
     document.body.classList.remove('board-page');
   }
-  
+
   /**
    * Filtert Tasks nach Status, sortiert nach order-Feld.
    * Wendet optional den Suchbegriff an.
@@ -76,8 +80,9 @@ export class Board implements OnDestroy {
       .filter((task) => {
         const matchesStatus = task.status === status;
         if (!this.searchTerm) return matchesStatus;
-        const matchesSearch = task.title.toLowerCase().includes(this.searchTerm) ||
-        (task.description ?? '').toLowerCase().includes(this.searchTerm);
+        const matchesSearch =
+          task.title.toLowerCase().includes(this.searchTerm) ||
+          (task.description ?? '').toLowerCase().includes(this.searchTerm);
         return matchesStatus && matchesSearch;
       })
       .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
@@ -152,12 +157,6 @@ export class Board implements OnDestroy {
   openTaskDialog(taskId: string): void {
     this.tasksService.openTaskDialog(taskId);
   }
-
-  /** Öffnet den Dialog zum Erstellen einer neuen Task. */
-  //! PB wird über Service geregelt
-  // openAddTaskDialog(): void {
-  //? TODO: Add Task Dialog öffnen
-  // }
 
   /**
    * Liest den Suchbegriff aus dem Input-Feld.

@@ -13,7 +13,7 @@ interface DisplayedUser {
   initials: string;
   color: string;
 }
-
+ 
 /**
  * SingleTaskCard – Zeigt eine einzelne Task als Karte im Board an.
  *
@@ -45,6 +45,7 @@ export class SingleTaskCard {
   get badgeClass(): string {
     return this.task.category === 'User Story' ? 'badge-user-story' : 'badge-technical-task';
   }
+
   /**
    * Berechnet den Fortschritt der Subtasks in Prozent.
    * @returns Prozentwert zwischen 0 und 100
@@ -55,13 +56,17 @@ export class SingleTaskCard {
     return (completed / this.task.subtasks.length) * 100;
   }
 
-  /** Zählt die erledigten Subtasks für die Anzeige "2/5 Subtasks". */
+  /**
+   * Zählt die erledigten Subtasks für die Anzeige "2/5 Subtasks".
+   */
   get completedSubtasks(): number {
     if (!this.task.subtasks) return 0;
     return this.task.subtasks.filter((st) => st.completed).length;
   }
 
-  /** Pfad zum passenden Priority-Icon (Urgent/Medium/Low). */
+  /**
+   * Pfad zum passenden Priority-Icon (Urgent/Medium/Low).
+   */
   get priorityIcon(): string {
     const icons: Record<string, string> = {
       Urgent: 'assets/icons/prio-urgent.svg',
@@ -83,13 +88,17 @@ export class SingleTaskCard {
     return ids.slice(0, 3).map((id) => this.resolveContact(id));
   }
 
-  /** Anzahl der User über 3 hinaus – wird als "+X" Badge angezeigt. */
+  /**
+   * Anzahl der User über 3 hinaus – wird als "+X" Badge angezeigt.
+   */
   get remainingUsersCount(): number {
     const ids = this.task.assigned || [];
     return Math.max(0, ids.length - 3);
   }
 
-  /** Tooltip mit allen zugewiesenen Kontaktnamen (kommagetrennt). */
+  /**
+   * Tooltip mit allen zugewiesenen Kontaktnamen (kommagetrennt).
+   */
   get allUsersTooltip(): string {
     if (!this.task) return '';
     const ids = this.task.assigned || [];
@@ -121,7 +130,9 @@ export class SingleTaskCard {
     };
   }
 
-  /** Gibt die Task-ID per Event an das Board weiter. */
+  /**
+   * Gibt die Task-ID per Event an das Board weiter.
+   */
   onCardClick(): void {
     if (this.task?.id) {
       this.taskClicked.emit(this.task.id);

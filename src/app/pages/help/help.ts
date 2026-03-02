@@ -18,7 +18,8 @@ import { Nav } from '../../shared/components/nav/nav';
 })
 export class Help {
   /**
-   * Location steuert den Browser-Verlauf.
+   * Konstruktor injiziert Location für die Navigation
+   * @param location Angular Location Service
    */
   constructor(private location: Location) {}
 

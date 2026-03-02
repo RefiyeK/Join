@@ -28,10 +28,16 @@ export class Summary implements OnInit, OnDestroy {
   private bpSub!: Subscription;
   private greetingTimeout!: ReturnType<typeof setTimeout>;
 
+  /**
+   * Fügt die CSS-Klasse für die Summary-Seite beim Erstellen hinzu
+   */
   constructor() {
     document.body.classList.add('summary-page');
   }
 
+  /**
+   * Initialisiert die Komponente und setzt das Greeting auf Mobilgeräten
+   */
   ngOnInit(): void {
     this.bpSub = this.breakpointObserver
       .observe(['(max-width: 1024px)'])
@@ -46,6 +52,9 @@ export class Summary implements OnInit, OnDestroy {
       });
   }
 
+  /**
+   * Liefert den Namen des eingeloggten Users
+   */
   get loggedInUserName(): string {
     const uid = this.authService.loggetInUserUid();
     if (!uid) return '';
@@ -53,30 +62,51 @@ export class Summary implements OnInit, OnDestroy {
     return contact?.name ?? '';
   }
 
+  /**
+   * Anzahl der "To do"-Tasks
+   */
   get todoCount(): number {
     return this.tasksService.tasks.filter(t => t.status === 'To do').length;
   }
 
+  /**
+   * Anzahl der "Done"-Tasks
+   */
   get doneCount(): number {
     return this.tasksService.tasks.filter(t => t.status === 'Done').length;
   }
 
+  /**
+   * Anzahl der "In progress"-Tasks
+   */
   get inProgressCount(): number {
     return this.tasksService.tasks.filter(t => t.status === 'In progress').length;
   }
 
+  /**
+   * Anzahl der "Await feedback"-Tasks
+   */
   get awaitFeedbackCount(): number {
     return this.tasksService.tasks.filter(t => t.status === 'Await feedback').length;
   }
 
+  /**
+   * Gesamtanzahl aller Tasks
+   */
   get totalCount(): number {
     return this.tasksService.tasks.length;
   }
 
+  /**
+   * Anzahl der "Urgent"-Tasks
+   */
   get urgentCount(): number {
     return this.tasksService.tasks.filter(t => t.priority === 'Urgent').length;
   }
 
+  /**
+   * Entfernt die CSS-Klasse und bereinigt Subscriptions/Timeouts beim Zerstören
+   */
   ngOnDestroy(): void {
     document.body.classList.remove('summary-page');
     this.bpSub?.unsubscribe();

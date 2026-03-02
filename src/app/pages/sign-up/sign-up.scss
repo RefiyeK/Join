@@ -37,6 +37,10 @@ section {
   }
 }
 .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
   .name-icon {
     height: 1rem;
     aspect-ratio: 1/1;

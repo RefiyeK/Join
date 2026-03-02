@@ -17,6 +17,9 @@ export class AddTaskSuccess implements AfterViewInit, OnDestroy {
   @ViewChild('dialogRef') dialog!: ElementRef;
   @ViewChild(SetDialogAnimation) dialogAnimation!: SetDialogAnimation;
 
+  /**
+   * Öffnet den Erfolgsdialog mit Animation und navigiert nach kurzer Zeit zum Board
+   */
   ngAfterViewInit(): void {
     this.sucessDialogSub = this.tasksService.successDialogOpen$.subscribe((open) => {
       if (open) {
@@ -29,6 +32,9 @@ export class AddTaskSuccess implements AfterViewInit, OnDestroy {
     });
   }
 
+  /**
+   * Bereinigt die Subscription beim Zerstören der Komponente
+   */
   ngOnDestroy(): void {
     this.sucessDialogSub?.unsubscribe();
   }

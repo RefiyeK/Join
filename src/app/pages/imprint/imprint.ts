@@ -5,7 +5,7 @@ import { Header } from '../../shared/components/header/header';
 
 /**
  * Legal Notice (Imprint) page component
- * @description Displays legal information, contact details and terms of use
+ * @description Zeigt rechtliche Informationen, Kontaktangaben und Nutzungsbedingungen an
  */
 @Component({
   selector: 'app-imprint',
@@ -15,10 +15,14 @@ import { Header } from '../../shared/components/header/header';
   styleUrl: './imprint.scss'
 })
 export class Imprint {
+  /**
+   * Konstruktor injiziert Location für die Navigation
+   * @param location Angular Location Service
+   */
   constructor(private location: Location) {}
 
   /**
-   * Navigates back to the previous page
+   * Navigiert zurück zur vorherigen Seite
    */
   goBack(): void {
     this.location.back();

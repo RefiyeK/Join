@@ -19,26 +19,24 @@ export class Login implements OnInit {
   private router = inject(Router);
   private authService = inject(AuthService);
 
+  /**
+   * Initialisiert die Animationen für das Logo und das Formular
+   */
   ngOnInit(): void {
-    // // Logo Animation
-    // setTimeout(() => {
-    //   this.logoAnimated = true;
-    // }, 400);
-
-    // // Form einblenden
-    // setTimeout(() => {
-    //   this.formVisible = true;
-    // }, 1200);
     const firstVisit = !sessionStorage.getItem('logoAnimationPlayed');
-  sessionStorage.setItem('logoAnimationPlayed', 'true');
+    sessionStorage.setItem('logoAnimationPlayed', 'true');
 
-  if (firstVisit) {
-    setTimeout(() => { this.logoAnimated = true; }, 400);
-    setTimeout(() => { this.formVisible = true; }, 1200);
-  } else {
-    this.logoAnimated = true;
-    this.formVisible = true;
-  }
+    if (firstVisit) {
+      setTimeout(() => {
+        this.logoAnimated = true;
+      }, 400);
+      setTimeout(() => {
+        this.formVisible = true;
+      }, 1200);
+    } else {
+      this.logoAnimated = true;
+      this.formVisible = true;
+    }
   }
 
   /**
@@ -55,6 +53,9 @@ export class Login implements OnInit {
   emailError: boolean = false;
   passwordError: boolean = false;
 
+  /**
+   * Führt den Login aus und behandelt Fehler sowie Weiterleitung
+   */
   async login() {
     this.emailError = false;
     this.passwordError = false;
@@ -74,18 +75,12 @@ export class Login implements OnInit {
       this.authService.loggetInUserUid.set(userCredential.user.uid);
 
       // Erfolgreich eingeloggt
-      console.log('Successfully logged in:', userCredential.user.uid);
-
-      // UID speichern (z.B. im localStorage)
       localStorage.setItem('uid', userCredential.user.uid);
 
       // Weiterleitung zur Summary-Seite
       this.router.navigate(['/summary']);
     } catch (error: any) {
       // Fehlerbehandlung
-      console.error('Login error:', error);
-
-      // Beide Inputs rot markieren bei falschen Anmeldedaten
       this.emailError = true;
       this.passwordError = true;
 
@@ -98,7 +93,7 @@ export class Login implements OnInit {
           break;
         case 'auth/invalid-email':
           this.errorMessage = 'Ungültiges E-Mail-Format';
-          this.passwordError = false; // Nur Email rot
+          this.passwordError = false;
           break;
         case 'auth/too-many-requests':
           this.errorMessage = 'Too many failed attempts. Please try again later';

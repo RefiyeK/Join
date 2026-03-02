@@ -12,3 +12,4 @@ import { ContactDialog } from './components/contact-dialog/contact-dialog';
   styleUrl: './contacts.scss',
 })
 export class Contacts {}
+ 

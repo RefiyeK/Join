@@ -11,35 +11,53 @@ import { ContactsService } from '../../../services/contacts-service';
   styleUrl: './header.scss',
 })
 export class Header {
-  // 1. Die Services müssen injiziert sein
+  /**
+   * AuthService für Benutzer-Authentifizierung
+   */
   authService = inject(AuthService);
+
+  /**
+   * ContactsService für Benutzerkontakte
+   */
   contactsService = inject(ContactsService);
 
   isDropdownOpen = false;
   dropdownBounce = false;
 
-  // 2. Der Vergleich für den Avatar (wie besprochen)
+  /**
+   * Liefert den aktuell eingeloggten Benutzer als Kontakt-Objekt
+   */
   currentUser = computed(() => {
     const currentUid = this.authService.loggetInUserUid();
     if (!currentUid) return null;
     return this.contactsService.contacts.find(c => c.uid === currentUid) || null;
   });
 
-
+  /**
+   * Führt Logout aus und schließt das Dropdown-Menü
+   */
   logout() {
-    this.authService.logout(); // Ruft die Logout-Logik im Service auf
-    this.closeDropdown();      // Schließt das Menü
+    this.authService.logout();
+    this.closeDropdown();
   }
-  // ----------------------------------------------------
 
+  /**
+   * Öffnet oder schließt das Dropdown-Menü
+   */
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
+  /**
+   * Schließt das Dropdown-Menü
+   */
   closeDropdown() {
     this.isDropdownOpen = false;
   }
 
+  /**
+   * Löst eine Bounce-Animation für das Dropdown aus
+   */
   triggerBounce() {
     this.dropdownBounce = false;
     setTimeout(() => {

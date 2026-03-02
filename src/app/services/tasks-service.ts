@@ -55,6 +55,12 @@ export class TasksService implements OnDestroy {
     });
   }
 
+  /**
+   * Wandelt ein beliebiges Objekt und eine ID in ein SingleTask-Objekt um
+   * @param obj Beliebiges Objekt mit Task-Daten
+   * @param id Firebase-Dokument-ID
+   * @returns SingleTask-Objekt
+   */
   setTaskObject(obj: any, id: string): SingleTask {
     return {
       id: id,
@@ -70,6 +76,9 @@ export class TasksService implements OnDestroy {
     };
   }
 
+  /**
+   * Abonniert die Tasks aus Firestore und aktualisiert das lokale Array
+   */
   subTasksArr() {
     return onSnapshot(this.getTasksRef(), (arr) => {
       this.tasks = [];
@@ -91,6 +100,9 @@ export class TasksService implements OnDestroy {
     this.activeTask = updated || null;
   }
 
+  /**
+   * Gibt die Referenz auf die Tasks-Collection zurück
+   */
   getTasksRef() {
     return collection(this.tasksDB, 'tasks');
   }
@@ -192,45 +204,68 @@ export class TasksService implements OnDestroy {
     await updateDoc(taskRef, { subtasks: updatedSubtasks });
   }
 
+  /**
+   * Wird beim Zerstören des Services aufgerufen, um Subscriptions zu bereinigen
+   */
   ngOnDestroy() {
     if (this.unsubTasks) this.unsubTasks();
   }
 
+  /**
+   * Öffnet den Dialog zum Hinzufügen einer neuen Task und setzt den Status
+   * @param status Status der neuen Task
+   */
   openAddTaskDialog(status: 'To do' | 'In progress' | 'Await feedback' | 'Done') {
     this.openAddTaskDialogSubject.next(true);
     this.addTaskDialogIsOpen = true;
     this.setStatus(status);
   }
 
+  /**
+   * Schließt den Dialog zum Hinzufügen einer neuen Task
+   */
   closeAddTaskDialog() {
     this.openAddTaskDialogSubject.next(false);
     this.addTaskDialogIsOpen = false;
   }
 
+  /**
+   * Startet den Editiermodus für eine Task
+   */
   startEditMode() {
-
     this.taskEditModeSubject.next(true);
     this.editMode = true;
   }
 
+  /**
+   * Beendet den Editiermodus und speichert die Änderungen
+   * @param task Die bearbeitete Task
+   */
   exidEditMode(task: SingleTask) {
     this.taskEditModeSubject.next(false);
     this.editMode = false;
     this.updateTask(task);
   }
 
+  /**
+   * Aktualisiert eine Task in Firebase
+   * @param task Die zu aktualisierende Task
+   */
   async updateTask(task: SingleTask) {
     if (task.id) {
       try {
         let docRef = this.getSingleTaskRef(task.id);
         await updateDoc(docRef, this.getCleanJson(task));
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
       this.currentTask = task;
     }
   }
 
+  /**
+   * Gibt ein bereinigtes JSON-Objekt für die Task zurück
+   * @param obj SingleTask-Objekt
+   * @returns Bereinigtes Objekt
+   */
   getCleanJson(obj: SingleTask) {
     return {
       id: obj.id,
@@ -265,7 +300,6 @@ export class TasksService implements OnDestroy {
       };
 
       const docRef = await addDoc(this.getTasksRef(), newTask);
-      console.log('Task added:', docRef.id);
       this.resetStatus();
       return docRef;
     } catch (error) {
@@ -274,14 +308,24 @@ export class TasksService implements OnDestroy {
     }
   }
 
+  /**
+   * Setzt den aktuellen Status für neue Tasks
+   * @param status Status
+   */
   setStatus(status: 'To do' | 'In progress' | 'Await feedback' | 'Done') {
     this.currentStatus = status;
   }
 
+  /**
+   * Setzt den Status zurück auf "To do"
+   */
   resetStatus() {
     this.currentStatus = 'To do';
   }
 
+  /**
+   * Öffnet den Erfolgsdialog nach dem Hinzufügen einer Task
+   */
   openTaskSuccessDialog() {
     this.taskSuccessDialogActiveSubject.next(true);
     this.taskSuccessDialogActive = true;
@@ -291,7 +335,7 @@ export class TasksService implements OnDestroy {
     }, 3000);
   }
 
-/**
+  /**
    * Gibt die Task mit dem nächsten Fälligkeitsdatum zurück.
    * Berücksichtigt nur Tasks mit gültigem dueDate ab heute.
    * @returns Die Task mit dem nächsten Deadline oder null
@@ -322,9 +366,8 @@ export class TasksService implements OnDestroy {
     const icons: Record<string, string> = {
       Urgent: 'assets/icons/urgent-summary.svg',
       Medium: 'assets/icons/medium-summary.svg',
-      Low:    'assets/icons/low-summary.svg',
+      Low: 'assets/icons/low-summary.svg',
     };
     return icons[priority] ?? icons['Medium'];
   }
-
 }

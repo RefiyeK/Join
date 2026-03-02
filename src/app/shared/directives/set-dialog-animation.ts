@@ -1,4 +1,4 @@
-import { Directive, ElementRef, ViewChild } from '@angular/core';
+import { Directive, ElementRef } from '@angular/core';
 
 @Directive({
   selector: '[appSetDialogAnimation]',
@@ -6,8 +6,15 @@ import { Directive, ElementRef, ViewChild } from '@angular/core';
 export class SetDialogAnimation {
   isClosing = false;
 
+  /**
+   * Konstruktor injiziert das Dialog-Element
+   * @param dialogRef Referenz auf das Dialog-Element
+   */
   constructor(private dialogRef: ElementRef<HTMLDialogElement>) {}
 
+  /**
+   * Öffnet das Dialogfenster mit Slide-In-Animation
+   */
   openDialogWithAnimation() {
     this.isClosing = false;
     this.dialogRef.nativeElement.showModal();
@@ -15,6 +22,9 @@ export class SetDialogAnimation {
     this.dialogRef.nativeElement.classList.add('slide-in');
   }
 
+  /**
+   * Schließt das Dialogfenster mit Slide-Out-Animation
+   */
   closeDialogWithAnimation() {
     this.isClosing = true;
     this.dialogRef.nativeElement.classList.remove('slide-in');

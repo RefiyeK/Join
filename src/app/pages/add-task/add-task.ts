@@ -11,6 +11,9 @@ import { AssignedAvatarItem } from '../../interfaces/assigned-avatar';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth-service';
 
+/**
+ * Interface für Fehlerstatus von Feldern
+ */
 interface FieldErrorState {
   [key: string]: boolean;
 }
@@ -23,62 +26,78 @@ interface FieldErrorState {
   styleUrl: './add-task.scss',
 })
 export class AddTask implements OnInit, OnDestroy {
-  @ViewChild('taskForm') taskForm!: NgForm; 
-  @ViewChild('editInput') editInput!: ElementRef; 
+  @ViewChild('taskForm') taskForm!: NgForm;
+  @ViewChild('editInput') editInput!: ElementRef;
 
   tasksService = inject(TasksService);
   contactsService = inject(ContactsService);
-  authService = inject(AuthService); // AuthService injiziert für (You) Logik
+  authService = inject(AuthService);
 
   private subEditMode!: Subscription;
 
-  // Contacts als Array für das Template
+  /** Kontakte als Array für das Template */
   contacts: SingleContact[] = [];
   loadingContacts: boolean = false;
 
-  // Subscription für Contacts
+  /** Subscription für Kontakte */
   private contactsSubscription?: Subscription;
 
-  // Date only for today and future
+  /** Minimales Datum für heute und Zukunft */
   minDate: string = new Date().toISOString().split('T')[0];
   statusCondition: string = this.tasksService.currentStatus;
 
-  // Assign Dropdown
+  /** Dropdown für Zuweisung */
   isOpen = false;
   selectedOption: string = 'Select contacts to assign';
   options: string[] = ['Option_1', 'Option_2', 'Option_3'];
 
+  /**
+   * Öffnet oder schließt das Zuweisungs-Dropdown
+   */
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }
 
+  /**
+   * Schließt das Zuweisungs-Dropdown
+   */
   closeDropdown() {
     this.isOpen = false;
   }
 
-  // Category Dropdown
+  /** Dropdown für Kategorie */
   isCategoryOpen = false;
   selectedCategory: string = 'Select category';
   categoryOptions: string[] = ['Technical Task', 'User Story'];
 
+  /**
+   * Öffnet oder schließt das Kategorie-Dropdown
+   */
   toggleCategoryDropdown() {
     this.isCategoryOpen = !this.isCategoryOpen;
   }
 
+  /**
+   * Wählt eine Kategorie aus
+   * @param option Kategorieoption
+   */
   selectCategory(option: string) {
     if (option === 'Technical Task' || option === 'User Story') {
       this.selectedCategory = option;
       this.taskData.category = option;
-      this.updateFieldError('category'); 
+      this.updateFieldError('category');
     }
     this.isCategoryOpen = false;
   }
 
+  /**
+   * Schließt das Kategorie-Dropdown
+   */
   closeCategoryDropdown() {
     this.isCategoryOpen = false;
   }
 
-  // Form State
+  /** Status des Formulars */
   formSubmitted: boolean = false;
   fieldErrors: FieldErrorState = {
     title: false,
@@ -86,10 +105,10 @@ export class AddTask implements OnInit, OnDestroy {
     category: false,
   };
 
-  // Required fields for validation
+  /** Pflichtfelder für Validierung */
   private readonly requiredFields = ['title', 'dueDate', 'category'] as const;
 
-  // Task Data Object
+  /** Task-Datenobjekt */
   taskData: Partial<SingleTask> = {
     status: this.statusCondition,
     title: '',
@@ -102,7 +121,7 @@ export class AddTask implements OnInit, OnDestroy {
     order: 0,
   };
 
-  // Subtask handling
+  /** Subtask-Handling */
   newSubtaskTitle: string = '';
 
   editingSubtaskIndex: number | null = null;
@@ -112,6 +131,9 @@ export class AddTask implements OnInit, OnDestroy {
   assignedPreviewUsers: AssignedAvatarItem[] = [];
   assignedRemainingCount: number = 0;
 
+  /**
+   * Initialisiert die Komponente und lädt Kontakte
+   */
   async ngOnInit() {
     this.subEditMode = this.tasksService.taskEditMode$.subscribe((editMode) => {
       if (editMode) {
@@ -124,6 +146,9 @@ export class AddTask implements OnInit, OnDestroy {
     await this.loadContacts();
   }
 
+  /**
+   * Bereinigt Subscriptions beim Zerstören der Komponente
+   */
   ngOnDestroy() {
     if (this.contactsSubscription) {
       this.contactsSubscription.unsubscribe();
@@ -142,20 +167,16 @@ export class AddTask implements OnInit, OnDestroy {
 
       this.contactsSubscription = this.contactsService.contacts$.subscribe(
         (contacts: SingleContact[]) => {
-          // 1. Alphabetisch sortieren
           let sortedContacts = this.sortContactsAlphabetically(contacts);
 
-          // 2. Logged-in User finden und "(You)" hinzufügen + nach oben schieben
           const currentUid = this.authService.loggetInUserUid();
-          const meIndex = sortedContacts.findIndex(c => c.uid === currentUid);
+          const meIndex = sortedContacts.findIndex((c) => c.uid === currentUid);
 
           if (meIndex !== -1) {
-            // User kurz entfernen
             const me = sortedContacts.splice(meIndex, 1)[0];
-            // Mit Zusatz "(You)" ganz vorne wieder einfügen
             sortedContacts.unshift({
               ...me,
-              name: me.name + ' (You)'
+              name: me.name + ' (You)',
             });
           }
 
@@ -177,6 +198,8 @@ export class AddTask implements OnInit, OnDestroy {
 
   /**
    * Sortiert Kontakte alphabetisch nach Namen
+   * @param contacts Kontaktliste
+   * @returns Sortierte Kontaktliste
    */
   private sortContactsAlphabetically(contacts: SingleContact[]): SingleContact[] {
     return [...contacts].sort((a, b) => {
@@ -189,6 +212,10 @@ export class AddTask implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Fügt einen Kontakt zur Zuweisung hinzu oder entfernt ihn
+   * @param contact Kontakt
+   */
   toggleAssigned(contact: SingleContact) {
     if (!this.taskData.assigned) {
       this.taskData.assigned = [];
@@ -205,10 +232,18 @@ export class AddTask implements OnInit, OnDestroy {
     this.updateAssignedAvatarsPreview();
   }
 
+  /**
+   * Prüft, ob ein Kontakt zugewiesen ist
+   * @param contact Kontakt
+   * @returns true, wenn zugewiesen
+   */
   isAssigned(contact: SingleContact): boolean {
     return this.taskData.assigned?.includes(contact.id!) || false;
   }
 
+  /**
+   * Aktualisiert den Text der Zuweisungsoption
+   */
   private updateSelectedOptionText() {
     const validAssignedIds = this.contactsService.sanitizeAssignedIds(this.taskData.assigned ?? []);
     this.taskData.assigned = validAssignedIds;
@@ -223,6 +258,9 @@ export class AddTask implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Aktualisiert die Vorschau der zugewiesenen Avatare
+   */
   private updateAssignedAvatarsPreview(): void {
     const validAssignedIds = this.contactsService.sanitizeAssignedIds(this.taskData.assigned ?? []);
     this.taskData.assigned = validAssignedIds;
@@ -232,10 +270,17 @@ export class AddTask implements OnInit, OnDestroy {
     this.assignedRemainingCount = preview.remaining;
   }
 
+  /**
+   * Setzt die Priorität der Aufgabe
+   * @param priority Priorität
+   */
   setPriority(priority: 'Urgent' | 'Medium' | 'Low') {
     this.taskData.priority = priority;
   }
 
+  /**
+   * Fügt einen neuen Subtask hinzu
+   */
   addSubtask() {
     if (this.newSubtaskTitle && this.newSubtaskTitle.trim()) {
       if (!this.taskData.subtasks) {
@@ -252,6 +297,10 @@ export class AddTask implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Entfernt einen Subtask
+   * @param index Index des Subtasks
+   */
   removeSubtask(index: number) {
     if (this.taskData.subtasks) {
       this.taskData.subtasks.splice(index, 1);
@@ -262,6 +311,11 @@ export class AddTask implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Startet das Bearbeiten eines Subtasks
+   * @param index Index des Subtasks
+   * @param currentTitle Aktueller Titel
+   */
   startEditingSubtask(index: number, currentTitle: string) {
     this.editingSubtaskIndex = index;
     this.editingSubtaskTitle = currentTitle;
@@ -274,6 +328,9 @@ export class AddTask implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Speichert die Bearbeitung eines Subtasks
+   */
   saveSubtaskEdit() {
     if (
       this.editingSubtaskIndex !== null &&
@@ -287,6 +344,9 @@ export class AddTask implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Reagiert auf das Verlassen des Subtask-Edit-Inputs
+   */
   onBlurSubtaskEdit() {
     setTimeout(() => {
       if (this.editingSubtaskIndex !== null) {
@@ -295,28 +355,53 @@ export class AddTask implements OnInit, OnDestroy {
     }, 200);
   }
 
+  /**
+   * Bricht die Bearbeitung eines Subtasks ab
+   */
   cancelSubtaskEdit() {
     this.editingSubtaskIndex = null;
     this.editingSubtaskTitle = '';
     this.originalSubtaskTitle = '';
   }
 
+  /**
+   * Leert das Subtask-Eingabefeld
+   */
   clearSubtaskInput() {
     this.newSubtaskTitle = '';
   }
 
+  /**
+   * Generiert eine eindeutige ID
+   * @returns ID-String
+   */
   private generateId(): string {
     return Date.now().toString(36) + Math.random().toString(36).substring(2);
   }
 
+  /**
+   * Gibt die Initialen eines Namens zurück
+   * @param name Name
+   * @returns Initialen
+   */
   getInitials(name: string): string {
     return this.contactsService.getInitials(name);
   }
 
+  /**
+   * Gibt die Farbklasse für einen Kontakt zurück
+   * @param contact Kontakt
+   * @returns Farbklasse
+   */
   getContactColorClass(contact: SingleContact): string {
     return this.contactsService.getIconColorClass(contact);
   }
 
+  /**
+   * Prüft, ob ein Feld gültig ist
+   * @param fieldName Feldname
+   * @returns true, wenn gültig
+   */
   isFieldValid(fieldName: string): boolean {
     if (fieldName === 'category') {
       return this.selectedCategory !== 'Select category';
@@ -326,16 +411,28 @@ export class AddTask implements OnInit, OnDestroy {
     return !!value && (typeof value !== 'string' || value.trim() !== '');
   }
 
+  /**
+   * Aktualisiert den Fehlerstatus eines Feldes
+   * @param fieldName Feldname
+   */
   private updateFieldError(fieldName: string): void {
     this.fieldErrors[fieldName] = !this.isFieldValid(fieldName);
   }
 
+  /**
+   * Wird bei Eingabe in ein Feld aufgerufen
+   * @param fieldName Feldname
+   */
   onFieldInput(fieldName: string): void {
     if (this.fieldErrors[fieldName]) {
       this.updateFieldError(fieldName);
     }
   }
 
+  /**
+   * Validiert alle Pflichtfelder
+   * @returns true, wenn alle gültig
+   */
   validateAllFields(): boolean {
     let isValid = true;
     for (const field of this.requiredFields) {
@@ -348,6 +445,9 @@ export class AddTask implements OnInit, OnDestroy {
     return isValid;
   }
 
+  /**
+   * Markiert das Formular als abgeschickt
+   */
   private markFormAsSubmitted(): void {
     this.formSubmitted = true;
     if (this.taskForm) {
@@ -358,15 +458,25 @@ export class AddTask implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Wird beim Verlassen des Kategorie-Dropdowns aufgerufen
+   */
   onCategoryBlur() {
     this.closeCategoryDropdown();
     this.updateFieldError('category');
   }
 
+  /**
+   * Prüft, ob das Formular gültig ist
+   * @returns true, wenn gültig
+   */
   isFormValid(): boolean {
     return this.requiredFields.every((field) => this.isFieldValid(field));
   }
 
+  /**
+   * Wird beim Absenden des Formulars aufgerufen
+   */
   async onSubmit() {
     this.markFormAsSubmitted();
 
@@ -384,6 +494,9 @@ export class AddTask implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Setzt das Formular zurück
+   */
   clearForm() {
     this.tasksService.resetStatus();
     this.taskData.status = this.statusCondition;
@@ -411,6 +524,10 @@ export class AddTask implements OnInit, OnDestroy {
     this.updateAssignedAvatarsPreview();
   }
 
+  /**
+   * Setzt die aktuellen Task-Daten
+   * @param currenTask Aktueller Task
+   */
   setCurrentTaskData(currenTask: SingleTask) {
     this.taskData = {
       id: currenTask.id,
@@ -431,6 +548,10 @@ export class AddTask implements OnInit, OnDestroy {
     this.fieldErrors = { title: false, dueDate: false, category: false };
   }
 
+  /**
+   * Gibt ein vollständiges Task-Objekt zurück
+   * @returns SingleTask
+   */
   getFullTask(): SingleTask {
     return {
       id: this.taskData.id ?? '',

@@ -1,109 +1,110 @@
-<section class="contact-details__outer"> 
-  <div class="contact-details__inner"> 
-
-<!--
+<section class="contact-details__outer">
+  <div class="contact-details__inner">
+    <!--
   Kopfzeile: "Contacts | Better with a team"
   Wird IMMER angezeigt – egal ob ein Kontakt ausgewählt ist oder nicht.
 -->
-<div class="contact-details__header">
- 
-  <h1 class="contact-details__title">Contacts</h1>
-  <div class="contact-details__separator"></div>
-  <p class="contact-details__subtitle">Better with a team</p>
+    <div class="contact-details__header">
+      <h1 class="contact-details__title">Contacts</h1>
+      <div class="contact-details__separator"></div>
+      <p class="contact-details__subtitle">Better with a team</p>
 
-  <!-- Back Button: Nur auf Mobile sichtbar -->
-  <button class="contact-details__back-btn" (click)="onBackClick()">
-    <img src="assets/icons/arrow-left.svg" alt="Back" />
-  </button>
-</div>
+      <!-- Back Button: Nur auf Mobile sichtbar -->
+      <button class="contact-details__back-btn" (click)="onBackClick()">
+        <img src="assets/icons/arrow-left.svg" alt="Back" />
+      </button>
+    </div>
 
-<!--
+    <!--
 Kontakt-Detail: Nur anzeigen, wenn ein Kontakt ausgewählt ist.
 Wir prüfen, ob activContact im Service einen Wert hat.
 -->
-@if(contactsService.activContact){
-  <div class="contact-details__content">
-
-    <!-- Profil-Bereich: Avatar + Name + Aktions-Buttons -->
-    <div class="contact-details__profile">
-      <!--
+    @if (contactsService.activContact) {
+      <div class="contact-details__content">
+        <!-- Profil-Bereich: Avatar + Name + Aktions-Buttons -->
+        <div class="contact-details__profile">
+          <!--
         Avatar mit Initialen und dynamischer Hintergrundfarbe.
         Die Farbe kommt aus der Icon-Klasse des Services.
       -->
-      <span
-        class="contact-details__avatar"
-        [ngClass]="contactsService.getIconColorClass(contactsService.activContact)"
-      >
-        {{ contactsService.getInitials(contactsService.activContact.name) }}
-      </span>
+          <span
+            class="contact-details__avatar"
+            [ngClass]="contactsService.getIconColorClass(contactsService.activContact)"
+          >
+            {{ contactsService.getInitials(contactsService.activContact.name) }}
+          </span>
 
-      <div class="contact-details__name-actions">
-        <h2 class="contact-details__name">
-          {{ contactsService.activContact.name }}
-        </h2>
+          <div class="contact-details__name-actions">
+            <h2 class="contact-details__name">
+              {{ contactsService.activContact.name }}
+            </h2>
 
-        <!-- Desktop: Edit & Delete Buttons (Mobile'da gizli) -->
-        <div class="contact-details__actions">
-          <button class="contact-details__btn-edit" (click)="onEdit()">
-            <img src="assets/icons/edit.svg" alt="Edit icon" />
-            <span>Edit</span>
-          </button>
-          <button class="contact-details__btn-delete" (click)="onDelete()">
-            <img src="assets/icons/delete.svg" alt="Delete icon" />
-            <span>Delete</span>
-          </button>
+            <!-- Desktop: Edit & Delete Buttons (Mobile'da gizli) -->
+            <div class="contact-details__actions">
+              <button class="contact-details__btn-edit" (click)="onEdit()">
+                <img src="assets/icons/edit.svg" alt="Edit icon" />
+                <span>Edit</span>
+              </button>
+              <button class="contact-details__btn-delete" (click)="onDelete()">
+                <img src="assets/icons/delete.svg" alt="Delete icon" />
+                <span>Delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kontaktinformationen: E-Mail und Telefon -->
+        <div class="contact-details__info">
+          <h3 class="contact-details__info-title">Contact Information</h3>
+
+          <div class="contact-details__field">
+            <span class="contact-details__label">Email</span>
+
+            <a
+              [href]="'mailto:' + contactsService.activContact.email"
+              class="contact-details__value contact-details__value--link"
+            >
+              {{ contactsService.activContact.email }}
+            </a>
+          </div>
+
+          <div class="contact-details__field">
+            <span class="contact-details__label">Phone</span>
+
+            <a [href]="'tel:' + contactsService.activContact.phone" class="contact-details__value">
+              {{ contactsService.activContact.phone }}
+            </a>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Kontaktinformationen: E-Mail und Telefon -->
-    <div class="contact-details__info">
-      <h3 class="contact-details__info-title">Contact Information</h3>
+      <!-- FAB Menu: Nur auf Mobile sichtbar -->
+      <div class="contact-details__fab-wrapper">
+        <!-- Dropdown Menu -->
+        @if (isFabMenuOpen) {
+          <div class="contact-details__fab-menu">
+            <button class="contact-details__fab-item" (click)="onEdit(); closeFabMenu()">
+              <img src="assets/icons/edit.svg" alt="Edit" />
+              <span>Edit</span>
+            </button>
+            <button class="contact-details__fab-item" (click)="onDelete(); closeFabMenu()">
+              <img src="assets/icons/delete.svg" alt="Delete" />
+              <span>Delete</span>
+            </button>
+          </div>
+        }
 
-      <div class="contact-details__field">
-        <span class="contact-details__label">Email</span>
-        
-          <a [href]="'mailto:' + contactsService.activContact.email"
-          class="contact-details__value contact-details__value--link"
-        >
-          {{ contactsService.activContact.email }}
-        </a>
-      </div>
-
-      <div class="contact-details__field">
-        <span class="contact-details__label">Phone</span>
-        
-          <a [href]="'tel:' + contactsService.activContact.phone"
-          class="contact-details__value"
-        >
-          {{ contactsService.activContact.phone }}
-        </a>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- FAB Menu: Nur auf Mobile sichtbar -->
-  <div class="contact-details__fab-wrapper">
-    <!-- Dropdown Menu -->
-    @if(isFabMenuOpen){
-      <div class="contact-details__fab-menu">
-        <button class="contact-details__fab-item" (click)="onEdit(); closeFabMenu()">
-          <img src="assets/icons/edit.svg" alt="Edit" />
-          <span>Edit</span>
-        </button>
-        <button class="contact-details__fab-item" (click)="onDelete(); closeFabMenu()">
-          <img src="assets/icons/delete.svg" alt="Delete" />
-          <span>Delete</span>
+        <!-- FAB Button -->
+        <button class="contact-details__fab" (click)="toggleFabMenu()">
+          <img src="assets/icons/fab-menu.svg" alt="Menu" />
         </button>
       </div>
     }
-
-    <!-- FAB Button -->
-    <button class="contact-details__fab" (click)="toggleFabMenu()">
-      <img src="assets/icons/fab-menu.svg" alt="Menu" />
-    </button>
-  </div>
-}
   </div>
 </section>
+
+<dialog appSetDialogAnimation>
+  <div class="container">
+    <p>User must be logged in to delete</p>
+  </div>
+</dialog>
