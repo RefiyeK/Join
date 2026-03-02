@@ -3,10 +3,7 @@ import { Location } from '@angular/common';
 import { Nav } from '../../shared/components/nav/nav';
 import { Header } from '../../shared/components/header/header';
 
-/**
- * Privacy Policy page component
- * @description Zeigt die Datenschutzerklärung mit DSGVO-Informationen an
- */
+/** Privacy Policy page component displaying GDPR information */
 @Component({
   selector: 'app-privacy-policy',
   standalone: true,
@@ -16,14 +13,12 @@ import { Header } from '../../shared/components/header/header';
 })
 export class PrivacyPolicy {
   /**
-   * Konstruktor injiziert Location für die Navigation
+   * Injects Location service for navigation
    * @param location Angular Location Service
    */
   constructor(private location: Location) {}
 
-  /**
-   * Navigiert zurück zur vorherigen Seite
-   */
+  /** Navigates back to the previous page */
   goBack(): void {
     this.location.back();
   }
