@@ -365,7 +365,7 @@
   a {
     position: relative;
     font-weight: 300;
-    color: var(--color-medium-blue);
+    color: #a8a8a8;
     text-decoration: none;
     transition: all 125ms ease-in-out;
     padding: 5px 10px;
@@ -374,7 +374,6 @@
     &:hover {
       font-weight: 700;
       color: var(--color-light-blue);
-      background-color: rgba(0, 0, 0, 0.02);
     }
     &::after {
       content: attr(data-text);
