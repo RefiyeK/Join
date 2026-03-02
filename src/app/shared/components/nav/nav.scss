@@ -198,6 +198,7 @@
   }
 }
 
+
 .nav__footer--guest {
   flex: 2;
   display: flex;
@@ -233,6 +234,7 @@
     transform: none;
   }
 }
+
   .nav {
     position: fixed;
     bottom: 0;
@@ -287,6 +289,10 @@
         color: var(--color-font-bright);
         width: 75px;
       }
+    }
+
+    &__footer:not(.nav__footer--guest) {
+      display: none !important;
     }
   }
 }
