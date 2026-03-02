@@ -51,6 +51,12 @@
   transition: all 0.8s ease-in-out;
 }
 
+// Deaktiviert alle Animationen bei wiederholtem Besuch der Login-Seite
+.logo--no-transition,
+.logo--no-transition .logo {
+  transition: none;
+}
+
 .signup-hint {
   position: fixed;
   top: 2rem;
@@ -84,6 +90,11 @@
 
   &.form--visible {
     opacity: 1;
+  }
+
+  // Formular sofort sichtbar ohne Fade-In bei wiederholtem Besuch
+  &.form--no-transition {
+    transition: none;
   }
 }
 

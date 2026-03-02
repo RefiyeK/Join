@@ -15,6 +15,7 @@ export class Login implements OnInit {
   logoAnimated = false;
   formVisible = false;
   showPassword = false;
+  skipAnimation = false;
 
   private router = inject(Router);
   private authService = inject(AuthService);
@@ -34,6 +35,7 @@ export class Login implements OnInit {
         this.formVisible = true;
       }, 1200);
     } else {
+      this.skipAnimation = true;
       this.logoAnimated = true;
       this.formVisible = true;
     }
