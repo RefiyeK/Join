@@ -1,11 +1,13 @@
 /* ================================================================
  * help.scss
  *
- * Responsive bis 320px. Nutzt clamp() für fließende Typografie.
- * Mindest-Fontgröße: 16px (1rem).
+ * Responsive down to 320px. Uses clamp() for fluid typography.
+ * Minimum font size: 16px (1rem).
  * ================================================================ */
 
-/* --- Host-Element (Layout-Container) --- */
+/* ================================================================
+ * Host Element (Layout Container)
+ * ================================================================ */
 :host {
   display: flex;
   width: 100%;
@@ -17,8 +19,9 @@
   display: none;
 }
 
-
-/* Outer Wrapper - Full-width background */
+/* ================================================================
+ * Outer Wrapper - Full-width background
+ * ================================================================ */
 .help__outer {
   display: flex;
   justify-content: flex-start;
@@ -28,7 +31,9 @@
   overflow-y: auto;
 }
 
-/* Inner Wrapper - Content begrenzt auf 1208px */
+/* ================================================================
+ * Inner Wrapper - Content limited to 1208px
+ * ================================================================ */
 .help__inner {
   display: flex;
   flex-direction: column;
@@ -37,8 +42,9 @@
   padding: 3rem 6.25rem 7.5rem 6.25rem;
 }
 
-
-/* --- Wrapper: Header + Content --- */
+/* ================================================================
+ * Layout Structure
+ * ================================================================ */
 .wrapper {
   display: flex;
   width: 100%;
@@ -46,7 +52,6 @@
   flex-direction: column;
 }
 
-/* --- Component Sizing --- */
 app-header {
   height: 96px;
   width: 100%;
@@ -57,14 +62,18 @@ app-nav {
   height: 100%;
 }
 
-/* --- Hauptcontainer: Help Content --- */
+/* ================================================================
+ * Main Container: Help Content
+ * ================================================================ */
 .help {
   padding: 48px 100px 120px 100px;
   background-color: #f0f4f3;
   flex: 1;
 }
 
-/* --- Header: Titel + Zurück-Pfeil --- */
+/* ================================================================
+ * Header: Title + Back Arrow
+ * ================================================================ */
 .help__header {
   display: flex;
   align-items: center;
@@ -78,7 +87,7 @@ app-nav {
   margin: 0;
 }
 
-/* Zurück-Button (Pfeil) */
+/* Back button (arrow) */
 .help__back-btn {
   background: none;
   border: none;
@@ -87,41 +96,43 @@ app-nav {
   border-radius: 50%;
   transition: var(--transition-fast);
   flex-shrink: 0;
-
   img {
     width: 24px;
     height: 24px;
   }
-
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
-  
-
-  img {
+    img {
       transform: scaleX(1.3) translateX(-2px);
     }
   }
 }
 
-/* --- Überschriften (h2) --- */
+/* ================================================================
+ * Section Headings (h2)
+ * ================================================================ */
 .help__heading {
   font-weight: 700;
   color: var(--color-font-dark);
   margin: clamp(1.25rem, 2.5vw, 2rem) 0 clamp(0.5rem, 1.5vw, 1rem);
 }
 
-/* --- Fließtext --- */
+/* ================================================================
+ * Body Text
+ * ================================================================ */
 .help__text {
   color: var(--color-font-dark);
   margin: 0 0 1rem;
 }
 
-/* "Join" in Hellblau hervorgehoben */
+/* "Join" highlighted in light blue */
 .help__highlight {
   color: var(--color-light-blue);
 }
 
-/* --- Nummerierte Schrittliste --- */
+/* ================================================================
+ * Numbered Step List
+ * ================================================================ */
 .help__steps {
   padding-left: clamp(1rem, 2vw, 1.5rem);
   margin: 1rem 0;
@@ -130,7 +141,7 @@ app-nav {
   gap: clamp(0.75rem, 2vw, 1.25rem);
 }
 
-/* Einzelner Schritt */
+/* Individual step */
 .help__step {
   list-style: decimal;
   padding-left: 0.5rem;
@@ -148,33 +159,22 @@ app-nav {
 }
 
 /* ================================================================
- * Responsive Anpassungen
+ * Mobile Breakpoint (max-width: 768px)
  * ================================================================ */
-
 @media (max-width: 768px) {
-   :host {
-    // height: auto;
-    // min-height: 100vh;
+  :host {
     height: 100vh;
   }
-
   app-nav {
     width: 0;
   }
-
   .help {
     padding: 24px 20px 140px 20px;
   }
-
-  app-nav {
-    width: 0;
-  }
-
   .help__inner {
     padding: 1.5rem 1.25rem 8.75rem 1.25rem;
   }
-
-  .help__heading_{
-  padding: 1rem 6.25rem 7.5rem 6.25rem;
+  .help__heading_ {
+    padding: 1rem 6.25rem 7.5rem 6.25rem;
   }
 }

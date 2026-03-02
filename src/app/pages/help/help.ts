@@ -4,11 +4,11 @@ import { Header } from '../../shared/components/header/header';
 import { Nav } from '../../shared/components/nav/nav';
 
 /**
- * Help – Zeigt die Hilfe-Seite mit Anleitung zur Nutzung von Join.
+ * Help page component displaying usage instructions for Join.
  *
- * Die Seite zeigt nur statischen Text.
- * Der Zurück-Pfeil nutzt Location.back(), um zur vorherigen Seite
- * zurückzukehren – egal von wo der User gekommen ist.
+ * Shows static text content only.
+ * The back arrow uses Location.back() to navigate to the
+ * previous page regardless of where the user came from.
  */
 @Component({
   selector: 'app-help',
@@ -18,15 +18,12 @@ import { Nav } from '../../shared/components/nav/nav';
 })
 export class Help {
   /**
-   * Konstruktor injiziert Location für die Navigation
+   * Injects Location service for navigation
    * @param location Angular Location Service
    */
   constructor(private location: Location) {}
 
-  /**
-   * Navigiert zurück zur vorherigen Seite.
-   * Wird vom Zurück-Pfeil oben rechts ausgelöst.
-   */
+  /** Navigates back to the previous page. Triggered by the back arrow. */
   protected goBack(): void {
     this.location.back();
   }
