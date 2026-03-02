@@ -321,9 +321,9 @@ app-nav {
 
 @media (max-width: 1024px) {
   .board-inner {
-    padding: 40px 24px;
+    padding: 80px 24px;
   }
-  
+
   app-nav {
     position: fixed;
     bottom: 0;
@@ -398,7 +398,7 @@ app-nav {
    ============================================ */
 @media (max-width: 900px) {
   .board-inner {
-    padding: 40px 20px;
+    padding: 80px 20px;
   }
 
   .board-header {
