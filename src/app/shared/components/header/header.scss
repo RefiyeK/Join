@@ -144,7 +144,11 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
+  // .profile {
+  //   display: none;
+  // }
+
   .dropdown {
     right: -5px;
     gap: 8px;

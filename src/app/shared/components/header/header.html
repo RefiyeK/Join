@@ -1,6 +1,7 @@
 <section class="header-outer" (click)="closeDropdown()">
   <div class="header-container">
     <img class="header-logo" src="assets/icons/logo-dark.svg" alt="Join Logo" />
+      @if (authService.loggetInUserUid()) {
     <p class="project-management-tool">Kanban Project Management Tool</p>
 
     <div class="help-and-profile">
@@ -45,5 +46,6 @@
         }
       </div>
     </div>
+  }
   </div>
 </section>
