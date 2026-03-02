@@ -52,6 +52,10 @@ p {
   flex-shrink: 0;
 }
 
+.head-line {
+  margin-top: 5rem;
+}
+
 .ng-dirty,
 .ng-touched,
 .ng-valid,
@@ -95,7 +99,7 @@ p {
   display: flex;
   flex-direction: column;
   width: 50%;
-  gap: 32px;
+  gap: 24px;
   padding: 0 5%;
 }
 
@@ -866,6 +870,10 @@ label.subtask-title {
     display: block;
   }
 
+  .head-line {
+    margin-top: 2rem;
+  }
+
   .foot-line {
     margin-bottom: 80px;
     justify-content: flex-end;
@@ -923,6 +931,7 @@ label.subtask-title {
       padding: 0 5%;
     }
     .head-line {
+      margin-top: 0;
       padding-top: 2rem;
     }
 

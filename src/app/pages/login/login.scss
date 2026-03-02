@@ -272,7 +272,6 @@
   }
 }
 
-
 .input-wrapper {
   img {
     position: absolute;
@@ -306,6 +305,8 @@
     font-size: 21px;
     font-weight: 500;
     transition: all 125ms ease-in-out;
+    align-items: center;
+    justify-content: center;
 
     &:disabled {
       opacity: 0.5;
@@ -349,7 +350,7 @@
   transform: translateX(-50%);
   display: flex;
   gap: 3rem;
-  
+
   a {
     position: relative;
     font-weight: 300;
@@ -425,12 +426,11 @@
     width: 60px;
     height: 80px;
   }
-    .login-buttons {
+  .login-buttons {
     flex-direction: column;
     align-items: center;
     height: auto;
     gap: 15px;
-   
 
     .btn-primary,
     .btn-outline {

@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, inject, OnDestroy, ViewChild } fr
 import { TasksService } from '../../../services/tasks-service';
 import { Subscription } from 'rxjs';
 import { SetDialogAnimation } from '../../../shared/directives/set-dialog-animation';
-import { routes } from '../../../app.routes';
 import { Router } from '@angular/router';
 
 @Component({
