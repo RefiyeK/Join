@@ -1,32 +1,25 @@
 <section class="contact-details__outer">
   <div class="contact-details__inner">
-    <!--
-  Kopfzeile: "Contacts | Better with a team"
-  Wird IMMER angezeigt – egal ob ein Kontakt ausgewählt ist oder nicht.
--->
+
+    <!-- Header: "Contacts | Better with a team" - Always visible regardless of selected contact -->
     <div class="contact-details__header">
       <h1 class="contact-details__title">Contacts</h1>
       <div class="contact-details__separator"></div>
       <p class="contact-details__subtitle">Better with a team</p>
 
-      <!-- Back Button: Nur auf Mobile sichtbar -->
+      <!-- Back Button: Visible on mobile only -->
       <button class="contact-details__back-btn" (click)="onBackClick()">
         <img src="assets/icons/arrow-left.svg" alt="Back" />
       </button>
     </div>
 
-    <!--
-Kontakt-Detail: Nur anzeigen, wenn ein Kontakt ausgewählt ist.
-Wir prüfen, ob activContact im Service einen Wert hat.
--->
+    <!-- Contact Detail: Only shown when a contact is selected via activContact in service -->
     @if (contactsService.activContact) {
       <div class="contact-details__content">
-        <!-- Profil-Bereich: Avatar + Name + Aktions-Buttons -->
+
+        <!-- Profile Section: Avatar + Name + Action Buttons -->
         <div class="contact-details__profile">
-          <!--
-        Avatar mit Initialen und dynamischer Hintergrundfarbe.
-        Die Farbe kommt aus der Icon-Klasse des Services.
-      -->
+          <!-- Avatar with initials and dynamic background color from service icon class -->
           <span
             class="contact-details__avatar"
             [ngClass]="contactsService.getIconColorClass(contactsService.activContact)"
@@ -39,7 +32,7 @@ Wir prüfen, ob activContact im Service einen Wert hat.
               {{ contactsService.activContact.name }}
             </h2>
 
-            <!-- Desktop: Edit & Delete Buttons (Mobile'da gizli) -->
+            <!-- Desktop: Edit & Delete Buttons (hidden on mobile) -->
             <div class="contact-details__actions">
               <button class="contact-details__btn-edit" (click)="onEdit()">
                 <img src="assets/icons/edit.svg" alt="Edit icon" />
@@ -53,13 +46,11 @@ Wir prüfen, ob activContact im Service einen Wert hat.
           </div>
         </div>
 
-        <!-- Kontaktinformationen: E-Mail und Telefon -->
+        <!-- Contact Information: Email and Phone -->
         <div class="contact-details__info">
           <h3 class="contact-details__info-title">Contact Information</h3>
-
           <div class="contact-details__field">
             <span class="contact-details__label">Email</span>
-
             <a
               [href]="'mailto:' + contactsService.activContact.email"
               class="contact-details__value contact-details__value--link"
@@ -67,10 +58,8 @@ Wir prüfen, ob activContact im Service einen Wert hat.
               {{ contactsService.activContact.email }}
             </a>
           </div>
-
           <div class="contact-details__field">
             <span class="contact-details__label">Phone</span>
-
             <a [href]="'tel:' + contactsService.activContact.phone" class="contact-details__value">
               {{ contactsService.activContact.phone }}
             </a>
@@ -78,7 +67,7 @@ Wir prüfen, ob activContact im Service einen Wert hat.
         </div>
       </div>
 
-      <!-- FAB Menu: Nur auf Mobile sichtbar -->
+      <!-- FAB Menu: Visible on mobile only -->
       <div class="contact-details__fab-wrapper">
         <!-- Dropdown Menu -->
         @if (isFabMenuOpen) {
@@ -100,6 +89,7 @@ Wir prüfen, ob activContact im Service einen Wert hat.
         </button>
       </div>
     }
+
   </div>
 </section>
 

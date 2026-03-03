@@ -9,14 +9,14 @@
           <!-- Mobile Greeting Screen -->
           @if (isMobile && showGreeting) {
             <div class="mobile-greeting">
-              <p class="greeting-text">Good morning@if (loggedInUserName){,}</p>
+              <p class="greeting-text">Hello@if (loggedInUserName){,} @if (!loggedInUserName){!}</p>
               @if (loggedInUserName) {
               <p class="greeting-name">{{ loggedInUserName }}</p>
               }
             </div>
           }
 
-          <!-- Summary Inhalt -->
+          <!-- Summary Content -->
           @if (!isMobile || !showGreeting) {
             <div class="summary-inner">
 
@@ -64,7 +64,7 @@
                       </div>
                       <div class="priority-divider"></div>
                       <div class="priority-right">
-                        <span class="priority-date">October 16, 2022</span>
+                        <span class="priority-date">{{ formattedUpcomingDeadline }}</span>
                         <span class="priority-deadline">Upcoming Deadline</span>
                       </div>
                     </div>
@@ -87,12 +87,14 @@
 
                 </div>
 
-                <div class="summary-greeting">
-                  <p class="greeting-text">Good morning@if (loggedInUserName){,} @if (!loggedInUserName){!}</p>
-                  @if (loggedInUserName) {
-                    <p class="greeting-name">{{ loggedInUserName }}</p>
-                  }
-                </div>
+                @if (showGreeting) {
+                  <div class="summary-greeting">
+                    <p class="greeting-text">Hello@if (loggedInUserName){,} @if (!loggedInUserName){!}</p>
+                    @if (loggedInUserName) {
+                      <p class="greeting-name">{{ loggedInUserName }}</p>
+                    }
+                  </div>
+                }
               </div>
 
             </div>

@@ -2,7 +2,6 @@ import { Component, inject, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
 import { ContactsService } from '../../../services/contacts-service';
-
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -20,7 +19,6 @@ export class Header {
    * ContactsService for user contacts
    */
   contactsService = inject(ContactsService);
-
   isDropdownOpen = false;
   dropdownBounce = false;
 

@@ -7,6 +7,7 @@ import { SetDialogAnimation } from '../../../../shared/directives/set-dialog-ani
 
 /**
  * ContactDetails – Displays the detail view of the selected contact.
+ * ContactDetails – Displays the detail view of the selected contact.
  *
  * Retrieves all data from contactsService.activContact.
  * Edit and Delete use the service methods for Firebase.

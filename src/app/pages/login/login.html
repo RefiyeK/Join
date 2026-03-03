@@ -1,22 +1,22 @@
 <div class="login-page">
   <!-- Logo -->
-  <div class="logo-wrapper" [class.logo--animated]="logoAnimated">
+  <div class="logo-wrapper" [class.logo--animated]="logoAnimated" [class.logo--no-transition]="skipAnimation">
     <img src="assets/icons/logo-dark.png" alt="Join Logo" class="logo" />
   </div>
 
-  <!-- Registrierungshinweis oben rechts -->
+  <!-- Sign up hint - top right -->
   <div class="signup-hint">
     <span class="signup-text">Not a Join user?</span>
     <button class="btn-primary" routerLink="/sign-up">Sign up</button>
   </div>
 
-  <!-- Login-Formular -->
-  <div class="login-container" [class.form--visible]="formVisible">
+  <!-- Login Form -->
+  <div class="login-container" [class.form--visible]="formVisible" [class.form--no-transition]="skipAnimation">
     <div class="login-card">
       <h1>Log in</h1>
       <div class="title-underline"></div>
 
-      <!-- E-Mail Eingabefeld -->
+      <!-- Email Input Field -->
       <div class="input-wrapper" [class.error]="emailError">
         <input
           type="email"
@@ -28,7 +28,7 @@
         <img src="assets/icons/mail.svg" alt="E-Mail" />
       </div>
 
-      <!-- Passwort Eingabefeld mit Sichtbarkeitsumschalter -->
+      <!-- Password Input Field with Visibility Toggle -->
       <div class="input-wrapper" [class.error]="passwordError">
         <input
           [type]="showPassword ? 'text' : 'password'"
@@ -38,47 +38,45 @@
           (input)="passwordError = false"
         />
         @if (!password) {
-        <img src="assets/icons/lock.svg" alt="Passwort" class="icon-lock" />
-          } @else if (showPassword) {
-        <img
-          src="assets/icons/visibility.svg"
-          alt="Passwort verbergen"
-          class="password-icon toggle-password"
-          (click)="showPassword = false"
-        />
+          <img src="assets/icons/lock.svg" alt="Password" class="icon-lock" />
+        } @else if (showPassword) {
+          <img
+            src="assets/icons/visibility.svg"
+            alt="Hide password"
+            class="password-icon toggle-password"
+            (click)="showPassword = false"
+          />
         } @else {
-        <img
-          src="assets/icons/visibility_off.svg"
-          alt="Passwort anzeigen"
-          class="password-icon toggle-password"
-          (click)="showPassword = true"
-        />
+          <img
+            src="assets/icons/visibility_off.svg"
+            alt="Show password"
+            class="password-icon toggle-password"
+            (click)="showPassword = true"
+          />
         }
-    </div>
+      </div>
 
-     <!-- Fehlermeldung -->
+      <!-- Error Message -->
       @if (errorMessage) {
         <div class="error-message">{{ errorMessage }}</div>
       }
 
-
-      <!-- Ladeindikator -->
+      <!-- Loading Indicator -->
       @if (isLoading) {
         <div class="loading-spinner">
           <span>Logging in…</span>
         </div>
       }
 
-      <!-- Aktionsbuttons -->
+      <!-- Action Buttons -->
       <div class="login-buttons">
         <button class="btn-primary" (click)="login()" [disabled]="isLoading">Log in</button>
         <button class="btn-outline" (click)="guestLogin()" [disabled]="isLoading">Guest Log in</button>
       </div>
-
     </div>
   </div>
 
-  <!-- Fußzeile -->
+  <!-- Footer -->
   <div class="login-footer">
     <a routerLink="/privacy-policy" data-text="Privacy Policy">Privacy Policy</a>
     <a routerLink="/imprint" data-text="Legal notice">Legal notice</a>

@@ -21,6 +21,7 @@ import { RouterLink } from '@angular/router';
 
 /**
  * Board – Kanban board with 4 columns, drag & drop, and task detail dialog.
+ * Board – Kanban board with 4 columns, drag & drop, and task detail dialog.
  *
  * Retrieves all tasks from the TasksService (Firebase real-time data).
  * Clicking a card opens the detail dialog.

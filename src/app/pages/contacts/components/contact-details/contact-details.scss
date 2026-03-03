@@ -1,12 +1,14 @@
 /* ================================================================
  * contact-details.scss
  *
- * Responsive bis 320px. Nutzt clamp() für fließende Typografie.
- * Mindest-Fontgröße: 16px (1rem).
- * Breakpoints aus styles.scss.
+ * Responsive down to 320px. Uses clamp() for fluid typography.
+ * Minimum font size: 16px (1rem).
+ * Breakpoints from styles.scss.
  * ================================================================ */
 
-/* --- Host-Element --- */
+/* ================================================================
+ * Host Element
+ * ================================================================ */
 :host {
   display: flex;
   width: 100%;
@@ -23,8 +25,8 @@ h3 {
 }
 
 /* ================================================================
- * Outer Wrapper - Hintergrund (volle Breite)
- * Dehnt sich auf großen Bildschirmen über 1440px aus.
+ * Outer Wrapper - Background (full width)
+ * Extends beyond 1440px on large screens.
  * ================================================================ */
 .contact-details__outer {
   display: flex;
@@ -36,8 +38,8 @@ h3 {
 }
 
 /* ================================================================
- * Inner Wrapper - Inhalt (max-width begrenzt)
- * Begrenzt den Inhalt auf 1208px (1440px - 232px Nav).
+ * Inner Wrapper - Content (limited to max-width)
+ * Limits content to 1208px (1440px - 232px Nav).
  * ================================================================ */
 .contact-details__inner {
   display: flex;
@@ -47,7 +49,9 @@ h3 {
   padding: clamp(3rem, 2vw, 6rem) clamp(0.5rem, 2vw, 6rem);
 }
 
-/* --- Header: "Contacts | Better with a team" --- */
+/* ================================================================
+ * Header: "Contacts | Better with a team"
+ * ================================================================ */
 .contact-details__header {
   display: flex;
   align-items: center;
@@ -55,14 +59,7 @@ h3 {
   margin-bottom: clamp(1rem, 3vw, 2.5rem);
 }
 
-// .contact-details__title {
-//   font-size: clamp(2rem, 5vw, 4rem);
-//   font-weight: 700;
-//   color: var(--color-font-dark);
-//   margin: 0;
-// }
-
-/* Vertikale blaue Trennlinie */
+/* Vertical blue divider */
 .contact-details__separator {
   width: 3px;
   height: clamp(2rem, 4vw, 3.5rem);
@@ -72,34 +69,32 @@ h3 {
 }
 
 .contact-details__subtitle {
-  // font-size: clamp(1.25rem, 0.893vw + 1.071rem, 1.87rem);
   font-size: 27px;
-  // font-weight: 400;
-  // color: var(--color-font-dark);
-  // margin: 0;
 }
 
-/* --- Content-Wrapper für Kontaktdetails --- */
+/* ================================================================
+ * Content Wrapper for Contact Details
+ * ================================================================ */
 .contact-details__content {
   display: flex;
   flex-direction: column;
   gap: clamp(1rem, 2.5vw, 2rem);
 }
 
-/* --- Profil: Avatar + Name + Buttons --- */
+/* ================================================================
+ * Profile: Avatar + Name + Buttons
+ * ================================================================ */
 .contact-details__profile {
   display: flex;
   align-items: center;
   gap: clamp(1rem, 2vw, 1.5rem);
 }
 
-/* Runder Avatar mit Initialen */
+/* Round avatar with initials */
 .contact-details__avatar {
   display: flex;
   align-items: center;
   justify-content: center;
-  // width: clamp(40px, 7vw, 80px);
-  // height: clamp(40px, 7vw, 80px);
   max-width: 120px;
   width: 30%;
   min-width: 80px;
@@ -109,11 +104,9 @@ h3 {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   color: var(--color-font-bright);
   font-size: clamp(1rem, 2.5vw, 2rem);
-  // font-weight: 500;
-  // flex-shrink: 0;
 }
 
-/* Name + Aktions-Buttons als Spalte */
+/* Name + Action buttons as column */
 .contact-details__name-actions {
   display: flex;
   flex-direction: column;
@@ -125,15 +118,14 @@ h3 {
 }
 
 .contact-details__name {
-  // font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 500;
-  // color: var(--color-font-dark);
-  // margin: 0;
   overflow-wrap: break-word;
   word-break: break-word;
 }
 
-/* --- Edit & Delete Buttons (nur Desktop) --- */
+/* ================================================================
+ * Edit & Delete Buttons (desktop only)
+ * ================================================================ */
 .contact-details__actions {
   display: flex;
 }
@@ -148,7 +140,6 @@ h3 {
   color: var(--color-font-dark);
   font-size: 1rem;
   cursor: pointer;
-  // padding: 0.25rem 0.35rem;
   padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1.25rem);
   border-radius: 0.25rem;
 
@@ -160,26 +151,20 @@ h3 {
 
   &:hover {
     color: var(--color-light-blue);
-
     img {
       filter: invert(58%) sepia(85%) saturate(501%) hue-rotate(156deg) brightness(94%) contrast(90%);
     }
   }
 }
 
-/* --- Kontaktinformationen (Email, Telefon) --- */
+/* ================================================================
+ * Contact Information (Email, Phone)
+ * ================================================================ */
 .contact-details__info {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
 }
-
-// .contact-details__info-title {
-//   font-size: clamp(1.25rem, 2vw, 1.5rem);
-//   font-weight: 400;
-//   color: var(--color-font-dark);
-//   margin: 0;
-// }
 
 .contact-details__field {
   display: flex;
@@ -203,7 +188,6 @@ h3 {
 
   &--link {
     color: var(--color-light-blue);
-
     &:hover {
       text-decoration: none;
     }
@@ -211,8 +195,8 @@ h3 {
 }
 
 /* ================================================================
- * Back Button (nur Mobile sichtbar)
- * Ermöglicht Rückkehr zur Kontaktliste.
+ * Back Button (visible on mobile only)
+ * Allows returning to the contacts list.
  * ================================================================ */
 .contact-details__back-btn {
   display: none;
@@ -238,8 +222,8 @@ h3 {
 }
 
 /* ================================================================
- * FAB (Floating Action Button) - nur Mobile sichtbar
- * Zeigt Edit/Delete Optionen als Dropdown-Menü.
+ * FAB (Floating Action Button) - visible on mobile only
+ * Shows Edit/Delete options as a dropdown menu.
  * ================================================================ */
 .contact-details__fab-wrapper {
   display: none;
@@ -281,7 +265,7 @@ h3 {
   }
 }
 
-/* FAB Dropdown-Menü */
+/* FAB Dropdown Menu */
 .contact-details__fab-menu {
   display: flex;
   flex-direction: column;
@@ -291,7 +275,7 @@ h3 {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* FAB Menü-Einträge */
+/* FAB Menu Items */
 .contact-details__fab-item {
   display: flex;
   align-items: center;
@@ -315,6 +299,9 @@ h3 {
   }
 }
 
+/* ================================================================
+ * Breakpoint (max-width: 1293px) - Header switches to column layout
+ * ================================================================ */
 @media (max-width: 1293px) {
   .contact-details__header {
     flex-direction: column;
@@ -337,13 +324,9 @@ h3 {
 }
 
 /* ================================================================
- * Mobile Responsive (< 1024px)
+ * Tablet Breakpoint (max-width: 1024px)
  * ================================================================ */
 @media (max-width: 1024px) {
-  // .contact-details__title {
-  // font-size: 4rem;
-  // }
-
   .contact-details__header {
     flex-direction: column;
     align-items: flex-start;
@@ -363,7 +346,7 @@ h3 {
     display: none;
   }
 
-  /* Back Button anzeigen */
+  /* Show back button */
   .contact-details__back-btn {
     display: flex;
     position: absolute;
@@ -375,7 +358,7 @@ h3 {
     display: flex;
   }
 
-  /* FAB verstecken */
+  /* Hide FAB */
   .contact-details__fab-wrapper {
     display: none;
   }
@@ -386,15 +369,18 @@ h3 {
   }
 }
 
+/* ================================================================
+ * Mobile Breakpoint (max-width: 768px)
+ * ================================================================ */
 @media (max-width: 768px) {
-  /* FAB verstecken */
   .contact-details__name {
-    // font-size: clamp(2rem, 5vw, 4rem);
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  /* Show FAB, hide desktop actions */
   .contact-details__fab-wrapper {
     display: flex;
     bottom: 120px;
@@ -410,17 +396,19 @@ h3 {
   }
 }
 
+/* ================================================================
+ * Extra Small Mobile (max-width: 375px)
+ * ================================================================ */
 @media (max-width: 375px) {
-  // .contact-details__title {
-  // font-size: clamp(3rem, 5vw, 4rem);
-  // }
-
   .contact-details__fab-wrapper {
     right: 16px;
     bottom: 110px;
   }
 }
 
+/* ================================================================
+ * Login Required Dialog
+ * ================================================================ */
 dialog {
   height: fit-content !important;
   width: fit-content !important;

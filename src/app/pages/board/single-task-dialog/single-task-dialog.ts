@@ -11,6 +11,8 @@ import { AddTask } from '../../add-task/add-task';
  *
  * Uses TasksService.activeTask for reactive data display.
  * All changes (subtask toggle, delete) are performed via the service.
+ * Uses TasksService.activeTask for reactive data display.
+ * All changes (subtask toggle, delete) are performed via the service.
  */
 @Component({
   selector: 'app-single-task-dialog',
@@ -33,8 +35,6 @@ export class SingleTaskDialog implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     this.updateAssignedUsersFromService();
-
-    // sorgt dafür, dass Contacts sicher vorhanden sind
     this.contactsService.loadContacts();
 
     this.contactsSubscription = this.contactsService.contacts$.subscribe(() => {
@@ -122,7 +122,6 @@ export class SingleTaskDialog implements OnInit, OnDestroy {
    */
   async onDeleteTask(): Promise<void> {
     if (!this.task || !this.task.id) return;
-
     await this.tasksService.deleteTask(this.task.id);
     this.closeDialog();
   }
@@ -132,7 +131,6 @@ export class SingleTaskDialog implements OnInit, OnDestroy {
    */
   async onSubtaskToggle(subtaskId: string, currentStatus: boolean): Promise<void> {
     if (!this.task || !this.task.id) return;
-
     await this.tasksService.updateSubtaskStatus(this.task.id, subtaskId, !currentStatus);
   }
 

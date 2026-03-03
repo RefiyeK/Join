@@ -9,6 +9,9 @@
   display: none;
 }
 
+/* ================================================================
+ * Layout Structure
+ * ================================================================ */
 .wrapper {
   display: flex;
   width: 100%;
@@ -26,7 +29,9 @@ app-nav {
   height: 100%;
 }
 
-/* Outer Wrapper - Full-width background */
+/* ================================================================
+ * Outer Wrapper - Full-width background
+ * ================================================================ */
 .imprint__outer {
   display: flex;
   justify-content: flex-start;
@@ -36,7 +41,9 @@ app-nav {
   overflow-y: auto;
 }
 
-/* Inner Wrapper - Content begrenzt auf 1208px */
+/* ================================================================
+ * Inner Wrapper - Content limited to 1208px
+ * ================================================================ */
 .imprint__inner {
   display: flex;
   flex-direction: column;
@@ -45,7 +52,9 @@ app-nav {
   padding: 3rem 6.25rem 7.5rem 6.25rem;
 }
 
-/* Header with title and back button */
+/* ================================================================
+ * Header with Title and Back Button
+ * ================================================================ */
 .imprint__header {
   display: flex;
   justify-content: space-between;
@@ -53,7 +62,7 @@ app-nav {
   margin-bottom: 40px;
 }
 
-/* Back button (mobile only) */
+/* Back button - visible on mobile only */
 .imprint__back {
   display: none;
   background: none;
@@ -61,35 +70,35 @@ app-nav {
   cursor: pointer;
   padding: 8px;
   transition: var(--transition-fast);
-
   img {
     width: 24px;
     height: 24px;
   }
-
   &:hover {
     transform: translateX(-4px);
   }
 }
 
-/* Content sections */
+/* ================================================================
+ * Content Sections
+ * ================================================================ */
 .imprint__section {
   max-width: 800px;
   margin-bottom: 40px;
-
   h2 {
     font-weight: 600;
     color: var(--color-font-dark);
     margin-bottom: 10px;
   }
-
   p {
     color: #4a4a4a;
     margin-bottom: 10px;
   }
 }
 
-/* Modern address card */
+/* ================================================================
+ * Address Card
+ * ================================================================ */
 .imprint__address {
   display: flex;
   flex-direction: column;
@@ -100,26 +109,24 @@ app-nav {
   background: linear-gradient(135deg, rgba(41, 171, 226, 0.05), rgba(41, 171, 226, 0.02));
   border-radius: 0 8px 8px 0;
   font-style: normal;
-
   span {
     color: var(--color-font-dark);
-
     &:first-child {
       font-weight: 600;
     }
   }
 }
 
-/* Contact email */
+/* ================================================================
+ * Contact Email
+ * ================================================================ */
 .imprint__contact {
   color: #4a4a4a;
-
   a {
     color: var(--color-light-blue);
     font-weight: 600;
     text-decoration: none;
     transition: var(--transition-fast);
-
     &:hover {
       color: var(--color-dark-blue);
       text-decoration: underline;
@@ -127,41 +134,38 @@ app-nav {
   }
 }
 
-/* Date footer */
+/* ================================================================
+ * Date Footer
+ * ================================================================ */
 .imprint__date {
   margin-top: 48px;
   color: #888;
   font-style: italic;
 }
 
-/* Mobile Styles */
+/* ================================================================
+ * Mobile Breakpoint (max-width: 768px)
+ * ================================================================ */
 @media (max-width: 768px) {
-
-  .imprint__date{
+  .imprint__date {
     padding: 1rem 6.25rem 7.5rem 6.25rem;
     white-space: nowrap;
   }
-
   app-nav {
     width: 0;
   }
-
   .imprint__inner {
     padding: 1.5rem 1.25rem 8.75rem 1.25rem;
   }
-
   .imprint__header {
     margin-bottom: 32px;
   }
-
   .imprint__back {
     display: block;
   }
-
   .imprint__section {
     margin-bottom: 24px;
   }
-
   .imprint__address {
     padding: 12px 16px;
   }

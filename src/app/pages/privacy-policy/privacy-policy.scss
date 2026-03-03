@@ -3,19 +3,20 @@
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  
 }
 
 :host ::ng-deep .help-icon {
   display: none;
 }
 
+/* ================================================================
+ * Layout Structure
+ * ================================================================ */
 .wrapper {
   display: flex;
   width: 100%;
   height: 100%;
   flex-direction: column;
- 
 }
 
 app-header {
@@ -28,7 +29,9 @@ app-nav {
   height: 100%;
 }
 
-/* Outer Wrapper - Hintergrund (volle Breite) */
+/* ================================================================
+ * Outer Wrapper - Background (full width)
+ * ================================================================ */
 .privacy-policy__outer {
   display: flex;
   justify-content: flex-start;
@@ -38,7 +41,9 @@ app-nav {
   overflow-y: auto;
 }
 
-/* Inner Wrapper - Inhalt (Content begrenzt auf 1208px) */
+/* ================================================================
+ * Inner Wrapper - Content (limited to 1208px)
+ * ================================================================ */
 .privacy-policy__inner {
   display: flex;
   flex-direction: column;
@@ -47,13 +52,14 @@ app-nav {
   padding: 3rem 6.25rem 7.5rem 6.25rem;
 }
 
-/* Header with title and back button */
+/* ================================================================
+ * Header with Title and Back Button
+ * ================================================================ */
 .privacy-policy__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
-
   h1 {
     font-weight: 700;
     color: var(--color-font-dark);
@@ -61,7 +67,7 @@ app-nav {
   }
 }
 
-/* Back button (mobile only) */
+/* Back button - visible on mobile only */
 .privacy-policy__back {
   display: none;
   background: none;
@@ -69,41 +75,38 @@ app-nav {
   cursor: pointer;
   padding: 8px;
   transition: var(--transition-fast);
-
   img {
     width: 24px;
     height: 24px;
   }
-
   &:hover {
     transform: translateX(-4px);
   }
 }
 
-/* Content sections */
+/* ================================================================
+ * Content Sections
+ * ================================================================ */
 .privacy-policy__section {
   max-width: 800px;
   margin-bottom: 40px;
   background-color: transparent;
-
   h2 {
     font-weight: 600;
     color: var(--color-font-dark);
     margin-bottom: 10px;
   }
-
   p {
     color: #4a4a4a;
     margin-bottom: 10px;
   }
 }
 
-/* Modern bullet points */
+/* Modern styled bullet points */
 .privacy-policy__list {
   list-style: none;
   padding: 0;
   margin: 10px 0;
-
   li {
     position: relative;
     padding-left: 28px;
@@ -111,7 +114,6 @@ app-nav {
     font-size: 1.2rem;
     line-height: 1.2;
     color: #4a4a4a;
-
     &::before {
       content: '';
       position: absolute;
@@ -126,14 +128,15 @@ app-nav {
   }
 }
 
-/* Contact section */
+/* ================================================================
+ * Contact Section
+ * ================================================================ */
 .privacy-policy__contact {
   a {
     color: var(--color-light-blue);
     font-weight: 600;
     text-decoration: none;
     transition: var(--transition-fast);
-
     &:hover {
       color: var(--color-dark-blue);
       text-decoration: underline;
@@ -141,41 +144,39 @@ app-nav {
   }
 }
 
-/* Date footer */
+/* ================================================================
+ * Date Footer
+ * ================================================================ */
 .privacy-policy__date {
   margin-top: 48px;
   color: #888;
   font-style: italic;
 }
 
-/* Mobile Styles */
+/* ================================================================
+ * Mobile Breakpoint (max-width: 768px)
+ * ================================================================ */
 @media (max-width: 768px) {
   app-nav {
     width: 0;
   }
-
   .privacy-policy__inner {
     padding: 1.5rem 1.25rem 8.75rem 1.25rem;
   }
-
   .privacy-policy__header {
     margin-bottom: 32px;
   }
-
   .privacy-policy__back {
     display: block;
   }
-
   .privacy-policy__section {
     margin-bottom: 24px;
   }
-
   .privacy-policy__list li {
     font-size: 1rem;
     padding-left: 24px;
   }
-
-  .privacy-policy__date{
+  .privacy-policy__date {
     padding: 1rem 6.25rem 7.5rem 6.25rem;
     white-space: nowrap;
   }

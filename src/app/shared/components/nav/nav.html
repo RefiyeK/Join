@@ -1,7 +1,9 @@
 <nav class="nav">
 
   <div class="nav__logo">
+    <a routerLink="/summary">
     <img src="assets/icons/logo-light.svg" alt="Join Logo" />
+    </a>
   </div>
 
   <div class="nav__menu">
@@ -17,13 +19,20 @@
         </a>
       }
     } @else {
+      <div class="guest-mobile-wrapper">
       <a routerLink="/login" class="nav__link">
         <img src="assets/icons/login.svg" alt="Login" />
         <span>Log In</span>
       </a>
+      <div class="nav__footer nav__footer--guest">
+            <a routerLink="/imprint" routerLinkActive="active" class="nav__footer-link">Legal Notice</a>
+            <a routerLink="/privacy-policy" routerLinkActive="active" class="nav__footer-link">Privacy Policy</a>
+        </div>
+      </div>
     }
   </div>
 
+    @if (authService.loggetInUserUid()) {
   <div class="nav__footer">
     @for (link of footerLinks; track link.route) {
       <a 
@@ -37,5 +46,5 @@
       </a>
     }
   </div>
-
+  }
 </nav>

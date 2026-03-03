@@ -15,17 +15,25 @@ export class Login implements OnInit {
   logoAnimated = false;
   formVisible = false;
   showPassword = false;
+  skipAnimation = false;
 
   private router = inject(Router);
   private authService = inject(AuthService);
 
-  /**
-   * Initializes the animations for the logo and the form
-   */
+  // Form variables
+  email: string = '';
+  password: string = '';
+  errorMessage: string = '';
+  isLoading: boolean = false;
+
+  // Input error styling flags
+  emailError: boolean = false;
+  passwordError: boolean = false;
+
+  /** Initializes the logo and form animations */
   ngOnInit(): void {
     const firstVisit = !sessionStorage.getItem('logoAnimationPlayed');
     sessionStorage.setItem('logoAnimationPlayed', 'true');
-
     if (firstVisit) {
       setTimeout(() => {
         this.logoAnimated = true;
@@ -34,65 +42,42 @@ export class Login implements OnInit {
         this.formVisible = true;
       }, 1200);
     } else {
+      this.skipAnimation = true;
       this.logoAnimated = true;
       this.formVisible = true;
     }
   }
 
-  /**
-   * Login with email and password
-   */
-
-  // Formular Variablen
-  email: string = '';
-  password: string = '';
-  errorMessage: string = '';
-  isLoading: boolean = false;
-
-  // Für Input Error Styling
-  emailError: boolean = false;
-  passwordError: boolean = false;
-
-  /**
-   * Executes the login and handles errors and redirection
-   */
+  /** Performs login and handles errors and redirection */
   async login() {
     this.emailError = false;
     this.passwordError = false;
-
     if (!this.email || !this.password) {
       this.errorMessage = 'Please enter email and password';
       if (!this.email) this.emailError = true;
       if (!this.password) this.passwordError = true;
       return;
     }
-
     this.isLoading = true;
     this.errorMessage = '';
-
     try {
       const userCredential = await this.authService.login(this.email, this.password);
       this.authService.loggetInUserUid.set(userCredential.user.uid);
-
-      // Erfolgreich eingeloggt
       localStorage.setItem('uid', userCredential.user.uid);
-
-      // Weiterleitung zur Summary-Seite
+      // Redirect to summary page
       this.router.navigate(['/summary']);
     } catch (error: any) {
-      // Fehlerbehandlung
       this.emailError = true;
       this.passwordError = true;
-
-      // Firebase Fehlercodes auswerten
+      // Evaluate Firebase error codes
       switch (error.code) {
         case 'auth/invalid-credential':
         case 'auth/user-not-found':
         case 'auth/wrong-password':
-          this.errorMessage = 'Incorrect your email or password. Please try again.';
+          this.errorMessage = 'Incorrect email or password. Please try again.';
           break;
         case 'auth/invalid-email':
-          this.errorMessage = 'Ungültiges E-Mail-Format';
+          this.errorMessage = 'Invalid email format';
           this.passwordError = false;
           break;
         case 'auth/too-many-requests':
@@ -115,10 +100,7 @@ export class Login implements OnInit {
     }
   }
 
-  /**
-   * Guest login - without automatic test data
-   * Redirects directly to the summary page
-   */
+  /** Guest login - redirects directly to the summary page */
   guestLogin() {
     this.authService.loggetInUserUid.set('guest');
     this.router.navigate(['/summary']);

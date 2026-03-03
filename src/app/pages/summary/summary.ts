@@ -39,20 +39,32 @@ export class Summary implements OnInit, OnDestroy {
    * Initializes the component and sets the greeting on mobile devices
    */
   ngOnInit(): void {
+    const alreadyGreeted = sessionStorage.getItem('greetingShown');
+    if (alreadyGreeted) {
+      this.showGreeting = false;
+    } else {
+      sessionStorage.setItem('greetingShown', 'true');
+    }
+
     this.bpSub = this.breakpointObserver.observe(['(max-width: 1024px)']).subscribe((result) => {
       this.isMobile = result.matches;
-      if (this.isMobile) {
-        this.showGreeting = true;
-        this.greetingTimeout = setTimeout(() => {
-          this.showGreeting = false;
-        }, 2000);
-      }
+      this.handleMobileGreeting();
     });
   }
 
   /**
-   * Returns the name of the logged-in user
+   * Controls the greeting behavior on mobile devices.
+   * Shows the greeting for 2 seconds, then hides it.
+   * Only executed if the greeting has not been shown yet.
    */
+  private handleMobileGreeting(): void {
+    if (!this.isMobile || !this.showGreeting) return;
+    this.greetingTimeout = setTimeout(() => {
+      this.showGreeting = false;
+    }, 2000);
+  }
+
+  /** Returns the name of the currently logged-in user */
   get loggedInUserName(): string {
     const uid = this.authService.loggetInUserUid();
     if (!uid) return '';
@@ -60,51 +72,54 @@ export class Summary implements OnInit, OnDestroy {
     return contact?.name ?? '';
   }
 
-  /**
-   * Number of "To do" tasks
-   */
+  /** Number of "To do" tasks */
   get todoCount(): number {
     return this.tasksService.tasks.filter((t) => t.status === 'To do').length;
   }
 
-  /**
-   * Number of "Done" tasks
-   */
+  /** Number of "Done" tasks */
   get doneCount(): number {
     return this.tasksService.tasks.filter((t) => t.status === 'Done').length;
   }
 
-  /**
-   * Number of "In progress" tasks
-   */
+  /** Number of "In progress" tasks */
   get inProgressCount(): number {
     return this.tasksService.tasks.filter((t) => t.status === 'In progress').length;
   }
 
-  /**
-   * Number of "Await feedback" tasks
-   */
+  /** Number of "Await feedback" tasks */
   get awaitFeedbackCount(): number {
     return this.tasksService.tasks.filter((t) => t.status === 'Await feedback').length;
   }
 
-  /**
-   * Total number of all tasks
-   */
+  /** Total number of all tasks */
   get totalCount(): number {
     return this.tasksService.tasks.length;
   }
 
-  /**
-   * Number of "Urgent" tasks
-   */
+  /** Number of "Urgent" tasks */
   get urgentCount(): number {
     return this.tasksService.tasks.filter((t) => t.priority === 'Urgent').length;
   }
 
   /**
-   * Removes the CSS class and cleans up subscriptions/timeouts when destroyed
+   * Formats the upcoming deadline date for display.
+   * Returns e.g. "March 15, 2026".
+   * Shows "No deadline" if no task with a deadline exists.
+   * @returns Formatted date as a readable string
    */
+  get formattedUpcomingDeadline(): string {
+    const task = this.tasksService.upcomingTask;
+    if (!task?.dueDate) return 'No deadline';
+    const date = new Date(task.dueDate);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  }
+
+  /** Removes the CSS class and cleans up subscriptions/timeouts on destroy */
   ngOnDestroy(): void {
     document.body.classList.remove('summary-page');
     this.bpSub?.unsubscribe();
