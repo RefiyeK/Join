@@ -5,7 +5,7 @@ import { SingleTask } from '../../../interfaces/single-task';
 import { TasksService } from '../../../services/tasks-service';
 
 /**
- * Typ für die angezeigten User in der Karte (max 3).
+ * Type for the displayed users in the card (max 3).
  */
 interface DisplayedUser {
   id: string;
@@ -13,13 +13,13 @@ interface DisplayedUser {
   initials: string;
   color: string;
 }
- 
+
 /**
- * SingleTaskCard – Zeigt eine einzelne Task als Karte im Board an.
+ * SingleTaskCard – Displays a single task as a card on the board.
  *
- * Reine Anzeige-Komponente ("presentational component").
- * Empfängt Task-Daten per @Input, gibt Klick-Events per @Output weiter.
- * Nutzt den ContactsService, um aus Contact-IDs echte Initialen und Farben aufzulösen.
+ * Pure presentational component.
+ * Receives task data via @Input, emits click events via @Output.
+ * Uses ContactsService to resolve contact IDs to initials and colors.
  */
 @Component({
   selector: 'app-single-task-card',
@@ -29,26 +29,26 @@ interface DisplayedUser {
 })
 export class SingleTaskCard {
   tasksService = inject(TasksService);
-  /** Zugriff auf den ContactsService für Initialen und Farben. */
+  /** Access to ContactsService for initials and colors. */
   private readonly contactsService = inject(ContactsService);
 
-  /** Die Task-Daten von der Board-Komponente. */
+  /** The task data from the board component. */
   @Input() task!: SingleTask;
 
-  /** Event beim Klick auf die Karte – gibt die Task-ID weiter. */
+  /** Event on card click – emits the task ID. */
   @Output() taskClicked = new EventEmitter<string>();
 
   /**
-   * CSS-Klasse für das Kategorie-Badge.
-   * 'User Story' → blau, 'Technical Task' → grün.
+   * CSS class for the category badge.
+   * 'User Story' → blue, 'Technical Task' → green.
    */
   get badgeClass(): string {
     return this.task.category === 'User Story' ? 'badge-user-story' : 'badge-technical-task';
   }
 
   /**
-   * Berechnet den Fortschritt der Subtasks in Prozent.
-   * @returns Prozentwert zwischen 0 und 100
+   * Calculates the progress of subtasks in percent.
+   * @returns Percentage value between 0 and 100
    */
   get progressPercentage(): number {
     if (!this.task?.subtasks || this.task.subtasks.length === 0) return 0;
@@ -57,7 +57,7 @@ export class SingleTaskCard {
   }
 
   /**
-   * Zählt die erledigten Subtasks für die Anzeige "2/5 Subtasks".
+   * Counts the completed subtasks for the display "2/5 Subtasks".
    */
   get completedSubtasks(): number {
     if (!this.task.subtasks) return 0;
@@ -65,7 +65,7 @@ export class SingleTaskCard {
   }
 
   /**
-   * Pfad zum passenden Priority-Icon (Urgent/Medium/Low).
+   * Path to the appropriate priority icon (Urgent/Medium/Low).
    */
   get priorityIcon(): string {
     const icons: Record<string, string> = {
@@ -77,9 +77,9 @@ export class SingleTaskCard {
   }
 
   /**
-   * Löst Contact-IDs zu echten Kontaktdaten auf.
-   * Nutzt ContactsService.getInitials() und getIconColorClass().
-   * Gibt maximal 3 User-Objekte zurück.
+   * Resolves contact IDs to actual contact data.
+   * Uses ContactsService.getInitials() and getIconColorClass().
+   * Returns up to 3 user objects.
    */
   get displayedUsers(): DisplayedUser[] {
     if (!this.task) return [];
@@ -89,7 +89,7 @@ export class SingleTaskCard {
   }
 
   /**
-   * Anzahl der User über 3 hinaus – wird als "+X" Badge angezeigt.
+   * Number of users beyond 3 – shown as "+X" badge.
    */
   get remainingUsersCount(): number {
     const ids = this.task.assigned || [];
@@ -97,7 +97,7 @@ export class SingleTaskCard {
   }
 
   /**
-   * Tooltip mit allen zugewiesenen Kontaktnamen (kommagetrennt).
+   * Tooltip with all assigned contact names (comma separated).
    */
   get allUsersTooltip(): string {
     if (!this.task) return '';
@@ -106,10 +106,10 @@ export class SingleTaskCard {
   }
 
   /**
-   * Sucht einen Kontakt anhand seiner ID im ContactsService.
-   * Falls der Kontakt nicht gefunden wird, wird ein Fallback erzeugt.
-   * @param contactId - Die Firebase-ID des Kontakts
-   * @returns Objekt mit id, name, initials und color
+   * Looks up a contact by its ID in ContactsService.
+   * If the contact is not found, returns a fallback.
+   * @param contactId - The Firebase ID of the contact
+   * @returns Object with id, name, initials and color
    */
   private resolveContact(contactId: string): DisplayedUser {
     const contact = this.contactsService.contacts.find((c) => c.id === contactId);
@@ -131,7 +131,7 @@ export class SingleTaskCard {
   }
 
   /**
-   * Gibt die Task-ID per Event an das Board weiter.
+   * Emits the task ID to the board via event.
    */
   onCardClick(): void {
     if (this.task?.id) {

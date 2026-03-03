@@ -77,10 +77,10 @@ export class ContactDialog implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Speichert den Kontakt – unterscheidet zwischen Add und Edit.
-   * Edit-Modus: Aktualisiert den bestehenden Kontakt in Firebase.
-   * Add-Modus: Legt einen neuen Kontakt in Firebase an.
-   * Schließt den Dialog erst NACH erfolgreichem Speichern.
+   * Saves the contact – distinguishes between Add and Edit.
+   * Edit mode: Updates the existing contact in Firebase.
+   * Add mode: Creates a new contact in Firebase.
+   * Closes the dialog only AFTER successful saving.
    */
   async saveContact(): Promise<void> {
     if (!this.isFormValid()) return;
@@ -96,9 +96,9 @@ export class ContactDialog implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Erstellt das Datenobjekt aus den Formularfeldern.
-   * Der Name wird getrimmt und der erste Buchstabe wird großgeschrieben.
-   * @returns Objekt mit korrekt formatiertem name, sowie getrimmtem email und phone
+   * Creates the data object from the form fields.
+   * The name is trimmed and the first letter is capitalized.
+   * @returns Object with properly formatted name, and trimmed email and phone
    */
   private buildContactData(): { name: string; email: string; phone: string } {
     return {
@@ -111,9 +111,9 @@ export class ContactDialog implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Aktualisiert den aktiven Kontakt in Firebase.
-   * Holt die ID aus activContact und ruft updateContact() im Service auf.
-   * @param data - Die aktualisierten Kontaktdaten
+   * Updates the active contact in Firebase.
+   * Gets the ID from activContact and calls updateContact() in the service.
+   * @param data - The updated contact data
    */
   private async updateExistingContact(data: {
     name: string;
@@ -127,8 +127,8 @@ export class ContactDialog implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Wird nach erfolgreichem Speichern aufgerufen.
-   * Zeigt die Erfolgs-Snackbar, leert das Formular und schließt den Dialog.
+   * Called after successful saving.
+   * Shows the success snackbar, clears the form, and closes the dialog.
    */
   private handleSuccessfulSave(): void {
     this.submitted = false; // reset flag nach erfolgreichem Speichern
@@ -138,10 +138,10 @@ export class ContactDialog implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Zeigt eine Erfolgs-Snackbar mit passender Nachricht.
-   * Edit-Modus: "Contact successfully updated!"
-   * Add-Modus: "Contact successfully created!"
-   * Die Snackbar verschwindet automatisch nach 3 Sekunden.
+   * Shows a success snackbar with an appropriate message.
+   * Edit mode: "Contact successfully updated!"
+   * Add mode: "Contact successfully created!"
+   * The snackbar automatically disappears after 3 seconds.
    */
   showSuccessSnackbar(): void {
     // Nachricht je nach Modus setzen
@@ -176,10 +176,10 @@ export class ContactDialog implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Befüllt das Formular je nach Modus.
-   * Edit-Modus: Lädt die Daten des aktiven Kontakts in die Formularfelder.
-   * Add-Modus: Leert alle Felder für einen neuen Kontakt.
-   * Wird aufgerufen, bevor der Dialog sichtbar wird.
+   * Fills the form depending on the mode.
+   * Edit mode: Loads the data of the active contact into the form fields.
+   * Add mode: Clears all fields for a new contact.
+   * Called before the dialog becomes visible.
    */
   private loadFormData(): void {
     const contact = this.contactsService.activContact;
@@ -209,10 +209,10 @@ export class ContactDialog implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Lifecycle-Hook: Wird aufgerufen, nachdem die View initialisiert wurde.
-   * Hier abonnieren wir das Dialog-Observable aus dem Service.
-   * Bei jeder Änderung (true/false) reagiert der Dialog entsprechend.
-   * Das ist das BehaviorSubject-Pattern aus der Dokumentation von Philipp.
+   * Lifecycle hook: Called after the view has been initialized.
+   * Here we subscribe to the dialog observable from the service.
+   * On every change (true/false), the dialog reacts accordingly.
+   * This is the BehaviorSubject pattern from Philipp's documentation.
    */
   ngAfterViewInit(): void {
     // Subscription speichern, um sie in ngOnDestroy aufheben zu können
@@ -230,9 +230,9 @@ export class ContactDialog implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Lifecycle-Hook, der aufgerufen wird, wenn die Komponente zerstört wird.
-   * Hier wird die Subscription wieder aufgehoben, um Speicherlecks zu vermeiden.
-   * Das ist wichtig, weil sonst das Observable weiterläuft, auch wenn die Komponente nicht mehr existiert.
+   * Lifecycle hook, called when the component is destroyed.
+   * Here the subscription is cleaned up to avoid memory leaks.
+   * This is important because otherwise the observable keeps running even if the component no longer exists.
    */
   ngOnDestroy() {
     // Überprüft, ob eine Subscription existiert, und beendet sie.
@@ -247,8 +247,8 @@ export class ContactDialog implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Löscht den aktiven Kontakt und zeigt Erfolgs-Snackbar.
-   * Nutzt die deleteContact() Methode aus dem Service.
+   * Deletes the active contact and shows a success snackbar.
+   * Uses the deleteContact() method from the service.
    */
   async deleteContact(): Promise<void> {
     const contactId = this.contactsService.activContact?.id;
@@ -264,8 +264,8 @@ export class ContactDialog implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Gibt die Initialen für den Avatar zurück (Edit-Modus).
-   * Nutzt die getInitials() Methode aus dem Service.
+   * Returns the initials for the avatar (edit mode).
+   * Uses the getInitials() method from the service.
    */
   getContactInitials(): string {
     if (!this.contactsService.activContact) return '';

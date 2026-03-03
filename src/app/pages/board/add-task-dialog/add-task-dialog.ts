@@ -16,7 +16,7 @@ export class AddTaskDialog implements AfterViewInit, OnDestroy {
   @ViewChild(SetDialogAnimation) dialogAnimationDirective!: SetDialogAnimation;
 
   /**
-   * Initialisiert die Dialog-Animation nach dem View-Init und reagiert auf das Öffnen/Schließen des Dialogs
+   * Initializes the dialog animation after view init and reacts to opening/closing the dialog
    */
   ngAfterViewInit(): void {
     this.taskSub = this.tasksService.openAddTaskDialog$.subscribe((open) => {
@@ -29,21 +29,21 @@ export class AddTaskDialog implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Bereinigt die Subscription beim Zerstören der Komponente
+   * Cleans up the subscription when the component is destroyed
    */
   ngOnDestroy(): void {
     this.taskSub?.unsubscribe();
   }
 
   /**
-   * Öffnet den Dialog mit Animation
+   * Opens the dialog with animation
    */
   openDialog() {
     this.dialogAnimationDirective?.openDialogWithAnimation();
   }
 
   /**
-   * Schließt den Dialog mit Animation
+   * Closes the dialog with animation
    */
   closeDialog() {
     this.dialogAnimationDirective?.closeDialogWithAnimation();

@@ -20,7 +20,7 @@ export class Login implements OnInit {
   private authService = inject(AuthService);
 
   /**
-   * Initialisiert die Animationen für das Logo und das Formular
+   * Initializes the animations for the logo and the form
    */
   ngOnInit(): void {
     const firstVisit = !sessionStorage.getItem('logoAnimationPlayed');
@@ -40,7 +40,7 @@ export class Login implements OnInit {
   }
 
   /**
-   * Login mit E-Mail und Passwort
+   * Login with email and password
    */
 
   // Formular Variablen
@@ -54,7 +54,7 @@ export class Login implements OnInit {
   passwordError: boolean = false;
 
   /**
-   * Führt den Login aus und behandelt Fehler sowie Weiterleitung
+   * Executes the login and handles errors and redirection
    */
   async login() {
     this.emailError = false;
@@ -116,8 +116,8 @@ export class Login implements OnInit {
   }
 
   /**
-   * Guest Login - ohne automatische Testdaten
-   * Leitet direkt zur Summary-Seite
+   * Guest login - without automatic test data
+   * Redirects directly to the summary page
    */
   guestLogin() {
     this.authService.loggetInUserUid.set('guest');

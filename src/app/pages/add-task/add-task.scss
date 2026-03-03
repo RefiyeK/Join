@@ -830,6 +830,10 @@ label.subtask-title {
   .task-details-container {
     padding: 0 2%;
   }
+
+  .line {
+    display: none;
+  }
 }
 
 @media (max-width: 1120px) {

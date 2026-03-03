@@ -17,26 +17,26 @@ import { AssignedAvatarItem } from '../interfaces/assigned-avatar';
   providedIn: 'root',
 })
 export class ContactsService implements OnDestroy {
-  /** Zentrale Quelle für Kontaktlisten. */
+  /** Central source for contact lists. */
   contacts: SingleContact[] = [];
-  /** Zentrale Quelle für Kontaktgruppen. */
+  /** Central source for contact groups. */
   contactGroups: string[] = [];
-  /** Aktiver Kontakt. */
+  /** Active contact. */
   activContact: SingleContact | null = null;
-  /** Status des Editiermodus. */
+  /** Status of edit mode. */
   isEditMode = false;
-  /** Firestore-Instanz. */
+  /** Firestore instance. */
   contactsDB: Firestore = inject(Firestore);
-  /** Unsubscribe-Funktion für Kontakte. */
+  /** Unsubscribe function for contacts. */
   unsubContacts;
 
   /**
-   * Steuert das Öffnen/Schließen des Dialogs.
+   * Controls opening/closing of the dialog.
    */
   private openDialogSubject = new BehaviorSubject<boolean>(false);
 
   /**
-   * Observable für den Dialog-Status.
+   * Observable for the dialog status.
    */
   openDialog$: Observable<boolean> = this.openDialogSubject.asObservable();
 
@@ -49,10 +49,10 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Erstellt ein Kontaktobjekt aus Daten und einer ID.
-   * @param obj Quelldaten
-   * @param id Kontakt-ID
-   * @returns Das erzeugte Kontaktobjekt
+   * Creates a contact object from data and an ID.
+   * @param obj Source data
+   * @param id Contact ID
+   * @returns The created contact object
    */
   setContactObject(obj: any, id: string): SingleContact {
     return {
@@ -65,16 +65,16 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Gibt die Referenz auf die Kontaktsammlung zurück.
-   * @returns Die Collection-Referenz für Kontakte
+   * Returns the reference to the contacts collection.
+   * @returns The collection reference for contacts
    */
   getNotesRef() {
     return collection(this.contactsDB, 'contacts');
   }
 
   /**
-   * Abonniert die Kontaktliste in Firebase mit Echtzeit-Updates.
-   * @returns Die Unsubscribe-Funktion für das Abonnement
+   * Subscribes to the contact list in Firebase with real-time updates.
+   * @returns The unsubscribe function for the subscription
    */
   subContactsList() {
     return onSnapshot(this.getNotesRef(), (list) => {
@@ -85,14 +85,13 @@ export class ContactsService implements OnDestroy {
       this.updateContactGroups();
       this.refreshActivContact();
 
-      // NEU: Aktualisiere auch das contactsSubject
       this.contactsSubject.next(this.contacts);
     });
   }
 
   /**
-   * Lädt Kontakte einmalig von Firebase (für AddTask Komponente)
-   * @returns Promise mit den geladenen Kontakten
+   * Loads contacts once from Firebase (for AddTask component)
+   * @returns Promise with the loaded contacts
    */
   async loadContacts(): Promise<SingleContact[]> {
     try {
@@ -115,7 +114,7 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Beendet das Abonnement der Kontakte.
+   * Ends the subscription to the contacts.
    * @returns void
    */
   ngOnDestroy(): void {
@@ -123,23 +122,23 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Gibt die aktuelle Kontaktliste zurück.
-   * @returns Die Kontaktliste
+   * Returns the current contact list.
+   * @returns The contact list
    */
   getContacts(): SingleContact[] {
     return this.contacts;
   }
 
   /**
-   * Gibt die Kontaktgruppen zurück.
-   * @returns Die Kontaktgruppen
+   * Returns the contact groups.
+   * @returns The contact groups
    */
   getContactGroups(): string[] {
     return this.contactGroups;
   }
 
   /**
-   * Berechnet die Kontaktgruppen.
+   * Calculates the contact groups.
    * @returns void
    */
   updateContactGroups(): void {
@@ -154,7 +153,7 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Synchronisiert den aktiven Kontakt mit den aktuellen Daten aus der Kontaktliste.
+   * Synchronizes the active contact with the current data from the contact list.
    * @private
    * @returns void
    */
@@ -167,8 +166,8 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Setzt den angeklickten Kontakt als aktiv.
-   * @param clickedContact Der ausgewählte Kontakt
+   * Sets the clicked contact as active.
+   * @param clickedContact The selected contact
    * @returns void
    */
   getActivContact(clickedContact: SingleContact): void {
@@ -176,9 +175,9 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Gibt die Initialen eines Namens zurück.
-   * @param name Name des Kontakts
-   * @returns Die Initialen (maximal 2 Buchstaben)
+   * Returns the initials of a name.
+   * @param name Name of the contact
+   * @returns The initials (maximum 2 letters)
    */
   getInitials(name: string): string {
     return name
@@ -190,9 +189,9 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Berechnet die Icon-Farbe für einen Kontakt.
-   * @param contact Kontaktobjekt
-   * @returns CSS-Klassenname für die Icon-Farbe
+   * Calculates the icon color for a contact.
+   * @param contact Contact object
+   * @returns CSS class name for the icon color
    */
   getIconColorClass(contact: SingleContact): string {
     const lettersArray = 'ABCDEFGHJKLMNOPQRSTUVW'.split('');
@@ -204,9 +203,9 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Gibt die Referenz zu einem einzelnen Kontakt-Dokument zurück.
-   * @param contactId Die ID des Kontakts
-   * @returns Die Dokument-Referenz
+   * Returns the reference to a single contact document.
+   * @param contactId The ID of the contact
+   * @returns The document reference
    * @private
    */
   private getSingleContactRef(contactId: string) {
@@ -214,9 +213,9 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Löscht einen Kontakt aus Firebase.
-   * @param contactId Die ID des zu löschenden Kontakts
-   * @returns Promise, das abgeschlossen wird, wenn der Kontakt gelöscht wurde
+   * Deletes a contact from Firebase.
+   * @param contactId The ID of the contact to delete
+   * @returns Promise that resolves when the contact is deleted
    */
   async deleteContact(contactId: string): Promise<void> {
     const contactRef = this.getSingleContactRef(contactId);
@@ -225,10 +224,10 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Aktualisiert einen bestehenden Kontakt in Firebase.
-   * @param contactId Die ID des Kontakts
-   * @param updatedData Neue Daten (name, email, phone)
-   * @returns Promise, das abgeschlossen wird, wenn der Kontakt aktualisiert wurde
+   * Updates an existing contact in Firebase.
+   * @param contactId The ID of the contact
+   * @param updatedData New data (name, email, phone)
+   * @returns Promise that resolves when the contact is updated
    */
   async updateContact(contactId: string, updatedData: Partial<SingleContact>): Promise<void> {
     const contactRef = this.getSingleContactRef(contactId);
@@ -236,16 +235,16 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Fügt einen neuen Kontakt zur Datenbank hinzu.
-   * @param addNewSingleContact Das Kontaktobjekt
-   * @returns Promise, das abgeschlossen wird, wenn der Kontakt hinzugefügt wurde
+   * Adds a new contact to the database.
+   * @param addNewSingleContact The contact object
+   * @returns Promise that resolves when the contact is added
    */
   async addNewSingleContactToDB(addNewSingleContact: SingleContact): Promise<void> {
     await addDoc(collection(this.contactsDB, 'contacts'), addNewSingleContact);
   }
 
   /**
-   * Öffnet das Modal zum Hinzufügen eines Kontakts.
+   * Opens the modal to add a contact.
    * @returns void
    */
   openAddContactDialog(): void {
@@ -253,7 +252,7 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Öffnet den Dialog im Edit-Modus.
+   * Opens the dialog in edit mode.
    * @returns void
    */
   openEditContactDialog(): void {
@@ -262,7 +261,7 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Schließt den Dialog und setzt den Edit-Modus zurück.
+   * Closes the dialog and resets edit mode.
    * @returns void
    */
   closeAddContactDialog(): void {
@@ -270,9 +269,9 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Entfernt IDs, die nicht in der aktuellen Kontaktliste existieren.
-   * @param assignedIds Array der zugewiesenen Kontakt-IDs
-   * @returns Array der gültigen Kontakt-IDs
+   * Removes IDs that do not exist in the current contact list.
+   * @param assignedIds Array of assigned contact IDs
+   * @returns Array of valid contact IDs
    */
   sanitizeAssignedIds(assignedIds: string[] = []): string[] {
     const validIds: string[] = [];
@@ -287,9 +286,9 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Liefert nur aufgelöste Assigned-User mit existierenden Kontakt-IDs.
-   * @param assignedIds Array der zugewiesenen Kontakt-IDs
-   * @returns Array von AssignedAvatarItem
+   * Returns only resolved assigned users with existing contact IDs.
+   * @param assignedIds Array of assigned contact IDs
+   * @returns Array of AssignedAvatarItem
    */
   buildAssignedUsers(assignedIds: string[] = []): AssignedAvatarItem[] {
     const validIds = this.sanitizeAssignedIds(assignedIds);
@@ -297,7 +296,7 @@ export class ContactsService implements OnDestroy {
 
     for (const contactId of validIds) {
       const user = this.resolveAssignedAvatarItem(contactId);
-      // Sicherheitscheck, sollte durch sanitizeAssignedIds eigentlich immer true sein
+      // Safety check, should be true by sanitizeAssignedIds
       if (user.name !== 'Unknown User') {
         assignedUsers.push(user);
       }
@@ -307,12 +306,12 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Baut eine kompakte Vorschau:
-   * - visible: maximal `maxVisible` Einträge
-   * - remaining: Anzahl restlicher Kontakte für "+N"
-   * @param assignedIds Array der zugewiesenen Kontakt-IDs
-   * @param maxVisible Maximale Anzahl sichtbarer Avatare
-   * @returns Objekt mit visible und remaining
+   * Builds a compact preview:
+   * - visible: maximum `maxVisible` entries
+   * - remaining: number of remaining contacts for "+N"
+   * @param assignedIds Array of assigned contact IDs
+   * @param maxVisible Maximum number of visible avatars
+   * @returns Object with visible and remaining
    */
   buildAssignedAvatarPreview(
     assignedIds: string[] = [],
@@ -348,9 +347,9 @@ export class ContactsService implements OnDestroy {
   }
 
   /**
-   * Interner Resolver:
-   * ID -> echter Kontakt (Name/Farbe/Initialen) oder stabiler Fallback.
-   * @param contactId Kontakt-ID
+   * Internal resolver:
+   * ID -> actual contact (name/color/initials) or stable fallback.
+   * @param contactId Contact ID
    * @returns AssignedAvatarItem
    */
   private resolveAssignedAvatarItem(contactId: string): AssignedAvatarItem {

@@ -12,12 +12,12 @@ import { ContactsService } from '../../../services/contacts-service';
 })
 export class Header {
   /**
-   * AuthService für Benutzer-Authentifizierung
+   * AuthService for user authentication
    */
   authService = inject(AuthService);
 
   /**
-   * ContactsService für Benutzerkontakte
+   * ContactsService for user contacts
    */
   contactsService = inject(ContactsService);
 
@@ -25,16 +25,16 @@ export class Header {
   dropdownBounce = false;
 
   /**
-   * Liefert den aktuell eingeloggten Benutzer als Kontakt-Objekt
+   * Returns the currently logged-in user as a contact object
    */
   currentUser = computed(() => {
     const currentUid = this.authService.loggetInUserUid();
     if (!currentUid) return null;
-    return this.contactsService.contacts.find(c => c.uid === currentUid) || null;
+    return this.contactsService.contacts.find((c) => c.uid === currentUid) || null;
   });
 
   /**
-   * Führt Logout aus und schließt das Dropdown-Menü
+   * Performs logout and closes the dropdown menu
    */
   logout() {
     this.authService.logout();
@@ -42,27 +42,27 @@ export class Header {
   }
 
   /**
-   * Öffnet oder schließt das Dropdown-Menü
+   * Opens or closes the dropdown menu
    */
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
   /**
-   * Schließt das Dropdown-Menü
+   * Closes the dropdown menu
    */
   closeDropdown() {
     this.isDropdownOpen = false;
   }
 
   /**
-   * Löst eine Bounce-Animation für das Dropdown aus
+   * Triggers a bounce animation for the dropdown
    */
   triggerBounce() {
     this.dropdownBounce = false;
     setTimeout(() => {
       this.dropdownBounce = true;
-      setTimeout(() => this.dropdownBounce = false, 300);
+      setTimeout(() => (this.dropdownBounce = false), 300);
     }, 10);
   }
 }

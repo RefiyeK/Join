@@ -18,15 +18,15 @@ export class AuthService {
   private contactsService = inject(ContactsService);
 
   /**
-   * Signal für die UID des eingeloggten Users (für reaktiven Header)
+   * Signal for the UID of the logged-in user (for reactive header)
    */
   loggetInUserUid = signal<string | null>(localStorage.getItem('uid'));
 
   isNewUser?: boolean;
 
   /**
-   * Erstellt einen neuen User und legt ihn als Kontakt an.
-   * @param newUser Die Daten des neuen Users
+   * Creates a new user and adds them as a contact.
+   * @param newUser The data of the new user
    */
   async createUser(newUser: NewUser) {
     const auth = getAuth();
@@ -58,9 +58,9 @@ export class AuthService {
   }
 
   /**
-   * Login mit E-Mail und Passwort
-   * @param email E-Mail-Adresse
-   * @param password Passwort
+   * Login with email and password
+   * @param email Email address
+   * @param password Password
    * @returns UserCredential
    */
   async login(email: string, password: string): Promise<UserCredential> {
@@ -74,7 +74,7 @@ export class AuthService {
   }
 
   /**
-   * Loggt den User aus und löscht die UID
+   * Logs out the user and deletes the UID
    */
   async logout() {
     const auth = getAuth();
@@ -85,7 +85,7 @@ export class AuthService {
   }
 
   /**
-   * Löscht den aktuell eingeloggten User aus Firebase
+   * Deletes the currently logged-in user from Firebase
    */
   deleteUser() {
     const auth = getAuth();

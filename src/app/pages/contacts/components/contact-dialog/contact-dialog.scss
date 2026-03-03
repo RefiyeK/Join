@@ -161,7 +161,7 @@ input {
 .invalid {
   border-color: var(--color-error) !important;
   background-color: #ffeeee !important; // Heller roter Hintergrund
-  
+
   input {
     background-color: #ffeeee !important;
   }
@@ -332,6 +332,7 @@ input {
   .btn-primary {
     width: 70%;
     max-width: 280px;
+    justify-content: center;
   }
 }
 

@@ -7,13 +7,13 @@ export class SetDialogAnimation {
   isClosing = false;
 
   /**
-   * Konstruktor injiziert das Dialog-Element
-   * @param dialogRef Referenz auf das Dialog-Element
+   * Constructor injects the dialog element
+   * @param dialogRef Reference to the dialog element
    */
   constructor(private dialogRef: ElementRef<HTMLDialogElement>) {}
 
   /**
-   * Öffnet das Dialogfenster mit Slide-In-Animation
+   * Opens the dialog window with slide-in animation
    */
   openDialogWithAnimation() {
     this.isClosing = false;
@@ -23,7 +23,7 @@ export class SetDialogAnimation {
   }
 
   /**
-   * Schließt das Dialogfenster mit Slide-Out-Animation
+   * Closes the dialog window with slide-out animation
    */
   closeDialogWithAnimation() {
     this.isClosing = true;
@@ -34,6 +34,6 @@ export class SetDialogAnimation {
       this.isClosing = false;
       this.dialogRef.nativeElement.classList.remove('slide-out');
       this.dialogRef.nativeElement.close();
-    }, 500); // Dauer muss mit CSS übereinstimmen
+    }, 500);
   }
 }

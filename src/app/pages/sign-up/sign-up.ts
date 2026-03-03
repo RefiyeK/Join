@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class SignUp {
   /**
-   * Objekt für die neuen Userdaten
+   * Object for the new user data
    */
   newUser: NewUser = {
     name: '',
@@ -31,7 +31,7 @@ export class SignUp {
   confirmPwType = 'password';
 
   /**
-   * Führt die Registrierung durch und öffnet den Dialog
+   * Performs the registration and opens the dialog
    */
   async onSubmit() {
     await this.authService.createUser(this.newUser);
@@ -40,10 +40,10 @@ export class SignUp {
   }
 
   /**
-   * Validiert die Eingaben und startet den Registrierungsprozess
-   * @param form Formularreferenz
-   * @param passwortValue Passwortwert
-   * @param confirmPasswordValue Bestätigungswert
+   * Validates the inputs and starts the registration process
+   * @param form Form reference
+   * @param passwortValue Password value
+   * @param confirmPasswordValue Confirmation value
    */
   onSignUpClick(form: any, passwortValue: string, confirmPasswordValue: string) {
     if (!this.newUser.privacyPolicy) {
@@ -59,7 +59,7 @@ export class SignUp {
   }
 
   /**
-   * Setzt alle Eingabefelder zurück
+   * Resets all input fields
    */
   clearInput() {
     this.newUser.name = '';
@@ -70,7 +70,7 @@ export class SignUp {
   }
 
   /**
-   * Setzt oder entfernt die Zustimmung zur Datenschutzrichtlinie
+   * Sets or removes consent to the privacy policy
    */
   setPrivacyPolicy() {
     if (this.newUser.privacyPolicy) {
@@ -81,7 +81,7 @@ export class SignUp {
   }
 
   /**
-   * Öffnet den Dialog mit Animation und navigiert nach kurzer Zeit zum Login
+   * Opens the dialog with animation and navigates to login after a short time
    */
   openDialog() {
     this.openDialogWithAnimation();
@@ -92,7 +92,7 @@ export class SignUp {
   }
 
   /**
-   * Öffnet den Dialog mit Slide-In-Animation
+   * Opens the dialog with slide-in animation
    */
   openDialogWithAnimation() {
     this.dialogIsClosing = false;
@@ -102,7 +102,7 @@ export class SignUp {
   }
 
   /**
-   * Schließt den Dialog mit Slide-Out-Animation
+   * Closes the dialog with slide-out animation
    */
   closeDialogWithAnimation() {
     this.dialogRef.nativeElement.classList.remove('slide-in');
@@ -116,8 +116,8 @@ export class SignUp {
   }
 
   /**
-   * Wechselt die Anzeige des Passwortfeldes zwischen Text und Passwort
-   * @param elementType Feldtyp ('pwType' oder 'confirmPwType')
+   * Toggles the display of the password field between text and password
+   * @param elementType Field type ('pwType' or 'confirmPwType')
    */
   changePwIcon(elementType: 'pwType' | 'confirmPwType') {
     if (this[elementType] == 'password') {

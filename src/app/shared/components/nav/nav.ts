@@ -3,10 +3,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
 
 /**
- * Repräsentiert ein Navigationsmenü-Item
- * @property {string} icon - Icon-Dateiname ohne Erweiterung (z.B. 'summary', 'board')
- * @property {string} label - Anzeige-Text für das Menü-Item
- * @property {string} route - Angular Router-Pfad
+ * Represents a navigation menu item
+ * @property {string} icon - Icon file name without extension (e.g. 'summary', 'board')
+ * @property {string} label - Display text for the menu item
+ * @property {string} route - Angular router path
  */
 interface NavItem {
   icon: string;
@@ -15,9 +15,9 @@ interface NavItem {
 }
 
 /**
- * Repräsentiert einen Footer-Link
- * @property {string} label - Anzeige-Text für den Link
- * @property {string} route - Angular Router-Pfad
+ * Represents a footer link
+ * @property {string} label - Display text for the link
+ * @property {string} route - Angular router path
  */
 interface FooterLink {
   label: string;
@@ -25,11 +25,11 @@ interface FooterLink {
 }
 
 /**
- * Haupt-Navigationskomponente
+ * Main navigation component
  *
- * @description Responsive Navigation, die wie folgt angezeigt wird:
- * - Desktop (≥768px): Vertikale Sidebar (232px) mit Logo, Menü und Footer-Links
- * - Mobile (<768px): Horizontale Bottom-Bar mit Menü-Icons
+ * @description Responsive navigation displayed as follows:
+ * - Desktop (≥768px): Vertical sidebar (232px) with logo, menu, and footer links
+ * - Mobile (<768px): Horizontal bottom bar with menu icons
  *
  * @example
  * <app-nav></app-nav>
@@ -45,7 +45,7 @@ export class Nav {
   authService = inject(AuthService);
 
   /**
-   * Hauptmenü-Items für Sidebar/Bottom-Bar
+   * Main menu items for sidebar/bottom bar
    * @protected
    * @readonly
    */
@@ -57,7 +57,7 @@ export class Nav {
   ];
 
   /**
-   * Footer-Links, nur auf Desktop sichtbar
+   * Footer links, visible only on desktop
    * @protected
    * @readonly
    */

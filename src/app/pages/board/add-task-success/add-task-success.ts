@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, inject, OnDestroy, ViewChild } fr
 import { TasksService } from '../../../services/tasks-service';
 import { Subscription } from 'rxjs';
 import { SetDialogAnimation } from '../../../shared/directives/set-dialog-animation';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-task-success',
@@ -12,13 +11,13 @@ import { Router } from '@angular/router';
 })
 export class AddTaskSuccess implements AfterViewInit, OnDestroy {
   tasksService = inject(TasksService);
-  private router = inject(Router);
+
   private sucessDialogSub!: Subscription;
   @ViewChild('dialogRef') dialog!: ElementRef;
   @ViewChild(SetDialogAnimation) dialogAnimation!: SetDialogAnimation;
 
   /**
-   * Öffnet den Erfolgsdialog mit Animation und navigiert nach kurzer Zeit zum Board
+   * Opens the success dialog with animation and navigates to the board after a short time
    */
   ngAfterViewInit(): void {
     this.sucessDialogSub = this.tasksService.successDialogOpen$.subscribe((open) => {
@@ -27,13 +26,12 @@ export class AddTaskSuccess implements AfterViewInit, OnDestroy {
         setTimeout(() => {
           this.dialogAnimation.closeDialogWithAnimation();
         }, 2000);
-        setTimeout(() => this.router.navigateByUrl('/board'), 2500);
       }
     });
   }
 
   /**
-   * Bereinigt die Subscription beim Zerstören der Komponente
+   * Cleans up the subscription when the component is destroyed
    */
   ngOnDestroy(): void {
     this.sucessDialogSub?.unsubscribe();

@@ -6,14 +6,14 @@ import { Router } from '@angular/router';
 import { SetDialogAnimation } from '../../../../shared/directives/set-dialog-animation';
 
 /**
- * ContactDetails – Zeigt die Detailansicht des ausgewählten Kontakts.
+ * ContactDetails – Displays the detail view of the selected contact.
  *
- * Bezieht alle Daten aus contactsService.activContact.
- * Edit und Delete nutzen die Service-Methoden für Firebase.
+ * Retrieves all data from contactsService.activContact.
+ * Edit and Delete use the service methods for Firebase.
  *
  * Mobile Features:
- * - Back-Button: Kehrt zur Kontaktliste zurück
- * - FAB-Menü: Zeigt Edit/Delete Optionen
+ * - Back button: Returns to the contact list
+ * - FAB menu: Shows Edit/Delete options
  */
 @Component({
   selector: 'app-contact-details',
@@ -23,8 +23,8 @@ import { SetDialogAnimation } from '../../../../shared/directives/set-dialog-ani
 })
 export class ContactDetails {
   /**
-   * Zugriff auf den zentralen ContactsService.
-   * Public, damit das Template darauf zugreifen kann.
+   * Access to the central ContactsService.
+   * Public so the template can access it.
    */
   contactsService = inject(ContactsService);
   authService = inject(AuthService);
@@ -32,28 +32,28 @@ export class ContactDetails {
   @ViewChild(SetDialogAnimation) dialogAnimationDirective!: SetDialogAnimation;
 
   /**
-   * Steuert die Sichtbarkeit des FAB-Dropdown-Menüs.
-   * Nur relevant für Mobile-Ansicht.
+   * Controls the visibility of the FAB dropdown menu.
+   * Only relevant for mobile view.
    */
   isFabMenuOpen = false;
 
   /**
-   * Öffnet/schließt das FAB-Dropdown-Menü.
+   * Opens/closes the FAB dropdown menu.
    */
   toggleFabMenu(): void {
     this.isFabMenuOpen = !this.isFabMenuOpen;
   }
 
   /**
-   * Schließt das FAB-Dropdown-Menü.
+   * Closes the FAB dropdown menu.
    */
   closeFabMenu(): void {
     this.isFabMenuOpen = false;
   }
 
   /**
-   * Kehrt zur Kontaktliste zurück (Mobile).
-   * Setzt activContact auf null, wodurch die Details ausgeblendet werden.
+   * Returns to the contact list (mobile).
+   * Sets activContact to null, which hides the details.
    */
   onBackClick(): void {
     this.contactsService.activContact = null;
@@ -61,9 +61,9 @@ export class ContactDetails {
   }
 
   /**
-   * Öffnet den Dialog im Edit-Modus für den aktuellen Kontakt.
-   * Nutzt openEditContactDialog() aus dem Service,
-   * das den isEditMode setzt und den Dialog über das BehaviorSubject öffnet.
+   * Opens the dialog in edit mode for the current contact.
+   * Uses openEditContactDialog() from the service,
+   * which sets isEditMode and opens the dialog via the BehaviorSubject.
    */
   protected onEdit(): void {
     if (this.contactsService.activContact) {
@@ -72,8 +72,8 @@ export class ContactDetails {
   }
 
   /**
-   * Löscht den aktuellen Kontakt aus Firebase.
-   * Nutzt deleteContact() aus dem ContactsService.
+   * Deletes the current contact from Firebase.
+   * Uses deleteContact() from the ContactsService.
    */
   protected async onDelete(): Promise<void> {
     const contact = this.contactsService.activContact;

@@ -20,7 +20,7 @@ export class TasksService implements OnDestroy {
   breakpointObserver = inject(BreakpointObserver);
 
   tasks: SingleTask[] = [];
-  /** Die aktuell im Dialog angezeigte Task (null = Dialog geschlossen). */
+  /** The task currently shown in the dialog (null = dialog closed). */
   activeTask: SingleTask | null = null;
   unsubTasks;
   smallView: boolean = false;
@@ -56,10 +56,10 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Wandelt ein beliebiges Objekt und eine ID in ein SingleTask-Objekt um
-   * @param obj Beliebiges Objekt mit Task-Daten
-   * @param id Firebase-Dokument-ID
-   * @returns SingleTask-Objekt
+   * Converts any object and an ID into a SingleTask object
+   * @param obj Any object with task data
+   * @param id Firebase document ID
+   * @returns SingleTask object
    */
   setTaskObject(obj: any, id: string): SingleTask {
     return {
@@ -77,7 +77,7 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Abonniert die Tasks aus Firestore und aktualisiert das lokale Array
+   * Subscribes to tasks from Firestore and updates the local array
    */
   subTasksArr() {
     return onSnapshot(this.getTasksRef(), (arr) => {
@@ -90,9 +90,8 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Aktualisiert die activeTask mit den neuesten Daten aus Firebase.
-   * Wird nach jedem onSnapshot aufgerufen, damit der Dialog
-   * immer aktuelle Daten zeigt (z.B. nach Subtask-Toggle).
+   * Updates the activeTask with the latest data from Firebase.
+   * Called after each onSnapshot so the dialog always shows up-to-date data (e.g. after subtask toggle).
    */
   private refreshActiveTask(): void {
     if (!this.activeTask?.id) return;
@@ -101,27 +100,27 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Gibt die Referenz auf die Tasks-Collection zurück
+   * Returns the reference to the tasks collection
    */
   getTasksRef() {
     return collection(this.tasksDB, 'tasks');
   }
 
   /**
-   * Gibt die Referenz zu einem einzelnen Task-Dokument zurück.
-   * Wird intern genutzt, um gezielt ein Dokument zu lesen oder zu ändern.
-   * @param taskId - Die eindeutige Firebase-ID der Task
-   * @returns Die Dokument-Referenz für diese Task
+   * Returns the reference to a single task document.
+   * Used internally to specifically read or change a document.
+   * @param taskId - The unique Firebase ID of the task
+   * @returns The document reference for this task
    */
   private getSingleTaskRef(taskId: string) {
     return doc(this.tasksDB, 'tasks', taskId);
   }
 
   /**
-   * Aktualisiert den Status einer Task in Firebase.
-   * Wird nach Drag & Drop aufgerufen, um den neuen Spaltenstatus zu speichern.
-   * @param taskId - Die eindeutige Firebase-ID der Task
-   * @param newStatus - Der neue Status ('To do', 'In progress', etc.)
+   * Updates the status of a task in Firebase.
+   * Called after drag & drop to save the new column status.
+   * @param taskId - The unique Firebase ID of the task
+   * @param newStatus - The new status ('To do', 'In progress', etc.)
    */
   async updateTaskStatus(taskId: string, newStatus: string): Promise<void> {
     const taskRef = this.getSingleTaskRef(taskId);
@@ -129,11 +128,11 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Aktualisiert Status und Position mehrerer Tasks gleichzeitig.
-   * Wird nach Drag & Drop aufgerufen, um die neue Reihenfolge zu speichern.
-   * Jeder Task bekommt seinen Index als order-Wert (0, 1, 2, ...).
-   * @param tasks - Die Tasks in ihrer neuen Reihenfolge
-   * @param newStatus - Der Spalten-Status für alle Tasks in dieser Liste
+   * Updates status and position of multiple tasks at once.
+   * Called after drag & drop to save the new order.
+   * Each task gets its index as order value (0, 1, 2, ...).
+   * @param tasks - The tasks in their new order
+   * @param newStatus - The column status for all tasks in this list
    */
   async updateTaskPositions(tasks: SingleTask[], newStatus: string): Promise<void> {
     const updates = tasks.map((task, index) => this.updateSinglePosition(task, index, newStatus));
@@ -141,11 +140,11 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Aktualisiert Status und Position einer einzelnen Task.
-   * Wird intern von updateTaskPositions() aufgerufen.
-   * @param task - Die zu aktualisierende Task
-   * @param index - Die neue Position (0 = ganz oben)
-   * @param newStatus - Der Spalten-Status
+   * Updates status and position of a single task.
+   * Called internally by updateTaskPositions().
+   * @param task - The task to update
+   * @param index - The new position (0 = top)
+   * @param newStatus - The column status
    */
   private async updateSinglePosition(
     task: SingleTask,
@@ -158,28 +157,28 @@ export class TasksService implements OnDestroy {
   }
 
   /* ================================================================
-   * Dialog-Steuerung
+   * Dialog control
    * ================================================================ */
 
   /**
-   * Öffnet den Task-Detail-Dialog für eine bestimmte Task.
-   * @param taskId - Die ID der anzuzeigenden Task
+   * Opens the task detail dialog for a specific task.
+   * @param taskId - The ID of the task to display
    */
   openTaskDialog(taskId: string): void {
     this.activeTask = this.tasks.find((t) => t.id === taskId) || null;
   }
 
   /**
-   * Schließt den Task-Detail-Dialog.
-   * Setzt activeTask auf null – das @if im Template blendet den Dialog aus.
+   * Closes the task detail dialog.
+   * Sets activeTask to null – the @if in the template hides the dialog.
    */
   closeTaskDialog(): void {
     this.activeTask = null;
   }
 
   /**
-   * Löscht eine Task endgültig aus Firebase.
-   * @param taskId - Die ID der zu löschenden Task
+   * Permanently deletes a task from Firebase.
+   * @param taskId - The ID of the task to delete
    */
   async deleteTask(taskId: string): Promise<void> {
     const taskRef = this.getSingleTaskRef(taskId);
@@ -187,12 +186,12 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Aktualisiert den completed-Status eines Subtasks.
-   * Liest die aktuelle Subtask-Liste, ändert den Ziel-Subtask,
-   * und schreibt die gesamte Liste zurück nach Firebase.
-   * @param taskId - Die ID der übergeordneten Task
-   * @param subtaskId - Die ID des Subtasks
-   * @param completed - Der neue Status (true/false)
+   * Updates the completed status of a subtask.
+   * Reads the current subtask list, changes the target subtask,
+   * and writes the entire list back to Firebase.
+   * @param taskId - The ID of the parent task
+   * @param subtaskId - The ID of the subtask
+   * @param completed - The new status (true/false)
    */
   async updateSubtaskStatus(taskId: string, subtaskId: string, completed: boolean): Promise<void> {
     const task = this.tasks.find((t) => t.id === taskId);
@@ -205,15 +204,15 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Wird beim Zerstören des Services aufgerufen, um Subscriptions zu bereinigen
+   * Called when the service is destroyed to clean up subscriptions
    */
   ngOnDestroy() {
     if (this.unsubTasks) this.unsubTasks();
   }
 
   /**
-   * Öffnet den Dialog zum Hinzufügen einer neuen Task und setzt den Status
-   * @param status Status der neuen Task
+   * Opens the dialog to add a new task and sets the status
+   * @param status Status of the new task
    */
   openAddTaskDialog(status: 'To do' | 'In progress' | 'Await feedback' | 'Done') {
     this.openAddTaskDialogSubject.next(true);
@@ -222,7 +221,7 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Schließt den Dialog zum Hinzufügen einer neuen Task
+   * Closes the dialog to add a new task
    */
   closeAddTaskDialog() {
     this.openAddTaskDialogSubject.next(false);
@@ -230,7 +229,7 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Startet den Editiermodus für eine Task
+   * Starts edit mode for a task
    */
   startEditMode() {
     this.taskEditModeSubject.next(true);
@@ -238,8 +237,8 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Beendet den Editiermodus und speichert die Änderungen
-   * @param task Die bearbeitete Task
+   * Ends edit mode and saves the changes
+   * @param task The edited task
    */
   exidEditMode(task: SingleTask) {
     this.taskEditModeSubject.next(false);
@@ -248,8 +247,8 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Aktualisiert eine Task in Firebase
-   * @param task Die zu aktualisierende Task
+   * Updates a task in Firebase
+   * @param task The task to update
    */
   async updateTask(task: SingleTask) {
     if (task.id) {
@@ -262,9 +261,9 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Gibt ein bereinigtes JSON-Objekt für die Task zurück
-   * @param obj SingleTask-Objekt
-   * @returns Bereinigtes Objekt
+   * Returns a cleaned JSON object for the task
+   * @param obj SingleTask object
+   * @returns Cleaned object
    */
   getCleanJson(obj: SingleTask) {
     return {
@@ -282,9 +281,9 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Erstellt eine neue Task in Firebase
-   * @param task - Die zu speichernde Task (ohne ID)
-   * @returns Promise mit der erstellten Dokument-Referenz
+   * Creates a new task in Firebase
+   * @param task - The task to save (without ID)
+   * @returns Promise with the created document reference
    */
   async addTask(task: SingleTask): Promise<any> {
     try {
@@ -309,7 +308,7 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Setzt den aktuellen Status für neue Tasks
+   * Sets the current status for new tasks
    * @param status Status
    */
   setStatus(status: 'To do' | 'In progress' | 'Await feedback' | 'Done') {
@@ -317,14 +316,14 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Setzt den Status zurück auf "To do"
+   * Resets the status to "To do"
    */
   resetStatus() {
     this.currentStatus = 'To do';
   }
 
   /**
-   * Öffnet den Erfolgsdialog nach dem Hinzufügen einer Task
+   * Opens the success dialog after adding a task
    */
   openTaskSuccessDialog() {
     this.taskSuccessDialogActiveSubject.next(true);
@@ -336,9 +335,9 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Gibt die Task mit dem nächsten Fälligkeitsdatum zurück.
-   * Berücksichtigt nur Tasks mit gültigem dueDate ab heute.
-   * @returns Die Task mit dem nächsten Deadline oder null
+   * Returns the task with the next due date.
+   * Only considers tasks with a valid dueDate from today onwards.
+   * @returns The task with the next deadline or null
    */
   get upcomingTask(): SingleTask | null {
     const today = new Date();
@@ -357,9 +356,9 @@ export class TasksService implements OnDestroy {
   }
 
   /**
-   * Gibt den SVG-Pfad für das Priority-Icon der nächsten Task zurück.
-   * Fallback: medium-summary.svg wenn keine Task vorhanden ist.
-   * @returns Pfad zum entsprechenden Priority-Icon
+   * Returns the SVG path for the priority icon of the next task.
+   * Fallback: medium-summary.svg if no task is present.
+   * @returns Path to the corresponding priority icon
    */
   get upcomingTaskPriorityIcon(): string {
     const priority = this.upcomingTask?.priority ?? 'Medium';
