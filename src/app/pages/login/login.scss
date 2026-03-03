@@ -1,11 +1,12 @@
+
 // ============================================================
 // Login Page Layout
 // ============================================================
 
 .login-page {
   width: 100%;
-  height: 100svh;
-  height: 100vh;
+  min-height: 100svh;
+  min-height: 100vh;
   background-color: var(--color-bg-light);
   display: flex;
 
@@ -359,8 +360,7 @@
 
 @media (max-width: 768px) {
   .login-page {
-    height: 100svh;
-    height: 100vh;
+    height: auto;
     min-height: 100svh;
     min-height: 100vh;
   }
