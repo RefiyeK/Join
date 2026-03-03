@@ -1,6 +1,10 @@
 <div class="login-page">
   <!-- Logo -->
-  <div class="logo-wrapper" [class.logo--animated]="logoAnimated" [class.logo--no-transition]="skipAnimation">
+  <div
+    class="logo-wrapper"
+    [class.logo--animated]="logoAnimated"
+    [class.logo--no-transition]="skipAnimation"
+  >
     <img src="assets/icons/logo-dark.png" alt="Join Logo" class="logo" />
   </div>
 
@@ -11,7 +15,11 @@
   </div>
 
   <!-- Login Form -->
-  <div class="login-container" [class.form--visible]="formVisible" [class.form--no-transition]="skipAnimation">
+  <div
+    class="login-container"
+    [class.form--visible]="formVisible"
+    [class.form--no-transition]="skipAnimation"
+  >
     <div class="login-card">
       <h1>Log in</h1>
       <div class="title-underline"></div>
@@ -61,17 +69,10 @@
         <div class="error-message">{{ errorMessage }}</div>
       }
 
-      <!-- Loading Indicator -->
-      @if (isLoading) {
-        <div class="loading-spinner">
-          <span>Logging in…</span>
-        </div>
-      }
-
       <!-- Action Buttons -->
       <div class="login-buttons">
-        <button class="btn-primary" (click)="login()" [disabled]="isLoading">Log in</button>
-        <button class="btn-outline" (click)="guestLogin()" [disabled]="isLoading">Guest Log in</button>
+        <button class="btn-primary" (click)="login()">Log in</button>
+        <button class="btn-outline" (click)="guestLogin()">Guest Log in</button>
       </div>
     </div>
   </div>

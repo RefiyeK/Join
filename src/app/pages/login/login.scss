@@ -150,47 +150,6 @@
 }
 
 // ============================================================
-// Loading Spinner
-// ============================================================
-
-.loading-spinner {
-  text-align: center;
-  margin: 10px 0;
-
-  span {
-    display: inline-block;
-    padding: 8px 20px;
-    background-color: #f5f5f5;
-    border-radius: 30px;
-    color: var(--color-medium-blue);
-    font-size: 15px;
-    font-weight: 500;
-    position: relative;
-    padding-left: 40px;
-
-    &::before {
-      content: '';
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 18px;
-      height: 18px;
-      border: 2px solid var(--color-light-blue);
-      border-top-color: transparent;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: translateY(-50%) rotate(360deg);
-  }
-}
-
-// ============================================================
 // Input Fields
 // ============================================================
 
@@ -234,13 +193,6 @@
     &.ng-valid.ng-touched {
       border-color: var(--color-light-blue);
     }
-
-    // Disabled state during loading
-    &:disabled {
-      background-color: #f5f5f5;
-      cursor: not-allowed;
-      opacity: 0.7;
-    }
   }
 
   img {
@@ -264,7 +216,6 @@
     outline: none !important;
     box-shadow: none !important;
     background-color: #fff5f5;
-    animation: shake 0.3s ease-in-out;
 
     &:focus {
       border-color: #ff3d00 !important;
@@ -274,21 +225,6 @@
 
   img {
     filter: brightness(0) saturate(100%);
-  }
-}
-
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  10%,30%,50%,70%,90% 
-  {
-    transform: translateX(-2px);
-  }
-  20%,40%,60%,80% 
-  {
-    transform: translateX(2px);
   }
 }
 

@@ -24,7 +24,7 @@ export class Login implements OnInit {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
-  isLoading: boolean = false;
+  // isLoading: boolean = false;
 
   // Input error styling flags
   emailError: boolean = false;
@@ -58,7 +58,7 @@ export class Login implements OnInit {
       if (!this.password) this.passwordError = true;
       return;
     }
-    this.isLoading = true;
+    // this.isLoading = true;
     this.errorMessage = '';
     try {
       const userCredential = await this.authService.login(this.email, this.password);
@@ -96,7 +96,7 @@ export class Login implements OnInit {
           this.passwordError = false;
       }
     } finally {
-      this.isLoading = false;
+      // this.isLoading = false;
     }
   }
 
