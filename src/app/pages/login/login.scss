@@ -133,7 +133,7 @@
 // ============================================================
 
 .error-message {
-  color: #c62828;
+  color: #ff3d00;
   font-size: 16px;
   margin-top: -25px;
 }
@@ -219,8 +219,15 @@
 
     // Style for invalid inputs (empty fields)
     &.ng-invalid.ng-touched {
-      border-color: #c62828;
-      background-color: #fff8f8;
+      border: 1px solid #ff3d00 !important;
+      outline: none !important;
+      box-shadow: none !important;
+      background-color: #fff5f5;
+
+      &:focus {
+        border-color: #ff3d00 !important;
+        outline: none !important;
+      }
     }
 
     // Style for valid inputs
@@ -253,9 +260,16 @@
 
 .input-wrapper.error {
   input {
-    border-color: #c62828;
-    background-color: #fff8f8;
+    border: 1px solid #ff3d00 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: #fff5f5;
     animation: shake 0.3s ease-in-out;
+
+    &:focus {
+      border-color: #ff3d00 !important;
+      outline: none !important;
+    }
   }
 
   img {
