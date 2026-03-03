@@ -63,9 +63,10 @@
           }
         </div>
         <!-- Error Message -->
-        @if (errorMessage) {
-          <div class="error-message">{{ errorMessage }}</div>
-        }
+        <div class="error-message" [class.visible]="errorMessage">
+          {{ errorMessage }}
+        </div>
+
         <!-- Action Buttons -->
         <div class="login-buttons">
           <button class="btn-primary" (click)="login()">Log in</button>
