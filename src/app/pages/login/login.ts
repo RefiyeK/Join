@@ -58,6 +58,16 @@ export class Login implements OnInit {
       if (!this.password) this.passwordError = true;
       return;
     }
+
+    // Frontend email format validation — prevents unnecessary HTTP requests
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(this.email)) {
+    this.errorMessage = 'Invalid email format';
+    this.emailError = true;
+    return;
+  }
+
+  
     // this.isLoading = true;
     this.errorMessage = '';
     try {
