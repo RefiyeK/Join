@@ -32,8 +32,8 @@ export class Login implements OnInit {
 
   /** Initializes the logo and form animations */
   ngOnInit(): void {
-    const firstVisit = !sessionStorage.getItem('logoAnimationPlayed');
-    sessionStorage.setItem('logoAnimationPlayed', 'true');
+    const firstVisit = !localStorage.getItem('logoAnimationPlayed');
+    localStorage.setItem('logoAnimationPlayed', 'true');
     if (firstVisit) {
       setTimeout(() => {
         this.logoAnimated = true;
@@ -74,6 +74,7 @@ export class Login implements OnInit {
       const userCredential = await this.authService.login(this.email, this.password);
       this.authService.loggetInUserUid.set(userCredential.user.uid);
       localStorage.setItem('uid', userCredential.user.uid);
+      sessionStorage.setItem('justLoggedIn', 'true');
       // Redirect to summary page
       this.router.navigate(['/summary']);
     } catch (error: any) {
@@ -113,6 +114,7 @@ export class Login implements OnInit {
   /** Guest login - redirects directly to the summary page */
   guestLogin() {
     this.authService.loggetInUserUid.set('guest');
+    sessionStorage.setItem('justLoggedIn', 'true');
     this.router.navigate(['/summary']);
   }
 }

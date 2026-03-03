@@ -209,12 +209,11 @@ app-nav {
   min-width: 150px;
   gap: 1rem;
   overflow-y: auto;
-  max-height: calc(100vh - 250px);
+  max-height: calc(100vh - 300px);
   scrollbar-width: thin;
   scrollbar-color: var(--color-light-grey) transparent;
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
+  padding-bottom: 16px;
+ 
   app-single-task-card {
     width: 100%;
     min-width: 0;
