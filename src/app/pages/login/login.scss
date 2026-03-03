@@ -4,6 +4,7 @@
 
 .login-page {
   width: 100%;
+  height: 100svh;
   height: 100vh;
   background-color: var(--color-bg-light);
   display: flex;
@@ -41,7 +42,7 @@
   z-index: 100;
 
   &.logo--animated {
-    top: 48px;
+    top: calc(48px + env(safe-area-inset-top, 0px));
     left: 48px;
     transform: translate(0, 0);
   }
@@ -89,6 +90,7 @@
 // ============================================================
 
 .login-container {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -348,6 +350,44 @@
 // ============================================================
 
 @media (max-width: 768px) {
+  .login-page {
+    height: 100svh;
+    height: 100vh;
+    min-height: 100svh;
+    min-height: 100vh;
+  }
+
+  .login-page__inner {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 10px;
+    gap: 10px;
+    height: 100%;
+  }
+
+  .logo-wrapper.logo--animated {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    align-self: flex-start;
+    padding: 24px 0 0 24px;
+  }
+
+  .logo-wrapper.logo--animated .logo {
+    width: 60px;
+    height: 80px;
+  }
+
+  .login-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    order: 2;
+  }
+
   .login-card {
     width: 100%;
     padding: 48px 20px;
@@ -357,24 +397,16 @@
     }
   }
 
-  .input-wrapper {
-    width: 100%;
-
-    input {
-      width: 100%;
-    }
-  }
-
-  .error-message {
-    width: 100%;
-  }
-
   .signup-hint {
-    top: 1rem;
-    right: 1rem;
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    transform: none;
+    order: 3;
     gap: 15px;
 
-    .signup-text {
+     .signup-text {
       font-size: 16px;
     }
 
@@ -385,9 +417,13 @@
     }
   }
 
-  .logo-wrapper.logo--animated .logo {
-    width: 60px;
-    height: 80px;
+  .login-footer {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    order: 4;
+    padding-bottom: 1rem;
   }
 
   .login-buttons {
@@ -402,11 +438,32 @@
       padding: 12px;
     }
   }
+
+  .input-wrapper {
+    width: 100%;
+  }
+
+  .error-message {
+    width: 100%;
+  }  
+}
+
+@media (max-height: 700px) {
+  .login-card {
+    gap: 20px;
+    min-height: auto;
+  }
+
+  .login-buttons {
+    margin-top: 8px;
+    gap: 10px;
+  }
 }
 
 @media (max-width: 560px) {
   .login-footer {
     gap: 1rem;
     white-space: nowrap;
+    padding-bottom: 1rem;
   }
 }
