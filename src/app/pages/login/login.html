@@ -1,85 +1,83 @@
 <div class="login-page">
-  <!-- Logo -->
-  <div
-    class="logo-wrapper"
-    [class.logo--animated]="logoAnimated"
-    [class.logo--no-transition]="skipAnimation"
-  >
-    <img src="assets/icons/logo-dark.png" alt="Join Logo" class="logo" />
-  </div>
+  <div class="login-page__inner">
+    <!-- Logo -->
+    <div
+      class="logo-wrapper"
+      [class.logo--animated]="logoAnimated"
+      [class.logo--no-transition]="skipAnimation"
+    >
+      <img src="assets/icons/logo-dark.png" alt="Join Logo" class="logo" />
+    </div>
 
-  <!-- Sign up hint - top right -->
-  <div class="signup-hint">
-    <span class="signup-text">Not a Join user?</span>
-    <button class="btn-primary" routerLink="/sign-up">Sign up</button>
-  </div>
+    <!-- Sign up hint - top right -->
+    <div class="signup-hint">
+      <span class="signup-text">Not a Join user?</span>
+      <button class="btn-primary" routerLink="/sign-up">Sign up</button>
+    </div>
 
-  <!-- Login Form -->
-  <div
-    class="login-container"
-    [class.form--visible]="formVisible"
-    [class.form--no-transition]="skipAnimation"
-  >
-    <div class="login-card">
-      <h1>Log in</h1>
-      <div class="title-underline"></div>
-
-      <!-- Email Input Field -->
-      <div class="input-wrapper" [class.error]="emailError">
-        <input
-          type="email"
-          placeholder="Email"
-          [(ngModel)]="email"
-          name="email"
-          (input)="emailError = false"
-        />
-        <img src="assets/icons/mail.svg" alt="E-Mail" />
-      </div>
-
-      <!-- Password Input Field with Visibility Toggle -->
-      <div class="input-wrapper" [class.error]="passwordError">
-        <input
-          [type]="showPassword ? 'text' : 'password'"
-          placeholder="Password"
-          [(ngModel)]="password"
-          name="password"
-          (input)="passwordError = false"
-        />
-        @if (!password) {
-          <img src="assets/icons/lock.svg" alt="Password" class="icon-lock" />
-        } @else if (showPassword) {
-          <img
-            src="assets/icons/visibility.svg"
-            alt="Hide password"
-            class="password-icon toggle-password"
-            (click)="showPassword = false"
+    <!-- Login Form -->
+    <div
+      class="login-container"
+      [class.form--visible]="formVisible"
+      [class.form--no-transition]="skipAnimation"
+    >
+      <div class="login-card">
+        <h1>Log in</h1>
+        <div class="title-underline"></div>
+        <!-- Email Input Field -->
+        <div class="input-wrapper" [class.error]="emailError">
+          <input
+            type="email"
+            placeholder="Email"
+            [(ngModel)]="email"
+            name="email"
+            (input)="emailError = false"
           />
-        } @else {
-          <img
-            src="assets/icons/visibility_off.svg"
-            alt="Show password"
-            class="password-icon toggle-password"
-            (click)="showPassword = true"
+          <img src="assets/icons/mail.svg" alt="E-Mail" />
+        </div>
+        <!-- Password Input Field with Visibility Toggle -->
+        <div class="input-wrapper" [class.error]="passwordError">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Password"
+            [(ngModel)]="password"
+            name="password"
+            (input)="passwordError = false"
           />
+          @if (!password) {
+            <img src="assets/icons/lock.svg" alt="Password" class="icon-lock" />
+          } @else if (showPassword) {
+            <img
+              src="assets/icons/visibility.svg"
+              alt="Hide password"
+              class="password-icon toggle-password"
+              (click)="showPassword = false"
+            />
+          } @else {
+            <img
+              src="assets/icons/visibility_off.svg"
+              alt="Show password"
+              class="password-icon toggle-password"
+              (click)="showPassword = true"
+            />
+          }
+        </div>
+        <!-- Error Message -->
+        @if (errorMessage) {
+          <div class="error-message">{{ errorMessage }}</div>
         }
-      </div>
-
-      <!-- Error Message -->
-      @if (errorMessage) {
-        <div class="error-message">{{ errorMessage }}</div>
-      }
-
-      <!-- Action Buttons -->
-      <div class="login-buttons">
-        <button class="btn-primary" (click)="login()">Log in</button>
-        <button class="btn-outline" (click)="guestLogin()">Guest Log in</button>
+        <!-- Action Buttons -->
+        <div class="login-buttons">
+          <button class="btn-primary" (click)="login()">Log in</button>
+          <button class="btn-outline" (click)="guestLogin()">Guest Log in</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Footer -->
-  <div class="login-footer">
-    <a routerLink="/privacy-policy" data-text="Privacy Policy">Privacy Policy</a>
-    <a routerLink="/imprint" data-text="Legal notice">Legal notice</a>
+    <!-- Footer -->
+    <div class="login-footer">
+      <a routerLink="/privacy-policy" data-text="Privacy Policy">Privacy Policy</a>
+      <a routerLink="/imprint" data-text="Legal notice">Legal notice</a>
+    </div>
   </div>
 </div>
