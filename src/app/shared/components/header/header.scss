@@ -23,7 +23,11 @@
   align-items: center;
   width: 100%;
   max-width: calc(1440px - 232px);
-  padding: 16px 32px 16px 128px;
+  padding: 16px 32px 16px 60px;
+
+  a {
+    display: none;
+  }
 }
 
 .help-icon {
@@ -99,6 +103,12 @@
   }
 }
 
+@media (max-width: 1120px) {
+  .header-container {
+    padding: 16px 28px;
+  }
+}
+
 @media (max-width: 1024px) {
   app-contacts-list {
     width: clamp(280px, 30vw, 456px);
@@ -106,9 +116,6 @@
   app-contact-details {
     flex: 1;
     min-width: 280px;
-  }
-  .header-container {
-    padding: 16px 24px 16px 50px;
   }
 }
 
@@ -122,7 +129,11 @@
     border-radius: 16px 0 16px 16px;
   }
   .header-container {
-    padding: 16px 20px;
+    padding: 16px 28px;
+
+    a {
+      display: initial;
+    }
   }
   .header-logo {
     display: block;
