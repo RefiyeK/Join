@@ -217,9 +217,27 @@ footer {
   margin: 1rem;
   position: absolute;
   bottom: 0;
+
   a {
-    color: #a8a8a8;
+    font-weight: 300;
+    color: var(--color-medium-blue);
+    text-decoration: none;
     cursor: pointer;
+    transition: color 125ms ease-in-out;
+
+    &:hover {
+      font-weight: 700;
+      color: var(--color-light-blue);
+    }
+
+    // Reserviert die Breite des fetten Textes, damit nichts verrutscht
+    &::after {
+      content: attr(data-text);
+      font-weight: 700;
+      display: block;
+      height: 0;
+      visibility: hidden;
+    }
   }
 }
 

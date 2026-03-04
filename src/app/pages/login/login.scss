@@ -338,29 +338,24 @@
   gap: 3rem;
 
   a {
-    position: relative;
     font-weight: 300;
-    color: #a8a8a8;
+    color: var(--color-medium-blue);
     text-decoration: none;
-    transition: all 125ms ease-in-out;
+    transition: color 125ms ease-in-out;
     padding: 5px 10px;
-    border-radius: 5px;
 
     &:hover {
       font-weight: 700;
       color: var(--color-light-blue);
     }
+
+    // Reserviert die Breite des fetten Textes, damit nichts verrutscht
     &::after {
       content: attr(data-text);
       font-weight: 700;
-      position: absolute;
-      left: 0;
-      top: 0;
-      visibility: hidden;
-      height: 0;
-      overflow: hidden;
       display: block;
-      white-space: nowrap;
+      height: 0;
+      visibility: hidden;
     }
   }
 }
