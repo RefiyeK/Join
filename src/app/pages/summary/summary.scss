@@ -146,32 +146,44 @@ app-nav {
   }
 
   // To-do: Scales from left, left side stays fixed
-  &:first-child { transform-origin: left center; }
+  &:first-child {
+    transform-origin: left center;
+  }
 }
 
 // Done: Scales from right, right side stays fixed
 .cards-row-top .card:last-child {
-  &:hover { transform-origin: right center; }
+  &:hover {
+    transform-origin: right center;
+  }
 }
 
 // Priority card: Top-left corner stays fixed
 .card--priority {
-  &:hover { transform-origin: top left; }
+  &:hover {
+    transform-origin: top left;
+  }
 }
 
 // Tasks in Board: Left side stays fixed
 .cards-row-bottom .card:first-child {
-  &:hover { transform-origin: left center; }
+  &:hover {
+    transform-origin: left center;
+  }
 }
 
 // Tasks In Progress: Scales from center in all directions
 .cards-row-bottom .card:nth-child(2) {
-  &:hover { transform-origin: center center; }
+  &:hover {
+    transform-origin: center center;
+  }
 }
 
 // Awaiting Feedback: Scales from right, right side stays fixed
 .cards-row-bottom .card:last-child {
-  &:hover { transform-origin: right center; }
+  &:hover {
+    transform-origin: right center;
+  }
 }
 
 // ============================================================
@@ -349,7 +361,6 @@ app-nav {
 // ============================================================
 
 @media (max-width: 1024px) {
-
   .summary-content {
     padding-bottom: 80px;
     display: flex;
@@ -496,7 +507,6 @@ app-nav {
 }
 
 @media (max-width: 445px) {
-
   .summary-inner {
     padding: 40px 10px;
   }

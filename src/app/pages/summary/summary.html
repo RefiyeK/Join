@@ -1,17 +1,22 @@
 <main>
   <div class="summary__outer">
     <div class="summary-main-container">
-      <app-nav></app-nav>
       <div class="wrapper">
-        <app-header></app-header>
         <div class="summary-content">
-
           <!-- Mobile Greeting Screen -->
           @if (isMobile && showGreeting) {
             <div class="mobile-greeting">
-              <p class="greeting-text">Hello@if (loggedInUserName){,} @if (!loggedInUserName){!}</p>
+              <p class="greeting-text">
+                Hello
+                @if (loggedInUserName) {
+                  ,
+                }
+                @if (!loggedInUserName) {
+                  !
+                }
+              </p>
               @if (loggedInUserName) {
-              <p class="greeting-name">{{ loggedInUserName }}</p>
+                <p class="greeting-name">{{ loggedInUserName }}</p>
               }
             </div>
           }
@@ -19,7 +24,6 @@
           <!-- Summary Content -->
           @if (!isMobile || !showGreeting) {
             <div class="summary-inner">
-
               <div class="summary-headline">
                 <h1>Join 360</h1>
                 <span class="headline-divider"></span>
@@ -28,11 +32,21 @@
 
               <div class="summary-bottom">
                 <div class="summary-cards">
-
                   <div class="cards-row-top">
-                    <div class="card" (mouseenter)="todoHover = true" (mouseleave)="todoHover = false">
+                    <div
+                      class="card"
+                      (mouseenter)="todoHover = true"
+                      (mouseleave)="todoHover = false"
+                    >
                       <div class="card__icon">
-                        <img [src]="todoHover ? 'assets/icons/edit-summary-hover.svg' : 'assets/icons/edit-summary.svg'" alt="To-do">
+                        <img
+                          [src]="
+                            todoHover
+                              ? 'assets/icons/edit-summary-hover.svg'
+                              : 'assets/icons/edit-summary.svg'
+                          "
+                          alt="To-do"
+                        />
                       </div>
                       <div class="card__info">
                         <span class="card__count">{{ todoCount }}</span>
@@ -40,9 +54,20 @@
                       </div>
                     </div>
 
-                    <div class="card" (mouseenter)="doneHover = true" (mouseleave)="doneHover = false">
+                    <div
+                      class="card"
+                      (mouseenter)="doneHover = true"
+                      (mouseleave)="doneHover = false"
+                    >
                       <div class="card__icon">
-                        <img [src]="doneHover ? 'assets/icons/done-summary-hover.svg' : 'assets/icons/done-summary.svg'" alt="Done">
+                        <img
+                          [src]="
+                            doneHover
+                              ? 'assets/icons/done-summary-hover.svg'
+                              : 'assets/icons/done-summary.svg'
+                          "
+                          alt="Done"
+                        />
                       </div>
                       <div class="card__info">
                         <span class="card__count">{{ doneCount }}</span>
@@ -55,11 +80,16 @@
                     <div class="card card--priority">
                       <div class="priority-left">
                         <div class="card__icon card__icon--priority">
-                          <img [src]="tasksService.upcomingTaskPriorityIcon" [alt]="tasksService.upcomingTask?.priority ?? 'No upcoming task'">
+                          <img
+                            [src]="tasksService.upcomingTaskPriorityIcon"
+                            [alt]="tasksService.upcomingTask?.priority ?? 'No upcoming task'"
+                          />
                         </div>
                         <div class="card__info">
                           <span class="card__count">{{ urgentCount }}</span>
-                          <span class="card__label">{{ tasksService.upcomingTask?.priority ?? 'Medium' }}</span>
+                          <span class="card__label">{{
+                            tasksService.upcomingTask?.priority ?? 'Medium'
+                          }}</span>
                         </div>
                       </div>
                       <div class="priority-divider"></div>
@@ -73,33 +103,38 @@
                   <div class="cards-row-bottom">
                     <div class="card card--simple">
                       <span class="card__count">{{ totalCount }}</span>
-                      <span class="card__label">Tasks in<br>Board</span>
+                      <span class="card__label">Tasks in<br />Board</span>
                     </div>
                     <div class="card card--simple">
                       <span class="card__count">{{ inProgressCount }}</span>
-                      <span class="card__label">Tasks In<br>Progress</span>
+                      <span class="card__label">Tasks In<br />Progress</span>
                     </div>
                     <div class="card card--simple">
                       <span class="card__count">{{ awaitFeedbackCount }}</span>
-                      <span class="card__label">Awaiting<br>Feedback</span>
+                      <span class="card__label">Awaiting<br />Feedback</span>
                     </div>
                   </div>
-
                 </div>
 
                 @if (showGreeting) {
                   <div class="summary-greeting">
-                    <p class="greeting-text">Hello@if (loggedInUserName){,} @if (!loggedInUserName){!}</p>
+                    <p class="greeting-text">
+                      Hello
+                      @if (loggedInUserName) {
+                        ,
+                      }
+                      @if (!loggedInUserName) {
+                        !
+                      }
+                    </p>
                     @if (loggedInUserName) {
                       <p class="greeting-name">{{ loggedInUserName }}</p>
                     }
                   </div>
                 }
               </div>
-
             </div>
           }
-
         </div>
       </div>
     </div>

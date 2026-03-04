@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-summary',
-  imports: [Header, Nav, CommonModule],
+  imports: [CommonModule],
   templateUrl: './summary.html',
   styleUrl: './summary.scss',
 })
