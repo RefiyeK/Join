@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { Header } from '../../shared/components/header/header';
-import { Nav } from '../../shared/components/nav/nav';
 
 /**
  * Help – Displays the help page with instructions for using Join.
@@ -12,7 +10,7 @@ import { Nav } from '../../shared/components/nav/nav';
  */
 @Component({
   selector: 'app-help',
-  imports: [Header, Nav],
+  imports: [],
   templateUrl: './help.html',
   styleUrl: './help.scss',
 })
