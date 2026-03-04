@@ -31,7 +31,7 @@ p {
   padding: 1rem 60px;
   display: flex;
   justify-content: space-between;
-  max-width: 1440px;
+  max-width: calc(1440px - 232px);
   flex-shrink: 0;
 }
 
@@ -54,6 +54,8 @@ p {
 .add-Task-Container {
   display: flex;
   width: 100%;
+  max-width: calc(1440px - 232px);
+
   position: relative;
   background-color: #f6f7f8;
   flex: 1 1 auto;
