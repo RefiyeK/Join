@@ -1,17 +1,11 @@
-/* ================================================================
- * Host Element
- * ================================================================ */
 :host {
   width: 100%;
   min-width: 150px;
   display: block;
 }
 
-/* ================================================================
- * Task Card
- * ================================================================ */
 .task-card {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 24px;
   padding: 16px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
@@ -31,9 +25,6 @@
   }
 }
 
-/* ================================================================
- * Category Badge
- * ================================================================ */
 .task-badge {
   display: inline-block;
   padding: 4px 10px;
@@ -52,9 +43,6 @@
   margin-bottom: 14px;
 }
 
-/* ================================================================
- * Task Title
- * ================================================================ */
 .task-title {
   font-size: 16px;
   color: var(--color-medium-blue);
@@ -62,29 +50,21 @@
   line-height: 1.4;
   hyphens: auto;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   word-break: break-word;
 }
 
-/* ================================================================
- * Task Description
- * ================================================================ */
 .task-description {
   color: var(--color-light-grey);
   line-height: 1.2;
   hyphens: auto;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* ================================================================
- * Progress Bar
- * ================================================================ */
 .progress-container {
   display: flex;
   align-items: center;
@@ -95,7 +75,7 @@
 .progress-bar {
   flex: 1;
   height: 8px;
-  background-color: #F4F4F4;
+  background-color: #f4f4f4;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -111,9 +91,6 @@
   white-space: nowrap;
 }
 
-/* ================================================================
- * Card Footer
- * ================================================================ */
 .task-footer {
   display: flex;
   justify-content: space-between;
@@ -121,9 +98,6 @@
   margin-top: auto;
 }
 
-/* ================================================================
- * Avatars
- * ================================================================ */
 .avatars {
   display: flex;
   align-items: center;
@@ -144,7 +118,6 @@
   }
 }
 
-/* Avatar counter (+X badge) */
 .avatar-counter {
   background-color: var(--color-light-grey);
   color: var(--color-medium-blue);
@@ -152,18 +125,12 @@
   border: 2px solid white;
 }
 
-/* ================================================================
- * Priority Icon
- * ================================================================ */
 .priority-icon {
   width: 17px;
   height: 12px;
   flex-shrink: 0;
 }
 
-/* ================================================================
- * Responsive Design
- * ================================================================ */
 @media (min-width: 1025px) and (max-width: 1125px) {
   :host {
     max-width: 180px;
@@ -171,7 +138,6 @@
   }
 }
 
-/* Tablet Breakpoint (max-width: 1024px) */
 @media (max-width: 1024px) {
   :host {
     width: 252px;
@@ -188,7 +154,6 @@
   }
 }
 
-/* Mobile Breakpoint (max-width: 768px) */
 @media (max-width: 768px) {
   .priority-icon {
     width: 20px;

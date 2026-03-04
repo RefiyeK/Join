@@ -1,13 +1,3 @@
-/* ================================================================
- * help.scss
- *
- * Responsive down to 320px. Uses clamp() for fluid typography.
- * Minimum font size: 16px (1rem).
- * ================================================================ */
-
-/* ================================================================
- * Host Element (Layout Container)
- * ================================================================ */
 :host {
   display: flex;
   width: 100%;
@@ -19,9 +9,6 @@
   display: none;
 }
 
-/* ================================================================
- * Outer Wrapper - Full-width background
- * ================================================================ */
 .help__outer {
   display: flex;
   justify-content: flex-start;
@@ -31,9 +18,6 @@
   overflow-y: auto;
 }
 
-/* ================================================================
- * Inner Wrapper - Content limited to 1208px
- * ================================================================ */
 .help__inner {
   display: flex;
   flex-direction: column;
@@ -42,9 +26,6 @@
   padding: 3rem 6.25rem 7.5rem 6.25rem;
 }
 
-/* ================================================================
- * Layout Structure
- * ================================================================ */
 .wrapper {
   display: flex;
   width: 100%;
@@ -62,18 +43,12 @@ app-nav {
   height: 100%;
 }
 
-/* ================================================================
- * Main Container: Help Content
- * ================================================================ */
 .help {
   padding: 48px 100px 120px 100px;
   background-color: #f0f4f3;
   flex: 1;
 }
 
-/* ================================================================
- * Header: Title + Back Arrow
- * ================================================================ */
 .help__header {
   display: flex;
   align-items: center;
@@ -87,7 +62,6 @@ app-nav {
   margin: 0;
 }
 
-/* Back button (arrow) */
 .help__back-btn {
   background: none;
   border: none;
@@ -108,31 +82,21 @@ app-nav {
   }
 }
 
-/* ================================================================
- * Section Headings (h2)
- * ================================================================ */
 .help__heading {
   font-weight: 700;
   color: var(--color-font-dark);
   margin: clamp(1.25rem, 2.5vw, 2rem) 0 clamp(0.5rem, 1.5vw, 1rem);
 }
 
-/* ================================================================
- * Body Text
- * ================================================================ */
 .help__text {
   color: var(--color-font-dark);
   margin: 0 0 1rem;
 }
 
-/* "Join" highlighted in light blue */
 .help__highlight {
   color: var(--color-light-blue);
 }
 
-/* ================================================================
- * Numbered Step List
- * ================================================================ */
 .help__steps {
   padding-left: clamp(1rem, 2vw, 1.5rem);
   margin: 1rem 0;
@@ -141,7 +105,6 @@ app-nav {
   gap: clamp(0.75rem, 2vw, 1.25rem);
 }
 
-/* Individual step */
 .help__step {
   list-style: decimal;
   padding-left: 0.5rem;
@@ -158,9 +121,6 @@ app-nav {
   margin: 0;
 }
 
-/* ================================================================
- * Mobile Breakpoint (max-width: 768px)
- * ================================================================ */
 @media (max-width: 768px) {
   .help {
     padding: 24px 20px 140px 20px;

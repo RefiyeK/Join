@@ -6,8 +6,6 @@
   align-items: center;
   background-color: var(--color-font-bright);
   gap: 24px;
-  // max-width: 1280px;
-  // max-height: 720px;
 }
 
 .contact-text {
@@ -160,7 +158,7 @@ input {
 
 .invalid {
   border-color: var(--color-error) !important;
-  background-color: #ffeeee !important; // Heller roter Hintergrund
+  background-color: #ffeeee !important;
 
   input {
     background-color: #ffeeee !important;
@@ -241,7 +239,7 @@ input {
   }
 
   .edit-avatar {
-    font-size: 2.25rem; // ~36px
+    font-size: 2.25rem;
   }
 }
 
@@ -310,7 +308,6 @@ input {
   .inputs-container {
     display: flex;
     flex-direction: column;
-    // width: 100%;
     gap: 1.5rem;
     overflow-y: auto;
     flex-grow: 1;

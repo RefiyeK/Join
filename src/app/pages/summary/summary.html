@@ -3,7 +3,6 @@
     <div class="summary-main-container">
       <div class="wrapper">
         <div class="summary-content">
-          <!-- Mobile Greeting Screen -->
           @if (isMobile && showGreeting) {
             <div class="mobile-greeting">
               <p class="greeting-text">
@@ -21,7 +20,6 @@
             </div>
           }
 
-          <!-- Summary Content -->
           @if (!isMobile || !showGreeting) {
             <div class="summary-inner">
               <div class="summary-headline">

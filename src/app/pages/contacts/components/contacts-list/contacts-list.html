@@ -28,18 +28,16 @@
           />
         </g>
       </svg>
-    </span> 
+    </span>
   </button>
 
   <div class="contact-list">
-    <!-- Gruppen kommen zentral aus dem Service -->
     @for (group of contactsService.getContactGroups(); track $index) {
       <div class="contact-group">
         <div class="head-line">
           <h3>{{ group }}</h3>
         </div>
         <span class="underline"></span>
-        <!-- Kontakte kommen zentral aus dem Service -->
         @for (contact of contactsService.getContacts(); track $index) {
           @if (group == contact.name.charAt(0)) {
             <div
