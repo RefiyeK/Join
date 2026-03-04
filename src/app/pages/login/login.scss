@@ -407,7 +407,11 @@
       width: 200px;
       padding: 12px;
     }
+
+    .btn-outline {
+    border: 2px solid var(--color-medium-blue);
   }
+}
 
   .input-wrapper {
     width: 100%;
