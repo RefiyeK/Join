@@ -13,13 +13,15 @@
         <div class="profile-wrapper">
           <button
             class="profile"
-            [class]="currentUser() ? contactsService.getIconColorClass(currentUser()!) : 'icon-1'"
+            [class]="currentUser ? contactsService.getIconColorClass(currentUser!) : 'icon-1'"
             (click)="toggleDropdown(); $event.stopPropagation()"
-          >
-            @if (currentUser()) {
-              {{ contactsService.getInitials(currentUser()!.name) }}
-            } @else {
+            >
+            @if (currentUser) {
+              {{ contactsService.getInitials(currentUser!.name) }}
+            } @else if (authService.loggetInUserUid() === 'guest') {
               GU
+            } @else if (cachedInitials) {
+                {{ cachedInitials }}
             }
           </button>
 

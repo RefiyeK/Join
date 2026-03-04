@@ -25,11 +25,20 @@ export class Header {
   /**
    * Returns the currently logged-in user as a contact object
    */
-  currentUser = computed(() => {
+  get currentUser() {
     const currentUid = this.authService.loggetInUserUid();
     if (!currentUid) return null;
-    return this.contactsService.contacts.find((c) => c.uid === currentUid) || null;
-  });
+    const user = this.contactsService.contacts.find((c) => c.uid === currentUid) ?? null;
+    if (user) {
+          localStorage.setItem('userInitials', this.contactsService.getInitials(user.name));
+  }
+    return user;
+  }
+
+  get cachedInitials(): string {
+      return localStorage.getItem('userInitials') ?? '';
+  }
+  
 
   /**
    * Performs logout and closes the dropdown menu
