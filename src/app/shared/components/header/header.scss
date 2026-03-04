@@ -3,9 +3,6 @@
   width: 100%;
 }
 
-/* ================================================================
- * Outer Wrapper - Background & Shadow
- * ================================================================ */
 .header-outer {
   display: flex;
   justify-content: flex-start;
@@ -20,9 +17,6 @@
   display: none;
 }
 
-/* ================================================================
- * Inner Container - Content with max-width
- * ================================================================ */
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -32,9 +26,6 @@
   padding: 16px 32px 16px 128px;
 }
 
-/* ================================================================
- * Help Icon
- * ================================================================ */
 .help-icon {
   width: 32px;
   height: 32px;
@@ -44,9 +35,6 @@
   }
 }
 
-/* ================================================================
- * Help & Profile Section
- * ================================================================ */
 .help-and-profile {
   display: flex;
   justify-content: space-between;
@@ -58,9 +46,6 @@
   position: relative;
 }
 
-/* ================================================================
- * Profile Button
- * ================================================================ */
 .profile {
   width: 56px;
   height: 56px;
@@ -79,9 +64,6 @@
   }
 }
 
-/* ================================================================
- * Dropdown Menu
- * ================================================================ */
 .dropdown {
   position: absolute;
   top: calc(100% + 21px);
@@ -111,16 +93,12 @@
     &:hover {
       background-color: var(--color-nav-hover);
     }
-    /* Hidden on desktop, visible on mobile */
     &--help {
       display: none;
     }
   }
 }
 
-/* ================================================================
- * Tablet Breakpoint (max-width: 1024px)
- * ================================================================ */
 @media (max-width: 1024px) {
   app-contacts-list {
     width: clamp(280px, 30vw, 456px);
@@ -134,9 +112,6 @@
   }
 }
 
-/* ================================================================
- * Mobile Breakpoint (max-width: 768px)
- * ================================================================ */
 @media (max-width: 768px) {
   .dropdown {
     right: -5px;
@@ -154,14 +129,14 @@
     height: 40px;
     width: auto;
   }
-  /* Hide subtitle text on mobile */
+
   .project-management-tool {
     display: none;
   }
   .dropdown__link {
     padding: 10px 12px;
   }
-  /* Show help link in dropdown on mobile */
+
   .dropdown__link--help {
     display: block;
   }

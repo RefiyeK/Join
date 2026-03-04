@@ -52,9 +52,6 @@ app-contact-details {
   }
 }
 
-/* ================================================================
- * Tablet Breakpoint (max-width: 1024px)
- * ================================================================ */
 @media (max-width: 1024px) {
   app-contacts-list {
     width: 100%;
@@ -77,9 +74,6 @@ app-contact-details {
   }
 }
 
-/* ================================================================
- * Mobile Breakpoint (max-width: 768px)
- * ================================================================ */
 @media (max-width: 768px) {
   :host {
     flex-direction: column;
@@ -108,7 +102,6 @@ app-contact-details {
   }
 }
 
-/* Fix for very small widths (e.g. 350px) */
 @media (max-width: 400px) {
   app-contacts-list {
     min-width: 0;

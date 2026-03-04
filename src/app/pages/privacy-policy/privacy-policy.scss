@@ -8,9 +8,6 @@
   display: none;
 }
 
-/* ================================================================
- * Layout Structure
- * ================================================================ */
 .wrapper {
   display: flex;
   width: 100%;
@@ -28,9 +25,6 @@ app-nav {
   height: 100%;
 }
 
-/* ================================================================
- * Outer Wrapper - Background (full width)
- * ================================================================ */
 .privacy-policy__outer {
   display: flex;
   justify-content: flex-start;
@@ -40,9 +34,6 @@ app-nav {
   overflow-y: auto;
 }
 
-/* ================================================================
- * Inner Wrapper - Content (limited to 1208px)
- * ================================================================ */
 .privacy-policy__inner {
   display: flex;
   flex-direction: column;
@@ -51,9 +42,6 @@ app-nav {
   padding: 80px 60px;
 }
 
-/* ================================================================
- * Header with Title and Back Button
- * ================================================================ */
 .privacy-policy__header {
   display: flex;
   justify-content: space-between;
@@ -66,7 +54,6 @@ app-nav {
   }
 }
 
-/* Back button - visible on mobile only */
 .privacy-policy__back {
   display: none;
   background: none;
@@ -83,9 +70,6 @@ app-nav {
   }
 }
 
-/* ================================================================
- * Content Sections
- * ================================================================ */
 .privacy-policy__section {
   max-width: 800px;
   margin-bottom: 40px;
@@ -101,7 +85,6 @@ app-nav {
   }
 }
 
-/* Modern styled bullet points */
 .privacy-policy__list {
   list-style: none;
   padding: 0;
@@ -127,9 +110,6 @@ app-nav {
   }
 }
 
-/* ================================================================
- * Contact Section
- * ================================================================ */
 .privacy-policy__contact {
   a {
     color: var(--color-light-blue);
@@ -143,9 +123,6 @@ app-nav {
   }
 }
 
-/* ================================================================
- * Date Footer
- * ================================================================ */
 .privacy-policy__date {
   margin-top: 48px;
   padding-bottom: 2rem;
@@ -153,9 +130,6 @@ app-nav {
   font-style: italic;
 }
 
-/* ================================================================
- * Mobile Breakpoint (max-width: 768px)
- * ================================================================ */
 @media (max-width: 768px) {
   app-nav {
     width: 0;

@@ -12,7 +12,6 @@
     </div>
 
     @if (contactsService.isEditMode && contactsService.activContact) {
-      <!-- Edit Mode: Avatar mit InitiaWlen -->
       <div
         class="account-img edit-avatar"
         [ngClass]="contactsService.getIconColorClass(contactsService.activContact)"
@@ -20,7 +19,6 @@
         {{ getContactInitials() }}
       </div>
     } @else {
-      <!-- Add Mode: Standard Icon -->
       <div class="account-img"></div>
     }
 
@@ -79,13 +77,11 @@
 
       <div class="btns-container">
         @if (contactsService.isEditMode) {
-          <!-- Edit Mode: Delete + Save (schmal: 140-150px) -->
           <button type="button" class="btn-outline delete-btn" (click)="deleteContact()">
             Delete &#x2715;
           </button>
           <button type="submit" class="btn-primary save-btn">Save &#10003;</button>
         } @else {
-          <!-- Add Mode: Cancel + Create (breit: 100% bis 280px) -->
           <button type="button" class="btn-outline cancel-btn" (click)="cancelDialog()">
             Cancel &#x2715;
           </button>
