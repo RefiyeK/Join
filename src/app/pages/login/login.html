@@ -24,49 +24,50 @@
       <div class="login-card">
         <h1>Log in</h1>
         <div class="title-underline"></div>
-        <!-- Email Input Field -->
-        <div class="input-wrapper" [class.error]="emailError">
-          <input
-            type="email"
-            placeholder="Email"
-            [(ngModel)]="email"
-            name="email"
-            (input)="emailError = false"
-          />
-          <img src="assets/icons/mail.svg" alt="E-Mail" />
-        </div>
-        <!-- Password Input Field with Visibility Toggle -->
-        <div class="input-wrapper" [class.error]="passwordError">
-          <input
-            [type]="showPassword ? 'text' : 'password'"
-            placeholder="Password"
-            [(ngModel)]="password"
-            name="password"
-            (input)="passwordError = false"
-          />
-          @if (!password) {
-            <img src="assets/icons/lock.svg" alt="Password" class="icon-lock" />
-          } @else if (showPassword) {
-            <img
-              src="assets/icons/visibility.svg"
-              alt="Hide password"
-              class="password-icon toggle-password"
-              (click)="showPassword = false"
+        <div class="inputs-container">
+          <!-- Email Input Field -->
+          <div class="input-wrapper" [class.error]="emailError">
+            <input
+              type="email"
+              placeholder="Email"
+              [(ngModel)]="email"
+              name="email"
+              (input)="emailError = false"
             />
-          } @else {
-            <img
-              src="assets/icons/visibility_off.svg"
-              alt="Show password"
-              class="password-icon toggle-password"
-              (click)="showPassword = true"
+            <img src="assets/icons/mail.svg" alt="E-Mail" />
+          </div>
+          <!-- Password Input Field with Visibility Toggle -->
+          <div class="input-wrapper" [class.error]="passwordError">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="Password"
+              [(ngModel)]="password"
+              name="password"
+              (input)="passwordError = false"
             />
-          }
+            @if (!password) {
+              <img src="assets/icons/lock.svg" alt="Password" class="icon-lock" />
+            } @else if (showPassword) {
+              <img
+                src="assets/icons/visibility.svg"
+                alt="Hide password"
+                class="password-icon toggle-password"
+                (click)="showPassword = false"
+              />
+            } @else {
+              <img
+                src="assets/icons/visibility_off.svg"
+                alt="Show password"
+                class="password-icon toggle-password"
+                (click)="showPassword = true"
+              />
+            }
+          </div>
         </div>
         <!-- Error Message -->
         <div class="error-message" [class.visible]="errorMessage">
           {{ errorMessage }}
         </div>
-
         <!-- Action Buttons -->
         <div class="login-buttons">
           <button class="btn-primary" (click)="login()">Log in</button>

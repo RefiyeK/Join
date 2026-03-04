@@ -384,6 +384,12 @@ app-nav {
   }
 }
 
+@media (max-width: 1160px) {
+  .summary-inner {
+    padding: 80px 26px;
+  }
+}
+
 @media (min-width: 1024px) and (max-width: 1230px) {
   .summary-bottom {
     flex-direction: column;
@@ -393,10 +399,6 @@ app-nav {
 
   .summary-greeting {
     order: -1;
-  }
-
-  .summary-inner {
-    align-items: center;
   }
 }
 
@@ -421,11 +423,11 @@ app-nav {
     display: flex;
     justify-content: center;
   }
-  
+
   .summary-inner {
-  padding: 24px 16px 200px 16px;
-  margin-top: auto;
-  margin-bottom: auto;
+    padding: 24px 16px 200px 16px;
+    margin-top: auto;
+    margin-bottom: auto;
   }
 
   app-nav {

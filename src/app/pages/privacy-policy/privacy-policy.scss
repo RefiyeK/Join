@@ -48,7 +48,7 @@ app-nav {
   flex-direction: column;
   width: 100%;
   max-width: 1208px;
-  padding: 3rem 6.25rem 7.5rem 6.25rem;
+  padding: 80px 60px;
 }
 
 /* ================================================================
@@ -161,7 +161,7 @@ app-nav {
     width: 0;
   }
   .privacy-policy__inner {
-    padding: 1.5rem 1.25rem 8.75rem 1.25rem;
+    padding: 32px 28px;
   }
   .privacy-policy__header {
     margin-bottom: 32px;
@@ -178,5 +178,21 @@ app-nav {
   }
   .privacy-policy__date {
     white-space: nowrap;
+  }
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .privacy-policy__list li::before {
+    top: 6px;
+    width: 6px;
+    height: 6px;
   }
 }

@@ -4,22 +4,6 @@
   height: 100%;
 }
 
-app-header {
-  height: 96px;
-  flex-shrink: 0;
-}
-
-app-nav {
-  width: 232px;
-  height: 100%;
-  flex-shrink: 0;
-}
-
-app-header.d-none,
-app-nav.d-none {
-  display: none;
-}
-
 label,
 p {
   font-size: 20px;
@@ -46,7 +30,7 @@ p {
 .head-line,
 .foot-line {
   width: 100%;
-  padding: 1rem 5%;
+  padding: 1rem 60px;
   display: flex;
   justify-content: space-between;
   max-width: 1440px;
@@ -102,7 +86,7 @@ p {
   flex-direction: column;
   width: 50%;
   gap: 24px;
-  padding: 0 5%;
+  padding: 0 60px;
 }
 
 .task-details-container {
@@ -110,7 +94,7 @@ p {
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 0 5%;
+  padding: 0 60px;
   width: 50%;
   height: 100%;
 }
@@ -818,47 +802,26 @@ label.subtask-title {
 /* ========== MEDIA QUERIES ========== */
 
 @media (max-width: 1120px) {
-  .head-line,
-  .foot-line {
-    padding: 1rem 2%;
-  }
-
-  .form-container,
-  .task-details-container {
-    padding: 0 2%;
-  }
-}
-
-@media (max-width: 1120px) {
   .add-Task-Container {
     flex-direction: column;
   }
 
-  .head-line,
+  .head-line {
+    padding: 80px 28px 32px 28px;
+  }
+
   .foot-line {
-    padding: 1rem 10%;
+    padding: 32px 28px;
   }
 
   .form-container,
   .task-details-container {
     width: 100%;
-    padding: 0 10%;
+    padding: 0 28px;
   }
 
   .task-details-container {
     margin-top: 1.5rem;
-  }
-}
-
-@media (max-width: 886px) {
-  .head-line,
-  .foot-line {
-    padding: 1rem 5%;
-  }
-
-  .form-container,
-  .task-details-container {
-    padding: 0 5%;
   }
 }
 
@@ -868,7 +831,7 @@ label.subtask-title {
   }
 
   .head-line {
-    margin-top: 2rem;
+    margin-top: 0;
   }
 
   .foot-line {
@@ -905,6 +868,10 @@ label.subtask-title {
   p {
     font-size: 1rem;
   }
+
+  .head-line {
+    padding: 32px 28px;
+  }
 }
 
 @media (max-width: 424px) {
@@ -924,7 +891,7 @@ label.subtask-title {
   .task-wrapper {
     .form-container,
     .task-details-container {
-      padding: 0 5%;
+      padding: 0 60px;
     }
     .head-line {
       margin-top: 0;
@@ -939,8 +906,8 @@ label.subtask-title {
   @media (max-width: 1120px) {
     .head-line,
     .foot-line {
-      padding-left: 5%;
-      padding-right: 5%;
+      padding-left: 60px;
+      padding-right: 60px;
     }
 
     .add-Task-Container {

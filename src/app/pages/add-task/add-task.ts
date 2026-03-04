@@ -506,6 +506,12 @@ export class AddTask implements OnInit, OnDestroy {
       this.taskData.category = this.selectedCategory as 'User Story' | 'Technical Task';
       await this.tasksService.addTask(this.taskData as SingleTask);
       this.tasksService.openTaskSuccessDialog();
+
+      // Dialogmodus: Dialog schließen wie beim Close-Button
+      if (this.tasksService.addTaskDialogIsOpen && !this.tasksService.smallView) {
+        setTimeout(() => this.tasksService.closeAddTaskDialog(), 2000);
+      }
+
       setTimeout(() => {
         this.router.navigateByUrl('/board');
         this.clearForm();

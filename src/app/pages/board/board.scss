@@ -32,19 +32,6 @@ main {
   height: 100%;
 }
 
-/* Component Dimensions */
-app-header {
-  height: 96px;
-  width: 100%;
-  flex-shrink: 0;
-}
-
-app-nav {
-  width: 232px;
-  height: 100%;
-  flex-shrink: 0;
-}
-
 /* ================================================================
  * Board Content – Scrollable area below the header
  * ================================================================ */
@@ -321,10 +308,6 @@ app-nav {
  * Nav becomes fixed bottom bar, columns stack vertically
  * ================================================================ */
 @media (max-width: 1024px) {
-  .board-inner {
-    padding: 80px 24px;
-  }
-
   .board-columns {
     flex-direction: column;
     gap: 2rem;
@@ -385,10 +368,6 @@ app-nav {
  * Small Screen (max-width: 900px) - Header Grid + Plus Button
  * ================================================================ */
 @media (max-width: 900px) {
-  .board-inner {
-    padding: 80px 20px;
-  }
-
   .board-header {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -436,6 +415,16 @@ app-nav {
         height: 16px;
       }
     }
+  }
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2.75rem;
+  }
+
+  .board-inner {
+    padding: 32px 0 32px 28px;
   }
 }
 

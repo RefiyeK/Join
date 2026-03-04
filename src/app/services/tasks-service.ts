@@ -225,7 +225,9 @@ export class TasksService implements OnDestroy {
    */
   closeAddTaskDialog() {
     this.openAddTaskDialogSubject.next(false);
-    this.addTaskDialogIsOpen = false;
+    setTimeout(() => {
+      this.addTaskDialogIsOpen = false;
+    }, 500);
   }
 
   /**

@@ -1,4 +1,3 @@
-
 // ============================================================
 // Login Page Layout
 // ============================================================
@@ -18,7 +17,7 @@
   }
 }
 
-  .login-page__inner {
+.login-page__inner {
   width: 100%;
   max-width: 1440px;
   height: 100%;
@@ -28,7 +27,6 @@
   justify-content: center;
   padding: 0 10px;
 }
-
 
 // ============================================================
 // Logo Animation
@@ -43,14 +41,15 @@
   z-index: 100;
 
   &.logo--animated {
-    top: calc(48px + env(safe-area-inset-top, 0px));
-    left: 48px;
+    top: calc(40px + env(safe-area-inset-top, 0px));
+    left: 40px;
     transform: translate(0, 0);
   }
 
   &.logo--animated .logo {
     width: 100px;
-    height: 120px;
+    aspect-ratio: 101/122;
+    height: auto;
   }
 }
 
@@ -94,9 +93,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 2rem;
   opacity: 0;
   transition: opacity 0.8s ease-in-out;
+  width: 100%;
+  height: 100%;
 
   &.form--visible {
     opacity: 1;
@@ -113,15 +115,15 @@
 // ============================================================
 
 .login-card {
-  background-color: #ffffff;
-  border-radius: 30px;
-  padding: 48px 115px;
-  width: 650px;
-  min-height: 450px;
-  height: auto;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 30px;
+  padding: 48px;
+  max-width: 650px;
+  min-height: 450px;
+  width: 60%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
   h1 {
@@ -129,13 +131,22 @@
     margin: 0;
     text-align: center;
   }
+
+  .inputs-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    margin: 32px 0 0 0;
+  }
 }
 
 .title-underline {
   width: 150px;
   height: 3px;
   background-color: var(--color-light-blue);
-  margin: -1rem auto 0 auto;
+  margin-top: 1rem;
 }
 
 // ============================================================
@@ -173,7 +184,8 @@
 
 .input-wrapper {
   position: relative;
-  width: 422px;
+  width: 100%;
+  max-width: 420px;
 
   input {
     width: 100%;
@@ -357,13 +369,13 @@
 // Responsive Adjustments
 // ============================================================
 
-@media (max-width: 768px) {
-  .login-page {
-    height: auto;
-    min-height: 100svh;
-    min-height: 100vh;
+@media (max-width: 900px) {
+  .logo-wrapper.logo--animated .logo {
+    width: 64px;
   }
+}
 
+@media (max-width: 768px) {
   .login-page__inner {
     flex-direction: column;
     justify-content: flex-start;
@@ -382,11 +394,6 @@
     padding: 24px 0 0 24px;
   }
 
-  .logo-wrapper.logo--animated .logo {
-    width: 60px;
-    height: 80px;
-  }
-
   .login-container {
     flex: 1;
     display: flex;
@@ -396,7 +403,7 @@
   }
 
   .login-card {
-    width: 100%;
+    width: 80%;
     padding: 48px 20px;
 
     h1 {
@@ -413,7 +420,7 @@
     order: 3;
     gap: 15px;
 
-     .signup-text {
+    .signup-text {
       font-size: 16px;
     }
 
@@ -452,12 +459,11 @@
 
   .error-message {
     width: 100%;
-  }  
+  }
 }
 
 @media (max-height: 700px) {
   .login-card {
-    gap: 20px;
     min-height: auto;
   }
 
@@ -472,5 +478,20 @@
     gap: 1rem;
     white-space: nowrap;
     padding-bottom: 1rem;
+  }
+}
+
+@media (max-height: 670px) {
+  .login-card {
+    padding: 20px 20px;
+  }
+}
+
+@media (max-height: 620px) {
+  .logo-wrapper {
+    display: none;
+  }
+  .login-container {
+    margin-top: 1rem;
   }
 }
