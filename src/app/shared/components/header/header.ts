@@ -1,4 +1,4 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
 import { ContactsService } from '../../../services/contacts-service';
@@ -54,6 +54,13 @@ export class Header {
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
+
+  /** Closes dropdown when clicking outside the header */
+  @HostListener('document:click')
+  onDocumentClick(): void {
+  this.isDropdownOpen = false;
+  }
+
 
   /**
    * Closes the dropdown menu
