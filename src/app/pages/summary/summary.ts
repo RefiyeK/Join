@@ -39,11 +39,12 @@ export class Summary implements OnInit, OnDestroy {
    * Initializes the component and sets the greeting on mobile devices
    */
   ngOnInit(): void {
-    const alreadyGreeted = sessionStorage.getItem('greetingShown');
-    if (alreadyGreeted) {
-      this.showGreeting = false;
+    const justLoggedIn = sessionStorage.getItem('justLoggedIn');
+    if (justLoggedIn) {
+      this.showGreeting = true;
+      sessionStorage.removeItem('justLoggedIn');
     } else {
-      sessionStorage.setItem('greetingShown', 'true');
+      this.showGreeting = false;
     }
 
     this.bpSub = this.breakpointObserver.observe(['(max-width: 1024px)']).subscribe((result) => {

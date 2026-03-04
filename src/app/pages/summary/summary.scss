@@ -401,8 +401,39 @@ app-nav {
 }
 
 @media (max-width: 768px) {
+  main {
+    min-height: 100svh;
+    min-height: 100vh;
+  }
+
+  .summary__outer,
+  .summary-main-container,
+  .wrapper {
+    height: 100%;
+  }
+
+  .summary-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-bottom: 80px;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .summary-inner {
+  padding: 24px 16px 200px 16px;
+  margin-top: auto;
+  margin-bottom: auto;
+  }
+
   app-nav {
     width: 0;
+  }
+
+  app-header {
+    height: 72px;
   }
 
   .summary-headline {
@@ -416,7 +447,10 @@ app-nav {
   }
 
   .summary-inner {
-    align-items: flex-start;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    padding: 24px 16px 40px 16px;
   }
 
   .headline-divider {
@@ -475,6 +509,9 @@ app-nav {
   }
 
   .priority-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     white-space: nowrap;
   }
 

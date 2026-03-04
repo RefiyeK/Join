@@ -345,6 +345,7 @@ export class TasksService implements OnDestroy {
 
     const futureTasks = this.tasks.filter((task) => {
       if (!task.dueDate) return false;
+      if (task.priority !== 'Urgent') return false;
       return new Date(task.dueDate) >= today;
     });
 

@@ -26,12 +26,9 @@
       <h1>Add Task</h1>
     </div>
 
-    <!-- FORM STARTET JETZT HIER UND UMSCHLIESST ALLES -->
     <form #taskForm="ngForm" (ngSubmit)="onSubmit()">
       <div class="add-Task-Container">
-        <!-- LEFT SIDE -->
         <section class="form-container">
-          <!-- TITLE -->
           <div class="input-fields">
             <label for="title"> Title <span class="required">*</span> </label>
             <input
@@ -50,7 +47,6 @@
             }
           </div>
 
-          <!-- DESCRIPTION -->
           <div class="input-fields">
             <label for="description">Description</label>
             <textarea
@@ -61,7 +57,6 @@
             ></textarea>
           </div>
 
-          <!-- DUE DATE -->
           <div class="input-fields">
             <label for="due-date"> Due date <span class="required">*</span> </label>
             <input
@@ -83,10 +78,8 @@
 
         <div class="line"></div>
 
-        <!-- RIGHT SIDE -->
         <section class="task-details-container">
           <div class="form-subtask">
-            <!-- PRIORITY -->
             <div class="btns-container">
               <p class="priority-title">Priority</p>
 
@@ -123,7 +116,6 @@
               </div>
             </div>
 
-            <!-- ASSIGNED TO -->
             <div class="assign-container">
               <label class="assigned-to-title">Assigned to</label>
 
@@ -139,7 +131,6 @@
                       <div class="loading-indicator">Loading contacts...</div>
                     } @else {
                       @for (contact of contacts; track contact.id) {
-                        <!-- KORRIGIERT: Checkbox mit fixer Position -->
                         <div
                           class="assign-option"
                           [class.selected]="isAssigned(contact)"
@@ -181,7 +172,6 @@
               }
             </div>
 
-            <!-- CATEGORY -->
             <div
               class="category-container"
               [ngClass]="{ 'd-none': tasksService.editMode }"
@@ -221,7 +211,6 @@
               }
             </div>
 
-            <!-- SUBTASK -->
             <div class="input-fields">
               <label for="subTask" class="subtask-title"> Subtask </label>
 
@@ -233,33 +222,35 @@
                   placeholder="Add new Subtask"
                   [(ngModel)]="newSubtaskTitle"
                   (keyup.enter)="addSubtask()"
+                  (focus)="onSubtaskFocus()"
+                  (blur)="onSubtaskBlur()"
                 />
 
-                <div class="input-icons">
-                  <img
-                    src="assets/icons/small_cancle_icon.svg"
-                    alt="Cancel"
-                    class="icon"
-                    (click)="clearSubtaskInput()"
-                  />
-                  <div class="input-line"></div>
-                  <img
-                    src="assets/icons/small_approv_icon.svg"
-                    alt="Approve"
-                    class="icon"
-                    (click)="addSubtask()"
-                  />
-                </div>
+                @if (isSubtaskInputFocused || newSubtaskTitle.trim().length > 0) {
+                  <div class="input-icons">
+                    <img
+                      src="assets/icons/small_cancle_icon.svg"
+                      alt="Cancel"
+                      class="icon"
+                      (click)="clearSubtaskInput()"
+                    />
+                    <div class="input-line"></div>
+                    <img
+                      src="assets/icons/small_approv_icon.svg"
+                      alt="Approve"
+                      class="icon"
+                      (click)="addSubtask()"
+                    />
+                  </div>
+                }
               </div>
             </div>
 
-            <!-- SUBTASK LIST -->
             @if (taskData.subtasks && taskData.subtasks.length > 0) {
               <div class="subtask-list">
                 @for (subtask of taskData.subtasks; track subtask.id; let i = $index) {
                   <div class="subtask-item" (click)="startEditingSubtask(i, subtask.title)">
                     @if (editingSubtaskIndex === i) {
-                      <!-- Edit Mode - Version 1: Mit onBlurSubtaskEdit() -->
                       <div class="subtask-edit-container">
                         <input
                           type="text"
@@ -289,7 +280,6 @@
                         </div>
                       </div>
                     } @else {
-                      <!-- View Mode -->
                       <span class="subtask-bullet">&#8226;</span>
                       <span class="subtask-title">{{ subtask.title }}</span>
                       <div class="subtask-icons">
@@ -329,7 +319,6 @@
           </p>
         </div>
 
-        <!-- BUTTONS -->
         <div class="create-clear-btns-container">
           <button type="button" class="btn-outline" (click)="clearForm()">
             <span class="btn-txt">Clear ✕</span>
@@ -341,8 +330,7 @@
         </div>
       </div>
     </form>
-    <!-- FORM ENDE HIER -->
-  </div>
+    </div>
 
   @if (tasksService.editMode) {
     <div class="dialog-footer">

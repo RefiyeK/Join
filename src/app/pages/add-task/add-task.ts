@@ -125,6 +125,7 @@ export class AddTask implements OnInit, OnDestroy {
 
   /** Subtask handling */
   newSubtaskTitle: string = '';
+  isSubtaskInputFocused: boolean = false;
 
   editingSubtaskIndex: number | null = null;
   editingSubtaskTitle: string = '';
@@ -132,6 +133,23 @@ export class AddTask implements OnInit, OnDestroy {
 
   assignedPreviewUsers: AssignedAvatarItem[] = [];
   assignedRemainingCount: number = 0;
+
+  /**
+   * Sets focus state for subtask input to true
+   */
+  onSubtaskFocus() {
+    this.isSubtaskInputFocused = true;
+  }
+
+  /**
+   * Sets focus state for subtask input to false after a short delay
+   * to allow click events on the clear/save icons to trigger first.
+   */
+  onSubtaskBlur() {
+    setTimeout(() => {
+      this.isSubtaskInputFocused = false;
+    }, 200);
+  }
 
   /**
    * Initializes the component and loads contacts
