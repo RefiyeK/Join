@@ -291,18 +291,17 @@
 
 .login-footer {
   position: absolute;
-  bottom: 2rem;
+  bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 3rem;
+  gap: 1rem;
 
   a {
     font-weight: 300;
     color: var(--color-medium-blue);
     text-decoration: none;
     transition: color 125ms ease-in-out;
-    padding: 5px 10px;
 
     &:hover {
       font-weight: 700;
