@@ -1,50 +1,52 @@
 <section class="header-outer" (click)="closeDropdown()">
   <div class="header-container">
-    <img class="header-logo" src="assets/icons/logo-dark.svg" alt="Join Logo" />
-      <p class="project-management-tool">Kanban Project Management Tool</p>
+    <a routerLink="/summary">
+      <img class="header-logo" src="assets/icons/logo-dark.svg" alt="Join Logo" />
+    </a>
+    <p class="project-management-tool">Kanban Project Management Tool</p>
     @if (authService.loggetInUserUid()) {
-    <div class="help-and-profile">
-      <a routerLink="/help">
-        <img class="help-icon" src="assets/icons/help.png" alt="help_icon" />
-      </a>
+      <div class="help-and-profile">
+        <a routerLink="/help">
+          <img class="help-icon" src="assets/icons/help.png" alt="help_icon" />
+        </a>
 
-      <div class="profile-wrapper">
-        <button
-          class="profile"
-          [class]="currentUser() ? contactsService.getIconColorClass(currentUser()!) : 'icon-1'"
-          (click)="toggleDropdown(); $event.stopPropagation()"
-        >
-          @if (currentUser()) {
-            {{ contactsService.getInitials(currentUser()!.name) }}
-          } @else {
-            GU
-          }
-        </button>
-
-        @if (isDropdownOpen) {
-          <div
-            class="dropdown"
-            [class.bounce]="dropdownBounce"
-            (mouseenter)="triggerBounce()"
-            (mouseleave)="triggerBounce()"
+        <div class="profile-wrapper">
+          <button
+            class="profile"
+            [class]="currentUser() ? contactsService.getIconColorClass(currentUser()!) : 'icon-1'"
+            (click)="toggleDropdown(); $event.stopPropagation()"
           >
-            <a
-              routerLink="/help"
-              class="dropdown__link dropdown__link--help"
-              (click)="closeDropdown()"
-              >Help</a
+            @if (currentUser()) {
+              {{ contactsService.getInitials(currentUser()!.name) }}
+            } @else {
+              GU
+            }
+          </button>
+
+          @if (isDropdownOpen) {
+            <div
+              class="dropdown"
+              [class.bounce]="dropdownBounce"
+              (mouseenter)="triggerBounce()"
+              (mouseleave)="triggerBounce()"
             >
-            <a routerLink="/imprint" class="dropdown__link" (click)="closeDropdown()"
-              >Legal Notice</a
-            >
-            <a routerLink="/privacy-policy" class="dropdown__link" (click)="closeDropdown()"
-              >Privacy Policy</a
-            >
-            <a class="dropdown__link" (click)="logout()">Log out</a>
-          </div>
-        }
+              <a
+                routerLink="/help"
+                class="dropdown__link dropdown__link--help"
+                (click)="closeDropdown()"
+                >Help</a
+              >
+              <a routerLink="/imprint" class="dropdown__link" (click)="closeDropdown()"
+                >Legal Notice</a
+              >
+              <a routerLink="/privacy-policy" class="dropdown__link" (click)="closeDropdown()"
+                >Privacy Policy</a
+              >
+              <a class="dropdown__link" (click)="logout()">Log out</a>
+            </div>
+          }
+        </div>
       </div>
-    </div>
-  }
+    }
   </div>
 </section>

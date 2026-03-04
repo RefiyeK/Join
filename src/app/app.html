@@ -1,12 +1,17 @@
 @if (tasksService.taskSuccessDialogActive) {
   <app-add-task-success></app-add-task-success>
 }
-<main>
-  <app-nav></app-nav>
-  <section>
-    <app-header></app-header>
-    <div class="content">
-      <router-outlet />
-    </div>
-  </section>
-</main>
+
+@if (isLoginRoute()) {
+  <router-outlet />
+} @else {
+  <main>
+    <app-nav></app-nav>
+    <section>
+      <app-header></app-header>
+      <div class="content">
+        <router-outlet />
+      </div>
+    </section>
+  </main>
+}

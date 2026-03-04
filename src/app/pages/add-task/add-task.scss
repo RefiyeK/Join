@@ -29,8 +29,9 @@ p {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-height: 100svh;
-  max-height: 100vh;
+  height: 100%;
+  // max-height: 100svh;
+  // max-height: 100vh;
   background-color: #f6f7f8;
 }
 
@@ -124,7 +125,6 @@ form {
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
-  gap: 1.5rem;
 }
 
 .required-container {
@@ -208,8 +208,8 @@ textarea {
 
 /* ========== TRENNLINE ========== */
 .line {
+  display: flex;
   width: 1px;
-  height: 100%;
   max-height: 500px;
   background-color: #d1d1d1;
 }
@@ -827,10 +827,6 @@ label.subtask-title {
   .task-details-container {
     padding: 0 2%;
   }
-
-  .line {
-    display: none;
-  }
 }
 
 @media (max-width: 1120px) {
@@ -876,7 +872,6 @@ label.subtask-title {
   }
 
   .foot-line {
-    margin-bottom: 80px;
     justify-content: flex-end;
   }
 

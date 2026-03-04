@@ -1,10 +1,10 @@
-<app-nav
+<!-- <app-nav
   [ngClass]="{
     'd-none':
       (tasksService.addTaskDialogIsOpen && !tasksService.smallView) || tasksService.editMode,
     'nav-add-task-context': true,
   }"
-></app-nav>
+></app-nav> -->
 
 <div
   class="wrapper"
@@ -14,12 +14,12 @@
     'edit-mode': tasksService.editMode,
   }"
 >
-  <app-header
+  <!-- <app-header
     [ngClass]="{
       'd-none':
         (tasksService.addTaskDialogIsOpen && !tasksService.smallView) || tasksService.editMode,
     }"
-  ></app-header>
+  ></app-header> -->
 
   <div class="task-wrapper">
     <div class="head-line" [ngClass]="{ 'd-none': tasksService.editMode }">
@@ -330,7 +330,7 @@
         </div>
       </div>
     </form>
-    </div>
+  </div>
 
   @if (tasksService.editMode) {
     <div class="dialog-footer">

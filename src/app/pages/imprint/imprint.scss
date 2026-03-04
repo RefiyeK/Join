@@ -1,8 +1,7 @@
 :host {
   display: flex;
   width: 100%;
-  height: 100vh;
-  overflow: hidden;
+  height: 100%;
 }
 
 :host ::ng-deep .help-icon {
@@ -139,6 +138,7 @@ app-nav {
  * ================================================================ */
 .imprint__date {
   margin-top: 48px;
+  padding-bottom: 2rem;
   color: #888;
   font-style: italic;
 }
@@ -148,7 +148,6 @@ app-nav {
  * ================================================================ */
 @media (max-width: 768px) {
   .imprint__date {
-    padding: 1rem 6.25rem 7.5rem 6.25rem;
     white-space: nowrap;
   }
   app-nav {

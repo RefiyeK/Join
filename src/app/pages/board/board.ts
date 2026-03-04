@@ -12,8 +12,6 @@ import {
 } from '@angular/cdk/drag-drop';
 import { SingleTaskCard } from './single-task-card/single-task-card';
 import { SingleTaskDialog } from './single-task-dialog/single-task-dialog';
-import { Header } from '../../shared/components/header/header';
-import { Nav } from '../../shared/components/nav/nav';
 import { TasksService } from '../../services/tasks-service';
 import { SingleTask } from '../../interfaces/single-task';
 import { AddTaskDialog } from './add-task-dialog/add-task-dialog';
@@ -33,8 +31,6 @@ import { RouterLink } from '@angular/router';
     CommonModule,
     SingleTaskCard,
     SingleTaskDialog,
-    Header,
-    Nav,
     AddTaskDialog,
     CdkDropListGroup,
     CdkDropList,

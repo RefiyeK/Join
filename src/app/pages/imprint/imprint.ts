@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { Nav } from '../../shared/components/nav/nav';
-import { Header } from '../../shared/components/header/header';
 
 /**
  * Legal Notice (Imprint) page component
@@ -10,7 +8,7 @@ import { Header } from '../../shared/components/header/header';
 @Component({
   selector: 'app-imprint',
   standalone: true,
-  imports: [Nav, Header],
+  imports: [],
   templateUrl: './imprint.html',
   styleUrl: './imprint.scss',
 })

@@ -1,6 +1,4 @@
 import { Component, inject, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Nav } from '../../shared/components/nav/nav';
-import { Header } from '../../shared/components/header/header';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TasksService } from '../../services/tasks-service';
@@ -22,7 +20,7 @@ interface FieldErrorState {
 @Component({
   selector: 'app-add-task',
   standalone: true,
-  imports: [Nav, Header, CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './add-task.html',
   styleUrl: './add-task.scss',
 })

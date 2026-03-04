@@ -118,67 +118,6 @@
   }
 }
 
-:host-context(body.board-page) .nav {
-  @media (max-width: 1024px) {
-    position: fixed !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-    height: 80px !important;
-    min-height: auto !important;
-    flex-direction: row !important;
-    justify-content: space-around !important;
-    align-items: center !important;
-    padding: 6px 10px !important;
-
-    &__logo {
-      display: none !important;
-    }
-
-    &__menu {
-      flex-direction: row !important;
-      justify-content: space-around !important;
-      align-items: center !important;
-      width: 100% !important;
-    }
-
-    &__link {
-      flex-direction: column !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 4px;
-      padding: 6px 8px;
-      width: 75px !important;
-      min-height: 80px !important;
-      margin-left: 0 !important;
-      font-size: 1rem;
-      border-left: none !important;
-      border-radius: 16px;
-      white-space: nowrap;
-
-      img {
-        width: 20px;
-        height: 20px;
-      }
-
-      &:hover {
-        background-color: transparent !important;
-      }
-
-      &.active {
-        background-color: var(--color-dark-blue) !important;
-        color: var(--color-font-bright);
-        width: 75px;
-      }
-    }
-
-    &__footer {
-      display: none !important;
-    }
-  }
-}
-
 /* Mobile: Bottom Navigation */
 @media (max-width: 768px) {
   .guest-mobile-wrapper {

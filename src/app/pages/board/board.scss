@@ -6,7 +6,7 @@
 /* Page Container */
 main {
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 
 /* Outer Wrapper: Background across full width */
@@ -213,7 +213,7 @@ app-nav {
   scrollbar-width: thin;
   scrollbar-color: var(--color-light-grey) transparent;
   padding-bottom: 16px;
- 
+
   app-single-task-card {
     width: 100%;
     min-width: 0;
@@ -323,19 +323,6 @@ app-nav {
 @media (max-width: 1024px) {
   .board-inner {
     padding: 80px 24px;
-  }
-
-  app-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 80px;
-    z-index: 100;
-  }
-
-  .board-content {
-    padding-bottom: 80px;
   }
 
   .board-columns {

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { Nav } from '../../shared/components/nav/nav';
-import { Header } from '../../shared/components/header/header';
 
 /**
  * Privacy Policy page component
@@ -10,7 +8,7 @@ import { Header } from '../../shared/components/header/header';
 @Component({
   selector: 'app-privacy-policy',
   standalone: true,
-  imports: [Nav, Header],
+  imports: [],
   templateUrl: './privacy-policy.html',
   styleUrl: './privacy-policy.scss',
 })

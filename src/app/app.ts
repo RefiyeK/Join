@@ -1,10 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { TasksService } from './services/tasks-service';
 import { AddTaskSuccess } from './pages/board/add-task-success/add-task-success';
 import { Header } from './shared/components/header/header';
 import { Nav } from './shared/components/nav/nav';
-import { Summary } from './pages/summary/summary';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +12,16 @@ import { Summary } from './pages/summary/summary';
   styleUrl: './app.scss',
 })
 export class App {
+  router = inject(Router);
+
   protected readonly title = signal('join');
   tasksService = inject(TasksService);
+
+  isLoginRoute() {
+    if (this.router.url == '/login' || this.router.url == '/sign-up') {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

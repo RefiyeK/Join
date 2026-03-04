@@ -1,11 +1,11 @@
 <main>
   <div class="board__outer">
     <div class="board-main-container board-mobile-nav">
-      <app-nav></app-nav>
+      <!-- <app-nav></app-nav> -->
 
       <div class="board-wrapper">
         <!-- Header -->
-        <app-header></app-header>
+        <!-- <app-header></app-header> -->
 
         <!-- Board Content -->
         <div class="board-content">
@@ -20,11 +20,13 @@
                 </div>
                 @if (!tasksService.smallView) {
                   <button class="btn-primary" (click)="tasksService.openAddTaskDialog('To do')">
-                    Add task <img src="assets/icons/plus-pure.svg" alt="Add Icon" class="plus-pure">
+                    Add task
+                    <img src="assets/icons/plus-pure.svg" alt="Add Icon" class="plus-pure" />
                   </button>
                 } @else {
                   <button class="btn-primary" [routerLink]="['/add-task']">
-                    Add task <img src="assets/icons/plus-pure.svg" alt="Add Icon" class="plus-pure">
+                    Add task
+                    <img src="assets/icons/plus-pure.svg" alt="Add Icon" class="plus-pure" />
                   </button>
                 }
               </div>
@@ -160,11 +162,12 @@
                 <div class="column-header">
                   <h2>Done</h2>
                   @if (!tasksService.smallView) {
-                    <button class="add-task-btn" (click)="tasksService.openAddTaskDialog('Done')">
-                    </button>
+                    <button
+                      class="add-task-btn"
+                      (click)="tasksService.openAddTaskDialog('Done')"
+                    ></button>
                   } @else {
-                    <button class="add-task-btn" [routerLink]="['/add-task']">
-                    </button>
+                    <button class="add-task-btn" [routerLink]="['/add-task']"></button>
                   }
                 </div>
 
