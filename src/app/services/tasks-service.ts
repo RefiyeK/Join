@@ -342,18 +342,16 @@ export class TasksService implements OnDestroy {
    * @returns The task with the next deadline or null
    */
   get upcomingTask(): SingleTask | null {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
 
-    const futureTasks = this.tasks.filter((task) => {
+    const urgentTasks = this.tasks.filter((task) => {
       if (!task.dueDate) return false;
       if (task.priority !== 'Urgent') return false;
-      return new Date(task.dueDate) >= today;
+      return true;
     });
 
-    if (futureTasks.length === 0) return null;
+    if (urgentTasks.length === 0) return null;
 
-    return futureTasks.reduce((nearest, task) => {
+    return urgentTasks.reduce((nearest, task) => {
       return new Date(task.dueDate) < new Date(nearest.dueDate) ? task : nearest;
     });
   }
