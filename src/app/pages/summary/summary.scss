@@ -521,16 +521,17 @@ app-nav {
   }
 
   .cards-row-top .card {
-    width: clamp(125px, 43vw, 185px);
+    width: clamp(110px, 40vw, 185px);
     height: 110px;
+    gap: 20px;
   }
 
   .cards-row-top {
-    gap: clamp(15px, 3vw, 30px);
+    gap: clamp(10px, 3vw, 30px);
   }
 
   .card--priority {
-    width: clamp(274px, 90vw, 400px);
+    width: clamp(240px, 85vw, 400px);
     flex-direction: column;
     height: auto;
     gap: 0.75rem;
@@ -547,7 +548,7 @@ app-nav {
     gap: clamp(8px, 2vw, 20px);
 
     .card--simple {
-      width: clamp(90px, 28vw, 120px);
+      width: clamp(80px, 26vw, 120px);
       height: 110px;
       gap: 1px;
     }
