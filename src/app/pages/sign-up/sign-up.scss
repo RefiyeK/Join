@@ -19,10 +19,13 @@ section {
   height: 100svh;
   height: 100vh;
   background-color: var(--color-bg-light);
-  position: relative;
+
+  display: flex;
+  justify-content: center;
 }
 
 .wrapper {
+  position: relative;
   @include flexbox();
   height: 100%;
   width: 100%;

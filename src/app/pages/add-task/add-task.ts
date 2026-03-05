@@ -540,6 +540,7 @@ export class AddTask implements OnInit, OnDestroy {
     this.newSubtaskTitle = '';
     this.formSubmitted = false;
     this.fieldErrors = { title: false, dueDate: false, category: false };
+    this.categoryOptions = ['Technical Task', 'User Story'];
 
     if (this.taskForm) {
       this.taskForm.resetForm();

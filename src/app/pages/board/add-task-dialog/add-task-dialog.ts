@@ -14,6 +14,7 @@ export class AddTaskDialog implements AfterViewInit, OnDestroy {
   tasksService = inject(TasksService);
   private taskSub!: Subscription;
   @ViewChild(SetDialogAnimation) dialogAnimationDirective!: SetDialogAnimation;
+  @ViewChild(AddTask) addTaskComponent!: AddTask;
 
   /**
    * Initializes the dialog animation after view init and reacts to opening/closing the dialog
@@ -43,9 +44,10 @@ export class AddTaskDialog implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Closes the dialog with animation
+   * Closes the dialog with animation and reset the form
    */
   closeDialog() {
     this.dialogAnimationDirective?.closeDialogWithAnimation();
+    this.addTaskComponent?.clearForm();
   }
 }

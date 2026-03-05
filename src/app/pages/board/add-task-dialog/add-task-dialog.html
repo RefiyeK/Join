@@ -1,4 +1,4 @@
 <dialog #dialogRef (click)="tasksService.closeAddTaskDialog()" appSetDialogAnimation>
   <div class="close" (click)="closeDialog()"></div>
-  <app-add-task></app-add-task>
+  <app-add-task #addTask></app-add-task>
 </dialog>

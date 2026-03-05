@@ -211,7 +211,9 @@
                   (blur)="onSubtaskBlur()"
                 />
 
-                @if (isSubtaskInputFocused || newSubtaskTitle.trim().length > 0) {
+                @if (
+                  isSubtaskInputFocused || (newSubtaskTitle && newSubtaskTitle.trim().length > 0)
+                ) {
                   <div class="input-icons">
                     <img
                       src="assets/icons/small_cancle_icon.svg"
