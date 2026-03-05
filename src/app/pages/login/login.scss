@@ -309,7 +309,6 @@
       color: var(--color-light-blue);
     }
 
-    // Reserviert die Breite des fetten Textes, damit nichts verrutscht
     &::after {
       content: attr(data-text);
       font-weight: 700;
@@ -455,11 +454,14 @@
 @media (max-width: 950px) and (orientation: landscape) {
   .login-page {
     overflow-y: auto;
+    align-items: flex-start;
   }
   
   .login-page__inner {
     flex-direction: column;
-    height: auto;
+    justify-content: flex-start;
+    align-items: center;
+    height: max-content;
     min-height: 100%;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -468,6 +470,7 @@
 
   .login-container {
     order: 2;
+    height: auto;
   }
 
   .signup-hint {
@@ -476,7 +479,7 @@
     right: auto;
     transform: none;
     order: 3;
-    margin-top: 64px;
+    margin-top: 20px;
   }
 
   .login-footer {
