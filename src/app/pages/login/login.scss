@@ -4,6 +4,7 @@
   height: 100vh;
   background-color: var(--color-bg-light);
   display: flex;
+  justify-content: center;
 
   .btn-outline {
     transition:
@@ -403,9 +404,9 @@
     }
 
     .btn-outline {
-    border: 2px solid var(--color-medium-blue);
+      border: 2px solid var(--color-medium-blue);
+    }
   }
-}
 
   .input-wrapper {
     width: 100%;
