@@ -230,14 +230,18 @@
 
 @media (max-height: 500px) and (min-width: 769px) {
   .nav {
-    padding: 24px 0;
+    padding: 16px 0;
 
     &__logo {
-      margin-bottom: 46px;
+      margin-bottom: 40px;
 
       img {
-        width: 64px;
+        width: 56px;
       }
+    }
+
+    &__link {
+      padding: 6px 30px;
     }
 
     &__footer {
