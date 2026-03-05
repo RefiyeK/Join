@@ -59,6 +59,7 @@ p {
   background-color: #f6f7f8;
   flex: 1 1 auto;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   min-height: 0;
 }
 
@@ -1007,4 +1008,37 @@ label.subtask-title {
 .assigned-avatar-counter {
   background-color: var(--color-light-grey);
   color: var(--color-medium-blue);
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  :host {
+    display: flex !important;
+    height: 100% !important;
+  }
+  
+  .wrapper {
+    display: flex !important;
+    height: 100% !important;
+  }
+
+  .task-wrapper {
+    overflow-y: auto !important;
+  }
+  
+  .add-Task-Container {
+    overflow-y: visible !important;
+    flex: none !important;
+    height: auto !important;
+  }
+  
+  .head-line {
+    padding: 16px 28px !important;
+    margin-top: 0 !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .foot-line {
+    padding: 16px 28px !important;
+    flex-shrink: 0 !important;
+  }
 }
