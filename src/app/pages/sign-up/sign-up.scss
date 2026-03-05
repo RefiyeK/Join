@@ -324,10 +324,25 @@ dialog {
 }
 
 @media (max-height: 680px) {
+  section {
+    overflow-y: auto;
+  }
+
+  .wrapper {
+    justify-content: flex-start;
+    height: max-content;
+    min-height: 100%;
+    padding-top: 20px;
+    padding-bottom: 80px;
+  }
+
   .logo {
     display: none;
   }
+
   .sign-up-form-wrapper {
-    margin: 4px 4px 30px 4px;
+    margin: 0 4px;
+    height: 550px;
+    max-height: none;
   }
 }
