@@ -270,7 +270,12 @@ main {
     height: auto;
   }
 
+  .board-inner {
+    padding: 80px 28px 5px 28px;
+  }
+
   .column-content {
+    max-height: none;
     flex-direction: row;
     align-items: stretch;
     overflow-x: auto;
@@ -317,6 +322,10 @@ main {
     max-width: 252px;
     flex-shrink: 0;
   }
+
+   .btn-primary {
+    right: 28px;
+   }
 }
 
 @media (max-width: 900px) {
@@ -354,7 +363,7 @@ main {
     .btn-primary {
       position: relative;
       top: -82px;
-      right: 0;
+      right: 28px;
       width: 40px;
       height: 40px;
       font-size: 0;
@@ -378,6 +387,10 @@ main {
   .board-inner {
     padding: 32px 0 32px 28px;
   }
+
+  .btn-primary {
+    right: 28px;
+  }
 }
 
 @media (max-width: 350px) {
@@ -385,7 +398,7 @@ main {
     width: 28px;
     height: 28px;
     top: -80px;
-    right: 0;
+    right: 28px;
 
     .plus-pure {
       width: 14px;

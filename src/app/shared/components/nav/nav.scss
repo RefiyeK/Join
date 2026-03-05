@@ -3,6 +3,8 @@
   height: 100%;
   z-index: 100;
   position: relative;
+  overflow-y:  auto;
+    background-color: var(--color-medium-blue);
 }
 
 .nav {
@@ -10,8 +12,8 @@
   flex-direction: column;
   align-items: center;
   width: 232px;
-  height: 100%;
-  min-height: 100vh;
+  min-height: 100%;
+  // min-height: 100vh;
   background-color: var(--color-medium-blue);
   padding: 64px 0;
 
@@ -225,6 +227,29 @@
     }
   }
 }
+
+@media (max-height: 500px) and (min-width: 769px) {
+  .nav {
+    padding: 24px 0;
+
+    &__logo {
+      margin-bottom: 46px;
+
+      img {
+        width: 64px;
+      }
+    }
+
+    &__footer {
+      padding-top: 8px;
+    }
+  }
+
+  .nav__menu {
+    gap: 0;
+  }
+}
+
 
 @media (max-width: 375px) {
   .nav {
