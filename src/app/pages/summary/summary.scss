@@ -342,7 +342,7 @@ app-nav {
 @media (max-width: 870px) {
    .summary-headline {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.5rem;
    }
   
