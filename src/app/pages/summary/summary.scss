@@ -327,8 +327,15 @@ app-nav {
   }
 }
 
+  @media (max-width: 1280px) {
+  .summary-inner {
+    padding: 80px 40px 160px 40px;
+  }
+}
+
 @media (min-width: 1024px) and (max-width: 1230px) {
   .summary-bottom {
+    padding-bottom: 160px;
     flex-direction: column;
     align-items: flex-start;
     gap: 2rem;
@@ -382,19 +389,16 @@ app-nav {
     flex: 1;
     min-height: 0;
     overflow-y: auto;
-    padding-bottom: 80px;
+    padding-bottom: 160px;
     -webkit-overflow-scrolling: touch;
-    display: flex;
-    justify-content: center;
   }
 
   .summary-inner {
-    padding: 24px 16px 200px 16px;
-    margin-top: auto;
+    padding: 80px 60px ;
     margin-bottom: auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
   app-nav {
@@ -413,10 +417,6 @@ app-nav {
     h1 {
       font-size: 47px;
     }
-  }
-
-  .summary-inner {
-    padding: 24px 16px 40px 16px;
   }
 
   .headline-divider {
@@ -509,7 +509,7 @@ app-nav {
   }
 }
 
-@media (max-width: 445px) {
+@media (max-width: 465px) {
   .summary-inner {
     padding: 40px 10px;
   }
