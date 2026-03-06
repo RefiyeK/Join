@@ -142,3 +142,9 @@ app-nav {
     font-size: 1.5rem;
   }
 }
+
+@media (max-height: 500px) and (max-width: 768px) {
+  .help__inner {
+    padding: 16px 28px;
+  }
+}

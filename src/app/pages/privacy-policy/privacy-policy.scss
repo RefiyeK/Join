@@ -170,3 +170,9 @@ app-nav {
     height: 6px;
   }
 }
+
+@media (max-height: 500px) and (max-width: 768px) {
+  .privacy-policy__inner {
+    padding: 16px 28px;
+  }
+}
