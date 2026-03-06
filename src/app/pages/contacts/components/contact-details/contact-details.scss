@@ -361,3 +361,9 @@ dialog {
     text-wrap: nowrap;
   }
 }
+
+@media (max-height: 500px) and (max-width: 768px) {
+      .contact-details__fab-wrapper {
+        bottom: 100px
+      }
+}

@@ -558,3 +558,13 @@ app-nav {
     }
   }
 }
+
+@media (max-height: 500px) and (max-width: 768px) {
+  .summary-headline h1 {
+    font-size: 61px;
+  }
+
+   .summary-inner {
+    padding: 16px 28px;
+  }
+}

@@ -195,3 +195,9 @@ button {
     }
   }
 }
+
+@media (max-height: 500px) and (max-width: 768px) {
+  .wrapper {
+    padding: 0 16px;
+  }
+}
