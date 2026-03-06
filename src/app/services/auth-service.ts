@@ -7,6 +7,7 @@ import {
   UserCredential,
   deleteUser,
   signOut,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { NewUser } from '../interfaces/new-user';
 import { ContactsService } from './contacts-service';
@@ -69,8 +70,42 @@ export class AuthService {
 
     this.loggetInUserUid.set(credential.user.uid);
     localStorage.setItem('uid', credential.user.uid);
+    sessionStorage.removeItem('guestSession');
 
     return credential;
+  }
+
+  /**
+   * Returns true if a Firebase user is authenticated or an active guest session exists.
+   */
+  async isAuthenticatedOrGuestAsync(): Promise<boolean> {
+    const isGuest =
+      sessionStorage.getItem('guestSession') === 'true' || this.loggetInUserUid() === 'guest';
+    if (isGuest) return true;
+
+    const auth = getAuth();
+    if (auth.currentUser) return true;
+
+    const isAuthenticated = await new Promise<boolean>((resolve) => {
+      const unsubscribe = onAuthStateChanged(
+        auth,
+        (user) => {
+          unsubscribe();
+          resolve(!!user);
+        },
+        () => {
+          unsubscribe();
+          resolve(false);
+        },
+      );
+    });
+
+    if (!isAuthenticated) {
+      this.loggetInUserUid.set(null);
+      localStorage.removeItem('uid');
+    }
+
+    return isAuthenticated;
   }
 
   /**
@@ -81,6 +116,8 @@ export class AuthService {
     await signOut(auth);
     this.loggetInUserUid.set(null);
     localStorage.removeItem('uid');
+    sessionStorage.removeItem('guestSession');
+    sessionStorage.removeItem('justLoggedIn');
     this.router.navigate(['/login']);
   }
 

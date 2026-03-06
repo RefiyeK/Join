@@ -74,6 +74,7 @@ export class Login implements OnInit {
       const userCredential = await this.authService.login(this.email, this.password);
       this.authService.loggetInUserUid.set(userCredential.user.uid);
       localStorage.setItem('uid', userCredential.user.uid);
+      sessionStorage.removeItem('guestSession');
       sessionStorage.setItem('justLoggedIn', 'true');
       // Redirect to summary page
       this.router.navigate(['/summary']);
@@ -114,6 +115,8 @@ export class Login implements OnInit {
   /** Guest login - redirects directly to the summary page */
   guestLogin() {
     this.authService.loggetInUserUid.set('guest');
+    localStorage.removeItem('uid');
+    sessionStorage.setItem('guestSession', 'true');
     sessionStorage.setItem('justLoggedIn', 'true');
     this.router.navigate(['/summary']);
   }
