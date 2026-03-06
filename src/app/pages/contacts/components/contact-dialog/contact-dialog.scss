@@ -375,3 +375,45 @@ input {
     max-width: calc(100vw - 32px);
   }
 }
+
+/* Fix for mobile landscape mode */
+@media (max-width: 1024px) and (orientation: landscape) {
+  .dialog-container {
+    height: auto;
+    min-height: 100%;
+    overflow-y: auto;
+    justify-content: flex-start;
+  }
+
+  .contact-text {
+    height: auto;
+    min-height: min-content;
+    padding-bottom: 64px;
+    overflow: visible;
+  }
+
+  .account-img {
+    position: relative;
+    top: -48px;
+    margin-bottom: -48px;
+  }
+
+  .add-contact {
+    height: auto;
+    min-height: min-content;
+    margin-top: 2rem;
+    padding-bottom: 2rem;
+    overflow: visible;
+  }
+
+  .inputs-container {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+  }
+}
