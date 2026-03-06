@@ -30,10 +30,6 @@
   }
 }
 
-.project-management-tool {
-  margin-left: 40px;
-}
-
 .help-icon {
   width: 32px;
   height: 32px;
@@ -107,7 +103,7 @@
   }
 }
 
-@media (max-width: 1120px) {
+@media (max-width: 1160px) {
   .header-container {
     padding: 16px 28px;
   }
@@ -137,11 +133,10 @@
     display: flex;
     justify-content: space-between;
 
-     > a:first-child {
-    display: flex;
+    > a:first-child {
+      display: flex;
     }
   }
-
 
   .header-logo {
     display: block;

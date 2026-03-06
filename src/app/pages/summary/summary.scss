@@ -315,7 +315,6 @@ app-nav {
     flex-direction: column;
     align-items: flex-start;
     gap: 2rem;
-    padding-bottom: 64px;
   }
 
   .summary-greeting {
@@ -329,7 +328,7 @@ app-nav {
   }
 }
 
-  @media (max-width: 1280px) {
+@media (max-width: 1280px) {
   .summary-inner {
     padding: 80px 40px 160px 28px;
   }
@@ -349,12 +348,11 @@ app-nav {
 }
 
 @media (max-width: 870px) {
-   .summary-headline {
+  .summary-headline {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
-   }
-  
+  }
 
   .headline-divider {
     display: none;
@@ -373,7 +371,6 @@ app-nav {
     }
   }
 }
-
 
 @media (max-width: 768px) {
   main {
@@ -396,7 +393,7 @@ app-nav {
   }
 
   .summary-inner {
-    padding: 32px 28px ;
+    padding: 32px 28px;
     margin-bottom: auto;
     display: flex;
     flex-direction: column;
@@ -564,7 +561,7 @@ app-nav {
     font-size: 61px;
   }
 
-   .summary-inner {
+  .summary-inner {
     padding: 16px 28px;
   }
 }
