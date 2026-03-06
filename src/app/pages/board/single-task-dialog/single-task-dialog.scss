@@ -70,9 +70,32 @@
   app-add-task {
     flex: 1;
     min-height: 0;
-    overflow: hidden;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.5);
+      }
+    }
   }
 
   .dialog-header {
@@ -491,5 +514,79 @@
 
   .dialog-overlay {
     padding: 0 10px;
+  }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  .dialog-card {
+    max-height: 95vh;
+    border-radius: 15px;
+  }
+
+  .dialog-header {
+    padding: 10px 20px 0 20px;
+  }
+
+  .dialog-card-inner {
+    padding: 10px 20px;
+    gap: 8px;
+    max-height: none;
+  }
+
+  .dialog-footer {
+    padding: 10px 20px 10px 20px;
+    height: auto;
+  }
+
+  .task-title {
+    font-size: 24px;
+  }
+
+  .task-description,
+  .info-label,
+  .info-value,
+  .user-name {
+    font-size: 14px;
+  }
+
+  .avatar-large {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .assigned-list,
+  .subtasks-list {
+    max-height: 80px;
+  }
+
+  .info-section {
+    grid-template-columns: 90px 1fr;
+    gap: 8px;
+  }
+
+  .dialog-card-edit-mode {
+    padding: 10px;
+    max-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    
+    .dialog-header {
+      top: 0;
+      background: white;
+      z-index: 10;
+      padding-bottom: 10px;
+      flex-shrink: 0;
+    }
+
+    app-add-task {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      flex: 1 0 auto; 
+      min-height: min-content; 
+      overflow: visible; 
+    }
   }
 }
