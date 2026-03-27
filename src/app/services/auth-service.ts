@@ -21,7 +21,10 @@ export class AuthService {
   /**
    * Signal for the UID of the logged-in user (for reactive header)
    */
-  loggetInUserUid = signal<string | null>(localStorage.getItem('uid'));
+  loggetInUserUid = signal<string | null>(
+    localStorage.getItem('uid') ??
+    (sessionStorage.getItem('guestSession') === 'true' ? 'guest' : null)
+  );
 
   isNewUser?: boolean;
 

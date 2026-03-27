@@ -8,7 +8,7 @@ import { Board } from './pages/board/board';
 import { Summary } from './pages/summary/summary';
 import { Login } from './pages/login/login';
 import { SignUp } from './pages/sign-up/sign-up';
-import { authGuard, authMatchGuard } from './guards/auth.guard';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
