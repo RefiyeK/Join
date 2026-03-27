@@ -94,23 +94,17 @@ export class ContactsService implements OnDestroy {
    * @returns Promise with the loaded contacts
    */
   async loadContacts(): Promise<SingleContact[]> {
-    try {
-      const querySnapshot = await getDocs(this.getNotesRef());
-      const loadedContacts: SingleContact[] = [];
-
-      querySnapshot.forEach((doc) => {
-        loadedContacts.push(this.setContactObject(doc.data(), doc.id));
-      });
-
-      this.contacts = loadedContacts;
-      this.updateContactGroups();
-      this.contactsSubject.next(this.contacts);
-
-      return loadedContacts;
-    } catch (error) {
-      console.error('Error loading contacts:', error);
-      return [];
-    }
+    if (this.contacts.length > 0) {
+    return this.contacts;
+  }
+  return new Promise((resolve) => {
+    const sub = this.contacts$.subscribe((contacts) => {
+      if (contacts.length > 0) {
+        sub.unsubscribe();
+        resolve(contacts);
+      }
+    });
+  });
   }
 
   /**

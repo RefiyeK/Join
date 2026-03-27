@@ -180,39 +180,33 @@ export class AddTask implements OnInit, OnDestroy {
   async loadContacts() {
     this.loadingContacts = true;
 
-    try {
-      await this.contactsService.loadContacts();
+    this.contactsSubscription = this.contactsService.contacts$.subscribe(
+    (contacts: SingleContact[]) => {
+      let sortedContacts = this.sortContactsAlphabetically(contacts);
 
-      this.contactsSubscription = this.contactsService.contacts$.subscribe(
-        (contacts: SingleContact[]) => {
-          let sortedContacts = this.sortContactsAlphabetically(contacts);
+      const currentUid = this.authService.loggetInUserUid();
+      const meIndex = sortedContacts.findIndex((c) => c.uid === currentUid);
 
-          const currentUid = this.authService.loggetInUserUid();
-          const meIndex = sortedContacts.findIndex((c) => c.uid === currentUid);
+      if (meIndex !== -1) {
+        const me = sortedContacts.splice(meIndex, 1)[0];
+        sortedContacts.unshift({
+          ...me,
+          name: me.name + ' (You)',
+        });
+      }
 
-          if (meIndex !== -1) {
-            const me = sortedContacts.splice(meIndex, 1)[0];
-            sortedContacts.unshift({
-              ...me,
-              name: me.name + ' (You)',
-            });
-          }
-
-          this.contacts = sortedContacts;
-          this.loadingContacts = false;
-
-          if (this.taskData.assigned && this.taskData.assigned.length > 0) {
-            this.updateSelectedOptionText();
-          }
-
-          this.updateAssignedAvatarsPreview();
-        },
-      );
-    } catch (error) {
-      console.error('Error loading contacts:', error);
+      this.contacts = sortedContacts;
       this.loadingContacts = false;
-    }
-  }
+
+      if (this.taskData.assigned && this.taskData.assigned.length > 0) {
+        this.updateSelectedOptionText();
+      }
+
+      this.updateAssignedAvatarsPreview();
+    },
+  );
+}
+
 
   /**
    * Sorts contacts alphabetically by name

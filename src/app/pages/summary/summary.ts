@@ -1,8 +1,6 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-// import { Header } from '../../shared/components/header/header';
-// import { Nav } from '../../shared/components/nav/nav';
 import { TasksService } from '../../services/tasks-service';
 import { ContactsService } from '../../services/contacts-service';
 import { AuthService } from '../../services/auth-service';
