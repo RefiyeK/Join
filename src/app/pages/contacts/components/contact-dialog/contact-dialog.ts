@@ -41,14 +41,14 @@ export class ContactDialog implements AfterViewInit, OnDestroy {
   // This function checks if the name has at least 2 letters and contains only letters
   isNameValid(): boolean {
     const name = this.addNewSingleContact.name.trim();
-    return name.length >= 2 && /^[A-Za-z\s]+$/.test(name);
+    return name.length >= 2 && /^[A-Za-zÀ-ÖØ-öø-žÄäÖöÜüß\s]+$/.test(name);
   }
 
   @HostListener('input', ['$event'])
   onInput(event: Event): void {
     const target = event.target as HTMLInputElement;
     if (target?.name === 'name') {
-      target.value = target.value.replace(/[^A-Za-z\s]/g, '');
+      target.value = target.value.replace(/[^A-Za-zÀ-ÖØ-öø-žÄäÖöÜüß\s]/g, '');
       this.addNewSingleContact.name = target.value;
     }
     if (target?.name === 'phone') {

@@ -188,6 +188,7 @@ export class ContactsService implements OnDestroy {
    * @returns CSS class name for the icon color
    */
   getIconColorClass(contact: SingleContact): string {
+    if (contact.color) return contact.color;
     const lettersArray = 'ABCDEFGHJKLMNOPQRSTUVW'.split('');
     const nameParts = contact.name.split(' ');
     const letter = (nameParts[1]?.charAt(0) || nameParts[0].charAt(0)).toUpperCase();
@@ -234,6 +235,9 @@ export class ContactsService implements OnDestroy {
    * @returns Promise that resolves when the contact is added
    */
   async addNewSingleContactToDB(addNewSingleContact: SingleContact): Promise<void> {
+    if (!addNewSingleContact.color) {
+      addNewSingleContact.color = this.getIconColorClass(addNewSingleContact);
+    }
     await addDoc(collection(this.contactsDB, 'contacts'), addNewSingleContact);
   }
 
