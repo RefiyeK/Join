@@ -33,6 +33,7 @@
                   <div class="cards-row-top">
                     <div
                       class="card"
+                      [routerLink]="['/board']"
                       (mouseenter)="todoHover = true"
                       (mouseleave)="todoHover = false"
                     >
@@ -54,6 +55,7 @@
 
                     <div
                       class="card"
+                      [routerLink]="['/board']"
                       (mouseenter)="doneHover = true"
                       (mouseleave)="doneHover = false"
                     >
@@ -67,7 +69,7 @@
                           alt="Done"
                         />
                       </div>
-                      <div class="card__info">
+                      <div class="card__info" >
                         <span class="card__count">{{ doneCount }}</span>
                         <span class="card__label">Done</span>
                       </div>
@@ -75,7 +77,7 @@
                   </div>
 
                   <div class="cards-row-priority">
-                    <div class="card card--priority">
+                    <div class="card card--priority" [routerLink]="['/board']">
                       <div class="priority-left">
                         <div class="card__icon card__icon--priority">
                           <img
@@ -99,15 +101,15 @@
                   </div>
 
                   <div class="cards-row-bottom">
-                    <div class="card card--simple">
+                    <div class="card card--simple" [routerLink]="['/board']">
                       <span class="card__count">{{ totalCount }}</span>
                       <span class="card__label">Tasks in<br />Board</span>
                     </div>
-                    <div class="card card--simple">
+                    <div class="card card--simple" [routerLink]="['/board']">
                       <span class="card__count">{{ inProgressCount }}</span>
                       <span class="card__label">Tasks In<br />Progress</span>
                     </div>
-                    <div class="card card--simple">
+                    <div class="card card--simple" [routerLink]="['/board']">
                       <span class="card__count">{{ awaitFeedbackCount }}</span>
                       <span class="card__label">Awaiting<br />Feedback</span>
                     </div>

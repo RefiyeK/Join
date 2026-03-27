@@ -1,16 +1,18 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Header } from '../../shared/components/header/header';
-import { Nav } from '../../shared/components/nav/nav';
+import { RouterLink } from '@angular/router';
+// import { Header } from '../../shared/components/header/header';
+// import { Nav } from '../../shared/components/nav/nav';
 import { TasksService } from '../../services/tasks-service';
 import { ContactsService } from '../../services/contacts-service';
 import { AuthService } from '../../services/auth-service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subscription } from 'rxjs';
 
+
 @Component({
   selector: 'app-summary',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './summary.html',
   styleUrl: './summary.scss',
 })
